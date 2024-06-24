@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-
+import adminUserProfile from "./assets/images/adminUserProfile.svg";
+import editIcon from "./assets/images/editIcon.svg";
+import deleteIcon from "./assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import ModalComponent from "./components/Modal/GroupManagementModal";
 import NavBar from "./components/NavBar/NavBar";
@@ -81,7 +83,7 @@ export default function GroupManagement() {
                     <td className="px-4 py-4 flex justify-center gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -100,14 +102,14 @@ export default function GroupManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                           onClick={openModal}
                         />
 
                         <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />
@@ -120,7 +122,7 @@ export default function GroupManagement() {
                     <td className="px-4 py-4 flex justify-center gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -139,14 +141,14 @@ export default function GroupManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                           onClick={openModal}
                         />
 
                         <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />
@@ -158,7 +160,7 @@ export default function GroupManagement() {
                     <td className="px-4 py-4 flex justify-center gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -177,53 +179,14 @@ export default function GroupManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                           onClick={openModal}
                         />
 
                         <img
-                          src="deleteIcon.svg"
-                          alt="edit icon"
-                          className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr className="text-center ">
-                    {/* user profile and name */}
-                    <td className="px-4 py-4 flex justify-center gap-2">
-                      <div className="userIcon">
-                        <img
-                          src="adminUserProfile.svg"
-                          alt="user "
-                          className="rounded-full"
-                        />
-                      </div>
-                      <span>Devon Lane</span>
-                    </td>
-
-                    {/* admin email id */}
-                    <td className=" py-2 text-center px-4">50</td>
-
-                    <td className=" px-4 py-2 capitalize">
-                      Jaini Shah, Dipal Shah, Kinjal Patel, Yash Patel, vibha
-                      shah....
-                    </td>
-
-                    <td className=" px-4 py-2 ">
-                      <div className="flex justify-center gap-2">
-                        <img
-                          src="editIcon.svg"
-                          alt="edit icon"
-                          className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
-                          onClick={openModal}
-                        />
-
-                        <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />
@@ -236,7 +199,7 @@ export default function GroupManagement() {
                     <td className="px-4 py-4 flex justify-center gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -255,14 +218,14 @@ export default function GroupManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                           onClick={openModal}
                         />
 
                         <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />
@@ -275,7 +238,7 @@ export default function GroupManagement() {
                     <td className="px-4 py-4 flex justify-center gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -294,14 +257,14 @@ export default function GroupManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                           onClick={openModal}
                         />
 
                         <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />
@@ -314,7 +277,7 @@ export default function GroupManagement() {
                     <td className="px-4 py-4 flex justify-center gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -333,14 +296,14 @@ export default function GroupManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                           onClick={openModal}
                         />
 
                         <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />
@@ -353,7 +316,7 @@ export default function GroupManagement() {
                     <td className="px-4 py-4 flex justify-center gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -372,14 +335,53 @@ export default function GroupManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                           onClick={openModal}
                         />
 
                         <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
+                          alt="edit icon"
+                          className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr className="text-center ">
+                    {/* user profile and name */}
+                    <td className="px-4 py-4 flex justify-center gap-2">
+                      <div className="userIcon">
+                        <img
+                          src={adminUserProfile}
+                          alt="user "
+                          className="rounded-full"
+                        />
+                      </div>
+                      <span>Devon Lane</span>
+                    </td>
+
+                    {/* admin email id */}
+                    <td className=" py-2 text-center px-4">50</td>
+
+                    <td className=" px-4 py-2 capitalize">
+                      Jaini Shah, Dipal Shah, Kinjal Patel, Yash Patel, vibha
+                      shah....
+                    </td>
+
+                    <td className=" px-4 py-2 ">
+                      <div className="flex justify-center gap-2">
+                        <img
+                          src={editIcon}
+                          alt="edit icon"
+                          className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
+                          onClick={openModal}
+                        />
+
+                        <img
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />

@@ -6,7 +6,10 @@ import { IoChevronDown } from "react-icons/io5";
 import Header from "./components/Header/Header";
 import NavBar from "./components/NavBar/NavBar";
 import { FaEye } from "react-icons/fa";
+import adminUserProfile from './assets/images/adminUserProfile.svg'
 import ViewRelativeModal from "./components/Modal/ViewRelativeModal";
+import editIcon from './assets/images/editIcon.svg'
+import deleteIcon from './assets/images/deleteIcon.svg'
 export default function UserManagement() {
   const [isOpen, setIsOpen] = useState(false);
   const [relativeModal, setRelativeModal] = useState(false);
@@ -104,10 +107,10 @@ export default function UserManagement() {
                   {/* data 1 */}
                   <tr className="text-center">
                     {/* user profile and name */}
-                    <td className="  px-4 py-4 flex gap-2">
+                    <td className=" px-4 py-4 flex gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -144,13 +147,13 @@ export default function UserManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                         />
 
                         <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />
@@ -165,7 +168,7 @@ export default function UserManagement() {
                     <td className=" px-4 py-4 flex gap-2">
                       <div className="userIcon">
                         <img
-                          src="adminUserProfile.svg"
+                          src={adminUserProfile}
                           alt="user "
                           className="rounded-full"
                         />
@@ -199,13 +202,13 @@ export default function UserManagement() {
                     <td className=" px-4 py-2 ">
                       <div className="flex justify-center gap-2">
                         <img
-                          src="editIcon.svg"
+                          src={editIcon}
                           alt="edit icon"
                           className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer"
                         />
 
                         <img
-                          src="deleteIcon.svg"
+                          src={deleteIcon}
                           alt="edit icon"
                           className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer"
                         />

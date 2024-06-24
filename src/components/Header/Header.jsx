@@ -1,13 +1,13 @@
 import { FaRegUserCircle } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { Link } from "react-router-dom";
-
+import logo from '../../assets/images/headerLogo.png'
 export default function Header() {
   return (
     <header className="flex justify-between border-gray-100 py-2 px-10 shadow-md">
       <div className="logo pl-2 ">
         <Link to="/">
-          <img src="logo.png" alt="header logo" className="w-40" />
+          <img src={logo} alt="header logsaasdsadao" className="w-40" />
         </Link>
       </div>
 
