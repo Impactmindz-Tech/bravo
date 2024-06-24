@@ -3,7 +3,7 @@ import NavBar from "./components/NavBar/NavBar";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
 import { useState } from "react";
-
+import settingUser from "./assets/images/settingUser.png";
 export default function SystemSetting() {
   const [files, setFiles] = useState({
     postCodeFile: null,
@@ -52,7 +52,7 @@ export default function SystemSetting() {
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
                   <div className="rounded-full">
                     <img
-                      src="settingUser.png"
+                      src={settingUser}
                       alt="user image"
                       className="object-contain h-8"
                     />
@@ -66,7 +66,7 @@ export default function SystemSetting() {
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
                   <div className="rounded-full">
                     <img
-                      src="settingUser.png"
+                      src={settingUser}
                       alt="user image"
                       className="object-contain h-8"
                     />
@@ -80,7 +80,7 @@ export default function SystemSetting() {
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
                   <div className="rounded-full">
                     <img
-                      src="settingUser.png"
+                      src={settingUser}
                       alt="user image"
                       className="object-contain h-8"
                     />
@@ -94,7 +94,7 @@ export default function SystemSetting() {
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
                   <div className="rounded-full">
                     <img
-                      src="settingUser.png"
+                      src={settingUser}
                       alt="user image"
                       className="object-contain h-8"
                     />
@@ -108,7 +108,7 @@ export default function SystemSetting() {
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
                   <div className="rounded-full">
                     <img
-                      src="settingUser.png"
+                      src={settingUser}
                       alt="user image"
                       className="object-contain h-8"
                     />

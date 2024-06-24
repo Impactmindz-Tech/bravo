@@ -1,4 +1,5 @@
 import { IoMdClose } from "react-icons/io";
+import adminUserProfile from '../../assets/images/adminUserProfile.svg'
 // eslint-disable-next-line react/prop-types
 const ViewRelativeModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -54,7 +55,7 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
                         <div className="flex gap-2">
                           <div className="userIcon">
                             <img
-                              src="adminUserProfile.svg"
+                              src={adminUserProfile}
                               alt="user "
                               className="rounded-full"
                             />
