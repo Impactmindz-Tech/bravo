@@ -25,12 +25,12 @@ export default function UserManagement() {
       <Header />
 
       {/* menu section */}
-      <div className="flex justify-start">
+      <div className="flex justify-start gap-2">
         {/* left nav bar */}
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw]">
+        <div className="w-[85%]  h-[41vw]">
           {/* top title */}
           <div className="flex justify-between px-1 mt-12 sm:mt-5 sm:flex-col sm:gap-y-2">
             <h1 className="text-3xl font-bold sm:text-sm" >User Management</h1>

@@ -9,11 +9,11 @@ export default function NavBar() {
   const location = useLocation();
   return (<>
 
-    <nav className="flex justify-center bg-blue-900 h-[43.24vw] w-[80px] sm:h-[100vh] md:block sm:hidden">
+    <nav className="flex justify-center bg-blue-900 h-[43.24vw] w-[80px] sm:h-[100vh]  ">
       <ul className="mt-8 w-full">
-        <Link to="/" className="text-gray-950 text-2xl hover:text-gray-950">
+        <Link to="/" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm">
           <li
-            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
+            className={`w-full py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
               location.pathname === "/" ? "bg-white text-black" : "text-white"
             }`}
           >
@@ -23,7 +23,7 @@ export default function NavBar() {
 
         <Link
           to="/adminmanagement"
-          className="text-gray-950 text-2xl hover:text-gray-950"
+          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
         >
           <li
             className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
@@ -38,7 +38,7 @@ export default function NavBar() {
 
         <Link
           to="/groupmanagement"
-          className="text-gray-950 text-2xl hover:text-gray-950"
+          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
         >
           <li
             className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
@@ -51,7 +51,7 @@ export default function NavBar() {
           </li>
         </Link>
 
-        <Link to="/calender" className="text-gray-950 text-2xl hover:text-gray-950">
+        <Link to="/calender" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm">
           <li
             className={
               location.pathname == "/calender"
@@ -65,7 +65,7 @@ export default function NavBar() {
 
         <Link
           to="/systemsetting"
-          className="text-gray-950 text-2xl hover:text-gray-950"
+          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
         >
           <li
             className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
