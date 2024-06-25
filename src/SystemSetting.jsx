@@ -39,29 +39,17 @@ export default function SystemSetting() {
         {/* right side section */}
         <div className="w-[90%] m-auto">
           {/* top title */}
-          <div className="flex justify-between px-1 my-3">
-            <h1 className="text-3xl font-bold">System Setting</h1>
+          <div className="flex justify-between px-1 my-3 ">
+            <h1 className="text-3xl font-bold sm:text-sm sm:pl-3">System Setting</h1>
           </div>
 
-          <div className="flex my-6 justify-between">
+          <div className="flex my-6 justify-between sm:flex-col sm:mx-2">
             {/* left section */}
-            <div className="w-[60%]  shadow-2xl shadow-[#969696] rounded-2xl">
+            <div className="w-[60%]  shadow-2xl shadow-[#969696] rounded-2xl sm:w-[98%]">
               {/* category */}
-              <h1 className="my-2 mx-5 text-blue-300">Category</h1>
-              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md py-2 px-2 list-none border-borderOutlineColor-900 mx-5">
-                <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
-                  <div className="rounded-full">
-                    <img
-                      src={settingUser}
-                      alt="user image"
-                      className="object-contain h-8"
-                    />
-                  </div>
-                  <span className="pt-1.5">Jaini Shah.PNG</span>
-                  <i className="text-lg text-black pt-1.5">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
+              <h1 className="my-2 mx-5 text-blue-300 sm:text-sm sm:mx-2 ">Category</h1>
+              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[96%] sm:py-1">
+
 
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
                   <div className="rounded-full">
@@ -71,58 +59,18 @@ export default function SystemSetting() {
                       className="object-contain h-8"
                     />
                   </div>
-                  <span className="pt-1.5">Jaini Shah.PNG</span>
+                  <span className="pt-1.5 sm:text-sm">Jaini Shah.PNG</span>
                   <i className="text-lg text-black pt-1.5">
                     <IoIosCloseCircleOutline className="cursor-pointer" />
                   </i>
                 </li>
 
-                <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
-                  <div className="rounded-full">
-                    <img
-                      src={settingUser}
-                      alt="user image"
-                      className="object-contain h-8"
-                    />
-                  </div>
-                  <span className="pt-1.5">Jaini Shah.PNG</span>
-                  <i className="text-lg text-black pt-1.5">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
-
-                <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
-                  <div className="rounded-full">
-                    <img
-                      src={settingUser}
-                      alt="user image"
-                      className="object-contain h-8"
-                    />
-                  </div>
-                  <span className="pt-1.5">Jaini Shah.PNG</span>
-                  <i className="text-lg text-black pt-1.5">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
-
-                <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
-                  <div className="rounded-full">
-                    <img
-                      src={settingUser}
-                      alt="user image"
-                      className="object-contain h-8"
-                    />
-                  </div>
-                  <span className="pt-1.5">Jaini Shah.PNG</span>
-                  <i className="text-lg text-black pt-1.5">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
+            
               </div>
               {/* relation */}
 
-              <h1 className="my-3 mx-5 text-blue-300">Relation</h1>
-              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md py-2 px-2 list-none border-borderOutlineColor-900 mx-5">
+              <h1 className="my-3 mx-5 text-blue-300 sm:mx-2">Relation</h1>
+              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[96%] sm:py-1">
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-center py-1 gap-2 px-5">
                   <span className="">Father</span>
                   <i className="text-lg text-black">
@@ -130,37 +78,10 @@ export default function SystemSetting() {
                   </i>
                 </li>
 
-                <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-center py-1 gap-2 px-5">
-                  <span className="">Father</span>
-                  <i className="text-lg text-black">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
-
-                <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-center py-1 gap-2 px-5">
-                  <span className="">Grand Father</span>
-                  <i className="text-lg text-black">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
-
-                <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-center py-1 gap-2 px-5">
-                  <span className="">Grand Mother</span>
-                  <i className="text-lg text-black">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
-
-                <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-center py-1 gap-2 px-5">
-                  <span className="">Uncle</span>
-                  <i className="text-lg text-black">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
               </div>
 
               {/* admin management */}
-              <div className="flex ml-5 mt-10 gap-3">
+              <div className="flex ml-5 mt-10 gap-3 sm:hidden">
                 <span className="font-medium py-8 w-[20%]">
                   Admin Management
                 </span>
@@ -185,7 +106,7 @@ export default function SystemSetting() {
               </div>
 
               {/* user management */}
-              <div className="flex ml-5 gap-3">
+              <div className="flex ml-5 gap-3 sm:hidden">
                 <span className="font-medium py-8 w-[20%]">
                   User Management
                 </span>
@@ -211,8 +132,8 @@ export default function SystemSetting() {
 
               {/* file management */}
 
-              <div className="flex mb-10 pl-5 mt-4">
-                <h4 className="text-blue-300 w-[25%] font-medium">
+              <div className="flex mb-10 pl-5 mt-4 sm:flex-col">
+                <h4 className="text-blue-300 w-[25%] font-medium sm:w-[100%]">
                   Import Post Code Table
                 </h4>
 

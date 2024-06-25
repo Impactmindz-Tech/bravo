@@ -99,8 +99,8 @@ export default function GroupManagement() {
                     </td>
                    
                     <td className="px-4 py-4">
-                      <div className="flex gap-2">
-                        <div className="flex justify-center w-[200px]">
+                      <div className="flex gap-2 justify-center">
+                        <div className="flex justify-center w-[200px] ">
                         Jaini shah, Dipal Shah, Kinjal Bholi, Kinal Patel,Yash Patel, vibha shah...
                       </div>
                       </div>
