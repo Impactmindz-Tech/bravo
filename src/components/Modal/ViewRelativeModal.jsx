@@ -6,8 +6,8 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
-      <div className="h-[600px] overflow-y-auto mt-6 mainFormSection sm:mt-1 sm:h-auto">
-        <div className="relative w-full max-w-5xl mx-auto rounded-lg overflow-hidden sm:w-[98vw] ">
+      <div className="h-[600px] overflow-y-auto mt-6 mainFormSection sm:mt-1 sm:h-auto ">
+        <div className="relative w-full max-w-5xl mx-auto rounded-lg overflow-hidden sm:w-[98vw] md:w-[98vw]">
           <div className="relative bg-white  rounded-lg shadow-md pb-2 ">
             {/* top model section */}
             <div className="flex justify-between items-center  bg-blue-900 py-2">
@@ -23,7 +23,7 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
             </div>
 
             <div className="overflow-y-hidden sm:overflow-y-auto sm:max-h-[76vh] ">
-              <div className="py-2 flex flex-col gap-y-4 sm:w-[800px]">
+              <div className="py-2 flex flex-col gap-y-4 sm:w-[800px] ">
                 {/* table */}
                 <div className="flex justify-between border-gray-100 py-2 px-1">
                   <table className="w-full shadow-2xl shadow-[#969696] rounded-lg ">

@@ -30,12 +30,12 @@ export default function GroupManagement() {
             <h1 className="text-3xl font-bold sm:text-sm">Group Management</h1>
             {/* search bar */}
             <div className="flex gap-1 sm:flex-col sm:gap-y-1">
-              <div className="flex justify-center items-center  border border-[#5f5f5f] rounded-md bg-white text-[#3c3c3c]">
+              <div className="flex justify-center items-center  border border-borderOutlineColor-900 rounded-md bg-white text-[#3c3c3c]">
                 <input
                   type="text"
                   name="search"
                   placeholder="User Name"
-                  className="px-3 py-2 rounded-lg outline-none focus:outline-none text-sm w-[250px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm"
+                  className="px-3 py-2 rounded-lg outline-none focus:outline-none text-sm w-[250px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm "
                 />
                 <i className="pr-3 flex items-center text-[#5a5a5a] text-lg sm:pr-1 sm:text-sm">
                   <IoIosSearch />

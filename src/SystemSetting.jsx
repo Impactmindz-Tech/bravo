@@ -39,7 +39,7 @@ export default function SystemSetting() {
         {/* right side section */}
         <div className="w-[90%] m-auto h-[41vw] sm:m-0">
 
-        <div className="sm:max-h-[90vh] overflow-y-auto mainFormSection overflow-x-hidden">
+        <div className="sm:max-h-[90vh]  sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 ">
 
           {/* top title */}
           <div className="flex justify-between px-1 my-3 ">

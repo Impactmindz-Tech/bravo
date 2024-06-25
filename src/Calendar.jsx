@@ -46,7 +46,7 @@ function Calendar() {
         <NavBar />
 
         {/* right side section */}
-        <div className="flex justify-center mx-4 w-[85vw] my-5 ml-9 h-[80vh]">
+        <div className="flex justify-center mx-4 w-[85vw] my-5 ml-9 sm:h-[80vh] sm:w-[90%] sm:m-0">
           <FullCalendar
             plugins={[
               dayGridPlugin,

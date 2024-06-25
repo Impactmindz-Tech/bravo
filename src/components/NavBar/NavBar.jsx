@@ -9,9 +9,9 @@ export default function NavBar() {
   const location = useLocation();
   return (<>
 
-    <nav className="flex justify-center bg-blue-900 h-[43.24vw] w-[80px] sm:h-[100vh]  sm:w-[10%]">
+    <nav className="flex justify-center bg-blue-900 h-[43.24vw] w-[80px] sm:h-[100vh]  sm:w-[10%] md:h-[100vh] md:w-[10%] ">
       <ul className="mt-8 w-full">
-        <Link to="/" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm">
+        <Link to="/" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl">
           <li
             className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/" ? "bg-white text-black" : "text-white"
               }`}
@@ -22,7 +22,7 @@ export default function NavBar() {
 
         <Link
           to="/adminmanagement"
-          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
+          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl"
         >
           <li
             className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/adminmanagement"
@@ -36,7 +36,7 @@ export default function NavBar() {
 
         <Link
           to="/groupmanagement"
-          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
+          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl"
         >
           <li
             className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/groupmanagement"
@@ -48,7 +48,7 @@ export default function NavBar() {
           </li>
         </Link>
 
-        <Link to="/calender" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm">
+        <Link to="/calender" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl">
           <li
             className={
               location.pathname == "/calender"
@@ -62,7 +62,7 @@ export default function NavBar() {
 
         <Link
           to="/systemsetting"
-          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
+          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl"
         >
           <li
             className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/systemsetting"
