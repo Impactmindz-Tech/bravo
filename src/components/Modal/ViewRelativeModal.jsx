@@ -26,7 +26,7 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
               <div className="py-2 flex flex-col gap-y-4 sm:w-[800px] ">
                 {/* table */}
                 <div className="flex justify-between border-gray-100 py-2 px-1">
-                  <table className="w-full shadow-2xl shadow-[#969696] rounded-lg ">
+                  <table className="w-full boxShadow rounded-lg ">
                     {/* table heading */}
                     <thead>
                       <tr>

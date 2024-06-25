@@ -30,18 +30,18 @@ export default function UserManagement() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw] sm:m-0  md:m-0 md:w-[90%] md:px-2 lg:m-0 lg:w-[90%]  lg:mx-2">
+        <div className="w-[90%] m-auto h-[41vw] sm:m-0  md:m-0 md:w-[90%] md:px-2 lg:m-0 lg:w-[90%]  lg:mx-2 xl:mt-0 2xl:mt-0 mt-0">
           {/* top title */}
           <div className="flex justify-between px-1 mt-12 sm:mt-5 sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
             <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">User Management</h1>
             {/* search bar */}
             <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3">
-              <div className="flex justify-center items-center border border-[#ccc] rounded-md bg-white text-[#3c3c3c] lg:w-[68%] ">
+              <div className="flex justify-center items-center border border-[#ccc] rounded-md bg-white text-[#3c3c3c] lg:w-[68%] md:w-[100%] sm:w-[100%]">
                 <input
                   type="text"
                   name="search"
                   placeholder="Search"
-                  className="px-3 py-2 rounded-lg outline-none focus:outline-none text-md w-[270px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm md:w-[100%] md:px-2 md:py-3 md:text-2xl lg:text-2xl lg:w-[100%] lg:py-0 lg:px-3"
+                  className="px-3 py-2 rounded-lg outline-none focus:outline-none text-md  w-[270px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm md:w-[100%]  md:px-2 md:py-3 md:text-2xl lg:text-2xl lg:w-[100%] lg:py-0 lg:px-3"
                 />
                 <i className="pr-3 flex items-center text-[#5a5a5a] text-lg sm:pr-1 sm:text-sm md:pr-1 md:text-md md:text-2xl lg:text-2xl">
                   <IoIosSearch />
@@ -146,18 +146,18 @@ export default function UserManagement() {
                         <FaEye />
                       </div>
                     </td>
-                    <td className="px-4 py-2 sm:px-0 sm:py-0 md:px-0 md:py-0 lg:px-0 lg:py-0 lg:items-center">
-                      <div className="flex justify-center gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center ">
+                    <td className="px-4 py-2 sm:px-0 sm:py-0 md:px-0 md:py-0 lg:px-0 lg:py-0">
+                      <div className="flex justify-center gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
                         <img
                           src={editIcon}
                           alt="edit icon"
-                          className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px]"
+                          className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
                         />
 
                         <img
                           src={deleteIcon}
                           alt="edit icon"
-                          className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px]"
+                          className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0"
                         />
                       </div>
                     </td>

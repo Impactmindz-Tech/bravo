@@ -25,7 +25,7 @@ export default function AdminManagement() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw] sm:m-0 md:m-0 md:w-[90%] md:px-2">
+        <div className="w-[90%] m-auto h-[41vw] sm:m-0 md:m-0 md:w-[90%] md:px-2 xl:mt-0 2xl:mt-0 mt-0" >
           {/* top title */}
           <div className="flex justify-between px-1 mt-12 sm:mt-5 sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2">
             <h1 className="text-3xl font-bold sm:text-sm md:text-md">Admin Management</h1>
@@ -45,7 +45,7 @@ export default function AdminManagement() {
               </div>
 
               {/* filter btn */}
-              <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 sm:text-sm md:text-xl">
+              <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 sm:text-sm md:text-xl ">
                 Filter
                 <i className="text-white text-md my-1">
                   <IoChevronDown />

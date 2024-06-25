@@ -24,7 +24,7 @@ export default function GroupManagement() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw] sm:m-0 md:m-0 md:w-[90%] md:px-2">
+        <div className="w-[90%] m-auto h-[41vw] sm:m-0 md:m-0 md:w-[90%] md:px-2 mt-0">
           {/* top title */}
           <div className="flex justify-between px-1 mt-12 sm:mt-5 sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2">
             <h1 className="text-3xl font-bold sm:text-sm md:text-md">Group Management</h1>
