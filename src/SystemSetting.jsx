@@ -37,21 +37,21 @@ export default function SystemSetting() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw] sm:m-0">
+        <div className="w-[90%] m-auto h-[41vw] sm:m-0 md:m-0 sm:mx-2">
 
-        <div className="sm:max-h-[90vh]  sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 ">
+        <div className="sm:max-h-[90vh]  sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 md:max-h-[90vh]  md:overflow-hidden md:overflow-y-auto">
 
           {/* top title */}
-          <div className="flex justify-between px-1 my-3 ">
-            <h1 className="text-3xl font-bold sm:text-sm sm:pl-3">System Setting</h1>
+          <div className="flex justify-between px-1  pt-4">
+            <h1 className="text-3xl font-bold sm:text-sm sm:pl-3 md:text-2xl md:pl-3">System Setting</h1>
           </div>
 
-          <div className="flex my-6 justify-between sm:flex-col sm:mx-2">
+          <div className="flex my-6 justify-between sm:flex-col sm:mx-2 md:flex-col md:mx-2 md:gap-y-4 sm:gap-1">
             {/* left section */}
-            <div className="w-[60%]  shadow-2xl shadow-[#969696] rounded-2xl sm:w-[98%]">
+            <div className="w-[60%] md:w-[100%] boxShadow rounded-2xl sm:w-[98%]">
               {/* category */}
-              <h1 className="my-2 mx-5 text-blue-300 sm:text-sm sm:mx-2 ">Category</h1>
-              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[96%] sm:py-1">
+              <h1 className="my-2 mx-5 text-blue-300 sm:text-sm sm:mx-2 md:mx-2">Category</h1>
+              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[96%] sm:py-1 md:w-[96%] md:py-1">
 
 
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2">
@@ -62,7 +62,7 @@ export default function SystemSetting() {
                       className="object-contain h-8"
                     />
                   </div>
-                  <span className="pt-1.5 sm:text-sm">Jaini Shah.PNG</span>
+                  <span className="pt-1.5 sm:text-sm md:text-sm">Jaini Shah.PNG</span>
                   <i className="text-lg text-black pt-1.5">
                     <IoIosCloseCircleOutline className="cursor-pointer" />
                   </i>
@@ -172,7 +172,7 @@ export default function SystemSetting() {
             </div>
 
             {/* right section */}
-            <div className="w-[38%] shadow-2xl shadow-[#969696] rounded-2xl sm:w-[98%] sm:mt-5">
+            <div className="w-[38%]  md:w-[100%] boxShadow rounded-2xl sm:w-[98%] sm:mt-5">
               <h1 className="font-bold mx-5 my-5 sm:text-sm">About Us</h1>
 
               <div className="flex pl-5 mt-4 gap-2 sm:flex-col sm:gap-y-1 sm:pl-3">

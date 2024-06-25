@@ -132,3 +132,9 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
   border-radius: 0px;
   color: white !important;
 }
+
+
+.boxShadow{
+
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

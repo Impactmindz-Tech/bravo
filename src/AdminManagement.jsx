@@ -45,7 +45,7 @@ export default function AdminManagement() {
               </div>
 
               {/* filter btn */}
-              <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 md:text-xl">
+              <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 sm:text-sm md:text-xl">
                 Filter
                 <i className="text-white text-md my-1">
                   <IoChevronDown />
@@ -66,7 +66,7 @@ export default function AdminManagement() {
 
           {/* table section */}
 
-          <div className="max-h-[440px] overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] shadow-2xl shadow-[#969696] rounded-lg sm:mx-1 md:mx-1">
+          <div className="max-h-[440px] overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1">
             <div className="flex justify-between border-gray-100 py-2 px-10 sm:px-0 md:px-0">
               <table className="min-w-full ">
                 {/* table heading */}

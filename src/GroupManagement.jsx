@@ -44,17 +44,20 @@ export default function GroupManagement() {
 
               {/* create group btn */}
               <button className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm md:text-xl">
-                <i className="my-0.4 pr-2 text-2xl sm:text-sm sm:my-1 md:text-md md:my-1">
+                <i className="my-0.4 pr-2 text-2xl sm:text-md sm:my-0 md:text-md md:my-1">
                   <IoMdAddCircleOutline />
                 </i>{" "}
+                <span className="sm:text-sm">
+
                 Create Group
+                </span>
               </button>
             </div>
           </div>
 
           {/* table section */}
 
-          <div className="max-h-[440px] overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] shadow-2xl shadow-[#969696] rounded-lg sm:mx-1 md:mx-1">
+          <div className="max-h-[440px] overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1">
             <div className="flex justify-between border-gray-100 py-2 px-10 sm:px-0 md:px-0">
               <table className="min-w-full">
                 {/* table heading */}
@@ -80,9 +83,9 @@ export default function GroupManagement() {
                   {/* data 1 */}
                   <tr className="text-center">
                     {/* user profile and name */}
-                    <td className="px-4 py-4">
-                      <div className="flex gap-2">
-                        <div className=" flex justify-center">
+                    <td className="px-4 py-4 ">
+                      <div className="flex gap-2 ">
+                        <div className="w-[40px] flex justify-center md:w-[60px] ">
                           <img
                             src={adminUserProfile}
                             alt="user "
