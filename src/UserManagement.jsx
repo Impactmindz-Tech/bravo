@@ -71,7 +71,7 @@ export default function UserManagement() {
           {/* table section */}
 
           <div className="max-h-[440px] overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] shadow-2xl shadow-[#969696] rounded-lg sm:mx-1 md:mx-1">
-            <div className="flex justify-between border-gray-100 py-2 px-10 sm:px-0">
+            <div className="flex justify-between border-gray-100 py-2 px-10 sm:px-0 md:px-0">
               <table className="min-w-full">
                 {/* table heading */}
                 <thead>
@@ -121,7 +121,7 @@ export default function UserManagement() {
                     </td>
 
                     {/* admin email id */}
-                    <td className="py-2 text-left px-4 md:text-xl">
+                    <td className="py-2 text-left px-4 md:text-lg">
                       debra.holt@exaple.com
                     </td>
                     <td className="px-4 py-2 md:text-xl">(406) 555-0120</td>
