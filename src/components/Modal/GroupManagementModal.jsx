@@ -15,7 +15,7 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
-      <div className="relative w-full max-w-2xl mx-auto rounded-lg sm:h-[80vh] overflow-hidden sm:w-[90vw] sm:mt-10">
+      <div className="relative w-full max-w-2xl mx-auto rounded-lg sm:h-[80vh] overflow-hidden sm:w-[90vw] sm:mt-10 md:h-[80vh] md:w-[90vw] md:mt-10">
         <div className="relative bg-white  rounded-lg shadow-md pb-4">
           {/* top model section */}
           <div className="flex justify-between items-center mb-4 bg-blue-900 py-2">
