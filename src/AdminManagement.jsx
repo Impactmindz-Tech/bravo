@@ -74,18 +74,22 @@ export default function AdminManagement() {
                     <th className="px-4 py-4   sticky bg-white top-0 border-gray-200 text-left rounded-tl-lg">
                       User Name
                     </th>
-                    <th className="text-left   bg-white border-gray-200  px-4">
+                    <th className="text-left   sticky top-0 bg-white border-gray-200  px-4">
                       Email Id
                     </th>
-                    <th className=" text-center   bg-white border-gray-200">
+                    <th className=" text-center   sticky top-0 bg-white border-gray-200">
                       Contact No
                     </th>
-                    <th className=" text-center  bg-white border-gray-200 w-[150px] px-9">
+                    <th className=" text-center  sticky top-0 bg-white border-gray-200 w-[150px] px-9">
                       Authentication Code
                     </th>
-                    <th className="text-center   bg-white">Role</th>
+                    <th className="text-center   sticky top-0 bg-white">
+                      Role
+                    </th>
 
-                    <th className=" px-2 text-center  bg-white">Action</th>
+                    <th className=" px-2 text-center  sticky top-0 bg-white">
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 {/* table body */}

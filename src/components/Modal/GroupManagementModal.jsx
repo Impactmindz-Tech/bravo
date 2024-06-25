@@ -15,7 +15,7 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
-      <div className="relative w-full max-w-2xl mx-auto rounded-lg overflow-hidden">
+      <div className="relative w-full max-w-2xl mx-auto rounded-lg sm:h-[80vh] overflow-hidden sm:w-[90vw] sm:mt-10">
         <div className="relative bg-white  rounded-lg shadow-md pb-4">
           {/* top model section */}
           <div className="flex justify-between items-center mb-4 bg-blue-900 py-2">
@@ -32,16 +32,16 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
 
           <div className="p-8 flex flex-col gap-y-4">
             {/* file upload section */}
-            <div className="flex justify-center">
-              <h4 className="text-blue-300 w-[25%]">
+            <div className="flex justify-center sm:flex-col sm:gap-y-2">
+              <h4 className="text-blue-300 w-[25%] sm:w-[100%]">
                 Group Picture{" "}
                 <span className="text-red-500 font-extrabold">*</span>
               </h4>
 
-              <div className="flex w-[75%] items-center border rounded-lg py-1 px-2">
+              <div className="flex w-[75%] items-center border rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1 sm:w-[100%]">
                 <label
                   htmlFor="file-upload"
-                  className="flex items-center bg-blue-900 px-4 py-2 rounded-lg cursor-pointer font-semibold text-white"
+                  className="flex items-center bg-blue-900 px-4 py-2 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
                 >
                   <FiUpload className="font-semibold mr-1" />
                   Upload
@@ -52,27 +52,29 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
                   className="hidden"
                   onChange={handleFileChange}
                 />
-                {selectedFile && (
-                  <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4">
-                    <span className="text-sm pl-2">{selectedFile.name}</span>
-                    <button
-                      onClick={handleRemoveFile}
-                      className="bg-none noColor text-sm bg-blue-300 outline-none border-none text-textMainColor-900"
-                    >
-                      <IoIosCloseCircleOutline className="text-lg" />
-                    </button>
-                  </div>
-                )}
+             {selectedFile && (
+                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0 ">
+                        <span className="text-sm pl-2">
+                          {selectedFile.name}
+                        </span>
+                        <button
+                          onClick={handleRemoveFile}
+                          className="text-black text-sm bg-transparent border-none"
+                        >
+                          <IoIosCloseCircleOutline className="text-lg bg-none" />
+                        </button>
+                      </div>
+                    )}
               </div>
             </div>
 
             {/* group name section */}
-            <div className="flex justify-center">
-              <h4 className=" text-blue-300 w-[25%] ">
+            <div className="flex justify-center sm:flex-col sm:gap-y-1">
+              <h4 className=" text-blue-300 w-[25%] sm:w-[100%]">
                 Group Name{" "}
                 <span className="text-red-500 font-extrabold">*</span>
               </h4>
-              <div className="flex w-[75%]">
+              <div className="flex w-[75%] sm:w-[100%]">
                 <input
                   type="text"
                   name=""
@@ -84,12 +86,12 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
             </div>
 
             {/*  group member*/}
-            <div className="flex justify-center">
-              <h4 className="text-blue-300 w-[25%]">
+            <div className="flex justify-center sm:flex-col sm:gap-y-1">
+              <h4 className="text-blue-300 w-[25%] sm:w-[100%]">
                 Group Member{" "}
                 <span className="text-red-500 font-extrabold">*</span>
               </h4>
-              <div className="flex flex-wrap border gap-3 w-[75%] rounded-md py-2 px-2 list-none">
+              <div className="flex flex-wrap border gap-3 w-[75%] rounded-md py-2 px-2 list-none sm:w-[100%]">
                 <li className="bg-blue-300 px-6 py-1.5 rounded-full text-sm flex justify-center mb-1 gap-2">
                   Jaini Shah
                   <i className="text-lg text-textMainColor-900">
@@ -101,7 +103,7 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
           </div>
 
           {/* bottom button */}
-          <div className="flex justify-end mr-9 gap-2">
+          <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
             <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none">
               Submit
             </button>
