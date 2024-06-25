@@ -13,9 +13,8 @@ export default function NavBar() {
       <ul className="mt-8 w-full">
         <Link to="/" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm">
           <li
-            className={`w-full py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
-              location.pathname === "/" ? "bg-white text-black" : "text-white"
-            }`}
+            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/" ? "bg-white text-black" : "text-white"
+              }`}
           >
             <CiHome />
           </li>
@@ -26,11 +25,10 @@ export default function NavBar() {
           className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
         >
           <li
-            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
-              location.pathname === "/adminmanagement"
-                ? "bg-white text-black"
-                : "text-white"
-            }`}
+            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/adminmanagement"
+              ? "bg-white text-black"
+              : "text-white"
+              }`}
           >
             <CiUser />
           </li>
@@ -41,11 +39,10 @@ export default function NavBar() {
           className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
         >
           <li
-            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
-              location.pathname === "/groupmanagement"
-                ? "bg-white text-black"
-                : "text-white"
-            }`}
+            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/groupmanagement"
+              ? "bg-white text-black"
+              : "text-white"
+              }`}
           >
             <GrGroup />
           </li>
@@ -68,11 +65,10 @@ export default function NavBar() {
           className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm"
         >
           <li
-            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${
-              location.pathname === "/systemsetting"
-                ? "bg-white text-black"
-                : "text-white"
-            }`}
+            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/systemsetting"
+              ? "bg-white text-black"
+              : "text-white"
+              }`}
           >
             <VscSettingsGear />
           </li>

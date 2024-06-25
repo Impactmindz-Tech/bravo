@@ -3,9 +3,13 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { profileValidation } from "./utils/validation/FormValidation";
+import { LoginApi } from "./utils/service/AuthService";
+import { useNavigate } from "react-router-dom";
+import { setLocalStorage } from "./utils/LocalStorageUtills";
 
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigate = useNavigate()
 
   const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(profileValidation) })
 
@@ -13,8 +17,17 @@ export default function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
-  const onSubmit = () => {
-    navigator("/")
+  const onSubmit = async (data) => {
+    try {
+      const responce = await LoginApi(data)
+      if (responce?.isSuccess) {
+        setLocalStorage("token", responce?.token)
+        console.log(responce)
+        navigate("/")
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -23,7 +36,7 @@ export default function Login() {
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <fieldset className="">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2" >Email</label>
-          <input type="email" name="email" id="email" className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:outline-none" {...register("email")} />
+          <input type="email" name="email" id="email" className="w-full px-3 py-2 border border-[#ccc] rounded-lg outline-none focus:outline-none" {...register("email")} />
         </fieldset>
         <p>{errors?.email?.message}</p>
         <fieldset className="relative">
