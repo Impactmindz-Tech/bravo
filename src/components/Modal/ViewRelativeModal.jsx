@@ -6,7 +6,7 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
-      <div className="h-[600px] overflow-y-auto mt-6 mainFormSection sm:mt-10 sm:h-auto">
+      <div className="h-[600px] overflow-y-auto mt-6 mainFormSection sm:mt-1 sm:h-auto">
         <div className="relative w-full max-w-5xl mx-auto rounded-lg overflow-hidden sm:w-[98vw] ">
           <div className="relative bg-white  rounded-lg shadow-md pb-2 ">
             {/* top model section */}
@@ -22,11 +22,11 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
               </button>
             </div>
 
-            <div className="overflow-y-hidden sm:overflow-y-auto ">
-              <div className="py-2 flex flex-col gap-y-4">
+            <div className="overflow-y-hidden sm:overflow-y-auto sm:max-h-[76vh] ">
+              <div className="py-2 flex flex-col gap-y-4 sm:w-[800px]">
                 {/* table */}
-                <div className="flex justify-between border-gray-100 py-2 px-2">
-                  <table className="w-full shadow-2xl shadow-[#969696] rounded-lg">
+                <div className="flex justify-between border-gray-100 py-2 px-1">
+                  <table className="w-full shadow-2xl shadow-[#969696] rounded-lg ">
                     {/* table heading */}
                     <thead>
                       <tr>
@@ -66,15 +66,17 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
                         </td>
 
                         {/* admin email id */}
-                        <td className=" py-2 text-left px-4">
-                          debra.holt@exaple.com
+                        <td className=" py-2 text-left px-4 sm:max-w-[200px] break-words">
+                          ded.holt@exaple.com
                         </td>
-                        <td className=" px-4 py-2 ">(406) 555-0120</td>
+                        <td className=" px-4 py-2 sm:max-w-[200px] ">(406) 555-0120</td>
                         <td className=" px-4 py-2 ">6391 Elgin st c....</td>
                         <td className=" px-4 py-2 ">3467895768</td>
 
                         <td className=" px-4 py-2 capitalize">father</td>
                       </tr>
+
+                 
                     </tbody>
                   </table>
                 </div>

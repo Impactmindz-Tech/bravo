@@ -25,8 +25,8 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
-        <div className="h-[600px] overflow-y-auto mt-6 mainFormSection">
-          <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden">
+        <div className="h-[600px] overflow-y-auto mt-6 sm:h-[80vh]">
+          <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden sm:w-[90vw]">
             <div className="relative bg-white  rounded-lg shadow-md pb-2 ">
               {/* top model section */}
               <div className="flex justify-between items-center  bg-blue-900 py-2">
@@ -80,12 +80,12 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
 
                 {/* file upload section */}
                 <div className="flex gap-2">
-                  <h4 className="text-blue-300 pt-2">Profile Picture</h4>
+                  <h4 className="text-blue-300 pt-2 sm:text-sm">Profile Picture</h4>
 
-                  <div className="flex w-[75%] items-center border rounded-lg py-1 px-2">
+                  <div className="flex w-[75%] items-center border rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
                     <label
                       htmlFor="file-upload"
-                      className="flex items-center bg-blue-900 text-white  px-4 py-1 rounded-lg cursor-pointer font-semibold"
+                      className="flex items-center bg-blue-900 text-white  px-4 py-1 rounded-lg cursor-pointer font-semibold sm:w-[100%]"
                     >
                       <FiUpload className="font-semibold mr-1" />
                       Upload
@@ -97,7 +97,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                       onChange={handleFileChange}
                     />
                     {selectedFile && (
-                      <div className="flex justify-between items-center bg-[#FBF3DE] rounded-full ml-2 px-4">
+                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
                         <span className="text-sm pl-2">
                           {selectedFile.name}
                         </span>
@@ -115,7 +115,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                 {/* form section */}
                 <div className="flex flex-wrap list-none mt-6 gap-6">
                   {/*  Authentication Code */}
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">
                       Authentication Code{" "}
                       <span className="text-red-500 pl-1">*</span>
@@ -127,7 +127,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
                   {/* first name */}
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">
                       First Name<span className="text-red-500 pl-1">*</span>
                     </h6>
@@ -138,7 +138,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">
                       Last Name<span className="text-red-500 pl-1">*</span>
                     </h6>
@@ -149,19 +149,19 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">
                       Gender<span className="text-red-500 pl-1">*</span>
                     </h6>
                     <select
                       name="gender"
-                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[180px]"
+                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[180px] sm:w-[100%]"
                     >
                       <option value="">Select</option>
                     </select>
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">
                       Email Id<span className="text-red-500 pl-1">*</span>
                     </h6>
@@ -172,7 +172,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">
                       Contact No<span className="text-red-500 pl-1">*</span>
                     </h6>
@@ -183,16 +183,16 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">DOB</h6>
                     <input
                       type="date"
                       name="Authentication_Code"
-                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[175px]"
+                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[175px] sm:w-[100%]"
                     />
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">Age</h6>
                     <input
                       type="text"
@@ -201,18 +201,18 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">
                       Address<span className="text-red-500 pl-1">*</span>
                     </h6>
                     <input
                       type="text"
                       name="Authentication_Code"
-                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100"
+                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 "
                     />
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">Postal Code</h6>
                     <input
                       type="text"
@@ -220,27 +220,27 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                       className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100"
                     />
                   </div>
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">Suburb</h6>
                     <select
                       name="gender"
-                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[180px]"
+                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[180px] sm:w-[100%]"
                     >
                       <option value="">Select</option>
                     </select>
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">State</h6>
                     <select
                       name="gender"
-                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[180px]"
+                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[180px] sm:w-[100%]"
                     >
                       <option value="">Select</option>
                     </select>
                   </div>
 
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">Country</h6>
                     <input
                       type="text"
@@ -248,11 +248,11 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                       className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100"
                     />
                   </div>
-                  <div className="flex flex-col gap-y-2">
+                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
                     <h6 className="text-blue-300 text-sm">Action</h6>
                     <select
                       name="gender"
-                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[180px]"
+                      className="border rounded-lg px-2 py-1 text-sm outline-none focus:bg-gray-100 w-[180px] sm:w-[100%]"
                     >
                       <option value="">Adult</option>
                       <option value="">Teen</option>
@@ -272,7 +272,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                   />
                 </div>
 
-                <div className="flex text gap-3 mt-3">
+                <div className="flex text gap-3 mt-3 sm:flex-col">
                   <span className="text-md font-medium text-blue-300 pt-2">
                     Relative Details
                   </span>
@@ -289,7 +289,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
               </div>
 
               {/* bottom button */}
-              <div className="flex justify-end mr-9 gap-2">
+              <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
                 <button className=" bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
                   Save
                 </button>

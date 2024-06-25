@@ -30,7 +30,7 @@ export default function UserManagement() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw] sm:h-auto ">
+        <div className="w-[90%] m-auto h-[41vw]">
           {/* top title */}
           <div className="flex justify-between px-1 mt-12 sm:mt-5 sm:flex-col sm:gap-y-2">
             <h1 className="text-3xl font-bold sm:text-sm" >User Management</h1>
@@ -70,13 +70,13 @@ export default function UserManagement() {
 
           {/* table section */}
 
-          <div className="h-[440px] overflow-y-auto mainFormSection mt-6 sm:h-auto ">
+          <div className="max-h-[440px] overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] shadow-2xl shadow-[#969696] rounded-lg">
             <div className="flex justify-between border-gray-100 py-2 px-10 sm:px-0">
-              <table className="min-w-full shadow-2xl shadow-[#969696] rounded-lg">
+              <table className="min-w-full ">
                 {/* table heading */}
                 <thead>
                   <tr>
-                    <th className="px-4 py-4   sticky bg-white top-0 border-gray-200 text-left rounded-tl-lg sm:px-0 sm:py-0">
+                    <th className="px-4 py-4   sticky bg-white top-0 border-gray-200 text-left rounded-tl-lg ">
                       User Name
                     </th>
                     <th className="text-left  sticky top-0 bg-white border-gray-200  px-4">
@@ -94,10 +94,10 @@ export default function UserManagement() {
                     <th className="text-center  sticky top-0 bg-white">
                       Relation
                     </th>
-                    <th className="text-center  sticky top-0 bg-white">
+                    <th className="px-2 text-center  sticky top-0 bg-white">
                       Relative
                     </th>
-                    <th className="text-center  sticky top-0 bg-white">
+                    <th className="px-2 text-center  sticky top-0 bg-white">
                       Action
                     </th>
                   </tr>
@@ -107,15 +107,19 @@ export default function UserManagement() {
                   {/* data 1 */}
                   <tr className="text-center">
                     {/* user profile and name */}
-                    <td className="px-4 py-4 flex gap-2">
-                      <div className="sm:w-[10vw]">
+                    <td className="px-4 py-4">
+                    <div className="flex gap-2">
+
+                      <div className="w-[40px] flex justify-center">
                         <img
                           src={adminUserProfile}
                           alt="user "
-                          className="rounded-full "
+                          className="rounded-full"
                         />
                       </div>
-                      <span>Devon Lane</span>
+                      <span>Devon Lane </span>
+                    </div>
+
                     </td>
 
                     {/* admin email id */}
@@ -135,8 +139,8 @@ export default function UserManagement() {
                         <option value="user">Inactive</option>
                       </select>
                     </td>
-                    <td className=" px-4 py-2 capitalize">student</td>
-                    <td className=" px-4 py-2 capitalize text-lg ">
+                    <td className="px-4 py-2 capitalize">student</td>
+                    <td className="px-4 py-2 capitalize text-lg ">
                       <div
                         className="flex justify-center text-[#065813] cursor-pointer"
                         onClick={openRelativeModal}
@@ -144,23 +148,24 @@ export default function UserManagement() {
                         <FaEye />
                       </div>
                     </td>
-                    <td className=" px-4 py-2 sm:px-0 sm:py-0">
-                      <div className="flex justify-center gap-2 sm:gap-1 sm:flex-col sm:gap-y-3">
+                    <td className="px-4 py-2 sm:px-0 sm:py-0 ">
+                      <div className="flex justify-center gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center">
                         <img
                           src={editIcon}
                           alt="edit icon"
-                          className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-3"
+                          className="mr-2  text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0"
                         />
 
                         <img
                           src={deleteIcon}
                           alt="edit icon"
-                          className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-3"
+                          className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0"
                         />
                       </div>
                     </td>
                   </tr>
 
+               
                
                 </tbody>
               </table>
