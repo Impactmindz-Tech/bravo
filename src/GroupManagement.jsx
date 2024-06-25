@@ -24,27 +24,27 @@ export default function GroupManagement() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw]">
+        <div className="w-[90%] m-auto h-[41vw] sm:m-0">
           {/* top title */}
-          <div className="flex justify-between px-1 mt-12">
-            <h1 className="text-3xl font-bold">Group Management</h1>
+          <div className="flex justify-between px-1 mt-12 sm:mt-5 sm:flex-col sm:gap-y-2">
+            <h1 className="text-3xl font-bold sm:text-sm">Group Management</h1>
             {/* search bar */}
-            <div className="flex gap-1">
+            <div className="flex gap-1 sm:flex-col sm:gap-y-1">
               <div className="flex justify-center items-center  border border-[#5f5f5f] rounded-md bg-white text-[#3c3c3c]">
                 <input
                   type="text"
                   name="search"
                   placeholder="User Name"
-                  className="px-3 py-2 rounded-lg outline-none focus:outline-none text-sm w-[250px]"
+                  className="px-3 py-2 rounded-lg outline-none focus:outline-none text-sm w-[250px] sm:w-[100%] sm:px-2 sm:py-1 sm:text-sm"
                 />
-                <i className="pr-3 flex items-center text-[#5a5a5a] text-lg">
+                <i className="pr-3 flex items-center text-[#5a5a5a] text-lg sm:pr-1 sm:text-sm">
                   <IoIosSearch />
                 </i>
               </div>
 
               {/* create group btn */}
-              <button className="bg-blue-900 flex justify-center text-white hover:-[#ccc]">
-                <i className="my-0.4 pr-2 text-2xl">
+              <button className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm">
+                <i className="my-0.4 pr-2 text-2xl sm:text-sm sm:my-1">
                   <IoMdAddCircleOutline />
                 </i>{" "}
                 Create Group

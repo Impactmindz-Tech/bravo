@@ -6,10 +6,10 @@ import { IoChevronDown } from "react-icons/io5";
 import Header from "./components/Header/Header";
 import NavBar from "./components/NavBar/NavBar";
 import { FaEye } from "react-icons/fa";
-import adminUserProfile from './assets/images/adminUserProfile.svg'
+import adminUserProfile from "./assets/images/adminUserProfile.svg";
 import ViewRelativeModal from "./components/Modal/ViewRelativeModal";
-import editIcon from './assets/images/editIcon.svg'
-import deleteIcon from './assets/images/deleteIcon.svg'
+import editIcon from "./assets/images/editIcon.svg";
+import deleteIcon from "./assets/images/deleteIcon.svg";
 export default function UserManagement() {
   const [isOpen, setIsOpen] = useState(false);
   const [relativeModal, setRelativeModal] = useState(false);
@@ -25,15 +25,15 @@ export default function UserManagement() {
       <Header />
 
       {/* menu section */}
-      <div className="flex justify-start gap-2">
+      <div className="flex justify-start">
         {/* left nav bar */}
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[85%]  h-[41vw]">
+        <div className="w-[90%] m-auto h-[41vw] sm:m-0">
           {/* top title */}
           <div className="flex justify-between px-1 mt-12 sm:mt-5 sm:flex-col sm:gap-y-2">
-            <h1 className="text-3xl font-bold sm:text-sm" >User Management</h1>
+            <h1 className="text-3xl font-bold sm:text-sm">User Management</h1>
             {/* search bar */}
             <div className="flex gap-1 sm:flex-col sm:gap-y-1">
               <div className="flex justify-center items-center border border-[#ccc] rounded-md bg-white text-[#3c3c3c] ">
@@ -41,7 +41,7 @@ export default function UserManagement() {
                   type="text"
                   name="search"
                   placeholder="Search"
-                  className="px-3 py-2 rounded-lg outline-none focus:outline-none text-md w-[270px] sm:w-[100%] sm:px-2 sm:py-1 sm:text-sm"
+                  className="px-3 py-2 rounded-lg outline-none focus:outline-none text-md w-[270px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm"
                 />
                 <i className="pr-3 flex items-center text-[#5a5a5a] text-lg sm:pr-1 sm:text-sm">
                   <IoIosSearch />
@@ -70,9 +70,9 @@ export default function UserManagement() {
 
           {/* table section */}
 
-          <div className="max-h-[440px] overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] shadow-2xl shadow-[#969696] rounded-lg">
+          <div className="max-h-[440px] overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] shadow-2xl shadow-[#969696] rounded-lg sm:mx-1">
             <div className="flex justify-between border-gray-100 py-2 px-10 sm:px-0">
-              <table className="min-w-full ">
+              <table className="min-w-full">
                 {/* table heading */}
                 <thead>
                   <tr>
@@ -108,28 +108,26 @@ export default function UserManagement() {
                   <tr className="text-center">
                     {/* user profile and name */}
                     <td className="px-4 py-4">
-                    <div className="flex gap-2">
-
-                      <div className="w-[40px] flex justify-center">
-                        <img
-                          src={adminUserProfile}
-                          alt="user "
-                          className="rounded-full"
-                        />
+                      <div className="flex gap-2">
+                        <div className="w-[40px] flex justify-center">
+                          <img
+                            src={adminUserProfile}
+                            alt="user "
+                            className="rounded-full"
+                          />
+                        </div>
+                        <span>Devon Lane </span>
                       </div>
-                      <span>Devon Lane </span>
-                    </div>
-
                     </td>
 
                     {/* admin email id */}
-                    <td className=" py-2 text-left px-4">
+                    <td className="py-2 text-left px-4">
                       debra.holt@exaple.com
                     </td>
-                    <td className=" px-4 py-2 ">(406) 555-0120</td>
-                    <td className=" px-4 py-2 ">3467895768</td>
+                    <td className="px-4 py-2 ">(406) 555-0120</td>
+                    <td className="px-4 py-2 ">3467895768</td>
 
-                    <td className=" px-4">
+                    <td className="px-4">
                       <select
                         id="role"
                         name="role"
@@ -164,9 +162,6 @@ export default function UserManagement() {
                       </div>
                     </td>
                   </tr>
-
-               
-               
                 </tbody>
               </table>
             </div>
