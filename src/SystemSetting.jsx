@@ -37,7 +37,10 @@ export default function SystemSetting() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto">
+        <div className="w-[90%] m-auto h-[41vw] sm:m-0">
+
+        <div className="sm:max-h-[90vh] overflow-y-auto mainFormSection overflow-x-hidden">
+
           {/* top title */}
           <div className="flex justify-between px-1 my-3 ">
             <h1 className="text-3xl font-bold sm:text-sm sm:pl-3">System Setting</h1>
@@ -81,66 +84,66 @@ export default function SystemSetting() {
               </div>
 
               {/* admin management */}
-              <div className="flex ml-5 mt-10 gap-3 sm:hidden">
-                <span className="font-medium py-8 w-[20%]">
+              <div className="flex ml-5 mt-10 gap-3 sm:flex-col sm:mt-0 sm:ml-2">
+                <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:text-sm sm:py-0 sm:pt-4 sm:ml-0" >
                   Admin Management
                 </span>
 
-                <div className="font-normal text-secondary">
-                  <h1>Level 1</h1>
+                <div className="font-normal text-secondary ">
+                  <h1 className="sm:text-sm">Level 1</h1>
                   <input
                     type="text"
                     name="level1"
-                    className="border rounded-lg px-2 outline-none py-1 mt-2 border-borderOutlineColor-900 font-normal text-black"
+                    className="border rounded-lg px-2 outline-none py-1 mt-2 border-borderOutlineColor-900 font-normal text-black sm:w-[96%]"
                   />
                 </div>
 
                 <div className="font-normal text-secondary">
-                  <h1>Level 2</h1>
+                  <h1 className="sm:text-sm">Level 2</h1>
                   <input
                     type="text"
                     name="level1"
-                    className="border rounded-lg px-2 outline-none py-1 mt-2 border-borderOutlineColor-900 font-normal text-black"
+                    className="border rounded-lg px-2 outline-none py-1 mt-2 border-borderOutlineColor-900 font-normal text-black sm:w-[96%]"
                   />
                 </div>
               </div>
 
               {/* user management */}
-              <div className="flex ml-5 gap-3 sm:hidden">
-                <span className="font-medium py-8 w-[20%]">
+              <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2">
+                <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:py-1">
                   User Management
                 </span>
 
                 <div className="font-normal text-secondary">
-                  <h1>Level 1</h1>
+                  <h1 className="sm:text-sm">Level 1</h1>
                   <input
                     type="text"
                     name="level1"
-                    className="border rounded-lg px-2 outline-none py-1 mt-2 border-borderOutlineColor-900 font-normal text-black"
+                    className="border rounded-lg px-2 outline-none py-1 mt-2 border-borderOutlineColor-900 font-normal text-black sm:w-[96%]"
                   />
                 </div>
 
                 <div className="font-normal text-secondary">
-                  <h1>Level 2</h1>
+                  <h1 className="sm:text-sm">Level 2</h1>
                   <input
                     type="text"
                     name="level1"
-                    className="border rounded-lg px-2 outline-none py-1 mt-2 border-borderOutlineColor-900 font-normal text-black"
+                    className="border rounded-lg px-2 outline-none py-1 mt-2 border-borderOutlineColor-900 font-normal text-black sm:w-[96%]"
                   />
                 </div>
               </div>
 
               {/* file management */}
 
-              <div className="flex mb-10 pl-5 mt-4 sm:flex-col">
+              <div className="flex mb-10 pl-5 mt-4 sm:flex-col sm:pl-3 sm:gap-y-2">
                 <h4 className="text-blue-300 w-[25%] font-medium sm:w-[100%]">
                   Import Post Code Table
                 </h4>
 
-                <div className="flex w-[72%] items-center border rounded-lg py-1 px-2 border-borderOutlineColor-900">
+                <div className="flex w-[72%] items-center border rounded-lg py-1 px-2 border-borderOutlineColor-900 sm:flex-col sm:w-[96%] sm:gap-y-1">
                   <label
                     htmlFor="file-upload"
-                    className="flex items-center bg-blue-900 px-4 py-2 rounded-lg cursor-pointer font-semibold text-white"
+                    className="flex items-center bg-blue-900 px-4 py-2 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
                   >
                     <FiUpload className="font-semibold mr-1" />
                     Upload
@@ -152,8 +155,8 @@ export default function SystemSetting() {
                     onChange={handleFileChange("postCodeFile")}
                   />
                   {files.postCodeFile && (
-                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4">
-                      <span className="text-sm pl-2">
+                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:w-[100%] sm:ml-0">
+                      <span className="text-sm pl-2 sm:pl-0">
                         {files.postCodeFile.name}
                       </span>
                       <button
@@ -169,18 +172,18 @@ export default function SystemSetting() {
             </div>
 
             {/* right section */}
-            <div className="w-[38%] shadow-2xl shadow-[#969696] rounded-2xl">
-              <h1 className="font-bold mx-5 my-5">About Us</h1>
+            <div className="w-[38%] shadow-2xl shadow-[#969696] rounded-2xl sm:w-[98%] sm:mt-5">
+              <h1 className="font-bold mx-5 my-5 sm:text-sm">About Us</h1>
 
-              <div className="flex pl-5 mt-4 gap-2">
-                <h4 className="text-blue-300 w-[25%] font-medium text-sm py-3">
+              <div className="flex pl-5 mt-4 gap-2 sm:flex-col sm:gap-y-1 sm:pl-3">
+                <h4 className="text-blue-300 w-[25%] font-medium text-sm py-3 sm:py-1  sm:w-[96%] sm:text-sm">
                   Upload Document
                 </h4>
 
-                <div className="flex w-[71%] items-center border rounded-lg py-1 px-1 border-borderOutlineColor-900">
+                <div className="flex w-[71%] items-center border rounded-lg py-1 px-1 border-borderOutlineColor-900 sm:flex-col sm:w-[96%] sm:gap-y-1">
                   <label
                     htmlFor="file-upload-document"
-                    className="flex items-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white"
+                    className="flex items-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
                   >
                     <FiUpload className="font-semibold mr-1 text-sm" />
                     Upload
@@ -192,8 +195,8 @@ export default function SystemSetting() {
                     onChange={handleFileChange("aboutDocumentFileDocument")}
                   />
                   {files.aboutDocumentFileDocument && (
-                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2">
-                      <span className="text-sm pl-2">
+                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2  sm:w-[100%] sm:ml-0">
+                      <span className="text-sm pl-2 ">
                         {files.aboutDocumentFileDocument.name}
                       </span>
                       <button
@@ -207,25 +210,25 @@ export default function SystemSetting() {
                 </div>
               </div>
 
-              <h2 className="mx-5 text-sm mt-2 text-secondary">Text</h2>
+              <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3">Text</h2>
               <textarea
                 name="text"
-                className="border mx-5 my-2 w-[94%] resize-none h-40 rounded-md border-borderOutlineColor-900 outline-none px-2"
+                className="border mx-5 my-2 w-[94%] resize-none h-40 rounded-md border-borderOutlineColor-900 outline-none px-2 sm:mx-3 sm:w-[92%]"
               ></textarea>
 
               {/*  divider*/}
               <hr className="border-borderOutlineColor-900" />
-              <h1 className="font-bold mx-5 my-5">Privacy Policy</h1>
+              <h1 className="font-bold mx-5 my-5 sm:my-1">Privacy Policy</h1>
 
-              <div className="flex pl-5 mt-4 gap-2">
-                <h4 className="text-blue-300 w-[25%] font-medium text-sm py-3">
+              <div className="flex pl-5 mt-4 gap-2 sm:flex-col">
+                <h4 className="text-blue-300 w-[25%] font-medium text-sm py-3 sm:w-[100%]">
                   Upload Document
                 </h4>
 
-                <div className="flex w-[71%] items-center border rounded-lg py-1 px-1 border-borderOutlineColor-900">
+                <div className="flex w-[71%] items-center border rounded-lg py-1 px-1 border-borderOutlineColor-900 sm:w-[96%] sm:flex-col sm:gap-y-1">
                   <label
                     htmlFor="file-upload-privacy"
-                    className="flex items-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white"
+                    className="flex items-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
                   >
                     <FiUpload className="font-semibold mr-1 text-sm" />
                     Upload
@@ -237,7 +240,7 @@ export default function SystemSetting() {
                     onChange={handleFileChange("privacyDocumentFileDocument")}
                   />
                   {files.privacyDocumentFileDocument && (
-                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2">
+                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2 sm:w-[100%] sm:ml-0">
                       <span className="text-sm pl-2">
                         {files.privacyDocumentFileDocument.name}
                       </span>
@@ -254,15 +257,15 @@ export default function SystemSetting() {
                 </div>
               </div>
 
-              <h2 className="mx-5 text-sm mt-2 text-secondary">Text</h2>
+              <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3">Text</h2>
               <textarea
                 name="text"
-                className="border mx-5 my-2 w-[94%] resize-none h-40 rounded-md border-borderOutlineColor-900 outline-none px-2"
+                className="border mx-5 my-2 w-[94%] resize-none h-40 rounded-md border-borderOutlineColor-900 outline-none px-2 sm:mx-3 sm:w-[92%]"
               ></textarea>
             </div>
           </div>
           {/* bottom btn section */}
-          <div className="flex justify-end mr-9 gap-2 mb-4 ">
+          <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5">
             <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none w-[120px]">
               Save
             </button>
@@ -270,6 +273,11 @@ export default function SystemSetting() {
               cancel
             </button>
           </div>
+
+
+
+
+        </div>
         </div>
       </div>
     </>

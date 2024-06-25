@@ -9,7 +9,7 @@ export default function NavBar() {
   const location = useLocation();
   return (<>
 
-    <nav className="flex justify-center bg-blue-900 h-[43.24vw] w-[80px] sm:h-[100vh]  ">
+    <nav className="flex justify-center bg-blue-900 h-[43.24vw] w-[80px] sm:h-[100vh]  sm:w-[10%]">
       <ul className="mt-8 w-full">
         <Link to="/" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm">
           <li
