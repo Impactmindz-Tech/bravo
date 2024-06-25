@@ -7,9 +7,9 @@ import { VscSettingsGear } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
 export default function NavBar() {
   const location = useLocation();
+  return (<>
 
-  return (
-    <nav className="flex justify-center bg-blue-900 h-[43.24vw] w-[80px]">
+    <nav className="flex justify-center bg-blue-900 h-[43.24vw] w-[80px] sm:h-[100vh] md:block sm:hidden">
       <ul className="mt-8 w-full">
         <Link to="/" className="text-gray-950 text-2xl hover:text-gray-950">
           <li
@@ -79,5 +79,6 @@ export default function NavBar() {
         </Link>
       </ul>
     </nav>
+    </>
   );
 }
