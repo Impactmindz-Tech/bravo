@@ -60,7 +60,7 @@ export default function UserManagement() {
                 className="bg-blue-900 text-white flex justify-center  hover:border-[#ccc] sm:text-sm md:text-xl "
                 onClick={openModal}
               >
-                <i className="my-0.4 pr-2 text-2xl sm:text-lg sm:my-0  md:text-md md:my- ">
+                <i className="my-0.4 pr-2 text-2xl sm:text-lg sm:my-0  md:text-md md:my-0 ">
                   <IoMdAddCircleOutline />
                 </i>{" "}
                 Add User
@@ -147,7 +147,7 @@ export default function UserManagement() {
                       </div>
                     </td>
                     <td className="px-4 py-2 sm:px-0 sm:py-0 md:px-0 md:py-0 ">
-                      <div className="flex justify-center gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center">
+                      <div className="flex justify-center gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center ">
                         <img
                           src={editIcon}
                           alt="edit icon"

@@ -17,8 +17,8 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
-      <div className="h-[600px] overflow-y-auto mt-6 sm:h-[80vh] mainFormSection">
-        <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden sm:w-[90vw]">
+      <div className="h-[600px] overflow-y-auto mt-6 sm:h-[80vh] md:h-auto mainFormSection">
+        <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw]">
           <div className="relative bg-white  rounded-lg shadow-md pb-2">
             {/* top model section */}
             <div className="flex justify-between items-center  bg-blue-900 py-2">
