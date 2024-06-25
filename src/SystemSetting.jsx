@@ -37,7 +37,7 @@ export default function SystemSetting() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw] sm:m-0 md:m-0 sm:mx-2">
+        <div className="w-[90%] m-auto h-[41vw] sm:m-0 md:m-0 sm:mx-2 my-0">
 
         <div className="sm:max-h-[90vh]  sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 md:max-h-[90vh]  md:overflow-hidden md:overflow-y-auto">
 
