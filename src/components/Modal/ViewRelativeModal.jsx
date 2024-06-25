@@ -69,14 +69,14 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
                         <td className=" py-2 text-left px-4 sm:max-w-[200px] break-words">
                           ded.holt@exaple.com
                         </td>
-                        <td className=" px-4 py-2 sm:max-w-[200px] ">(406) 555-0120</td>
+                        <td className=" px-4 py-2 sm:max-w-[200px] ">
+                          (406) 555-0120
+                        </td>
                         <td className=" px-4 py-2 ">6391 Elgin st c....</td>
                         <td className=" px-4 py-2 ">3467895768</td>
 
                         <td className=" px-4 py-2 capitalize">father</td>
                       </tr>
-
-                 
                     </tbody>
                   </table>
                 </div>
