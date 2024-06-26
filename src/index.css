@@ -165,8 +165,8 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
     justify-content: center;
   }
   /* calendar table */
-  .fc-dayGridMonth-view.fc-view.fc-daygrid {
-    height: 60vw;
+  .fc-dayGridMonth-view.fc-view.fc-daygrid ,.fc .fc-view-harness-active > .fc-view{
+    height: 80vw;
     font-size: 3vw;
   }
 }
