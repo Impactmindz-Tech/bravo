@@ -85,7 +85,7 @@ td a {
 }
 
 /* current date active  */
-td.fc-day.fc-day-mon.fc-day-today.fc-daygrid-day {
+.fc-day-today {
   background-color: #2a2f3e !important;
 }
 
@@ -133,8 +133,40 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
   color: white !important;
 }
 
-
-.boxShadow{
-
+.boxShadow {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+@media screen and (max-width: 639px) {
+  /* top container */
+  .fc .fc-toolbar {
+    display: block;
+  }
+  /* <,> today container */
+  .fc-toolbar-chunk:first-child {
+    width: 100%;
+    display: flex;
+    font-size: 3vw;
+    margin: 5% 0;
+    justify-content: space-between;
+  }
+  /* current month  */
+  .fc .fc-toolbar-title {
+    display: flex;
+    font-size: 4vw;
+    justify-content: center;
+  }
+  /* month , week,day,list container */
+  .fc-toolbar-chunk:last-child {
+    display: flex;
+    width: 100%;
+    margin-top: 5%;
+    font-size: 3vw;
+    justify-content: center;
+  }
+  /* calendar table */
+  .fc-dayGridMonth-view.fc-view.fc-daygrid {
+    height: 60vw;
+    font-size: 3vw;
+  }
 }

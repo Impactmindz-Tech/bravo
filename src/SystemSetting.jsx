@@ -37,21 +37,21 @@ export default function SystemSetting() {
         <NavBar />
 
         {/* right side section */}
-        <div className="w-[90%] m-auto h-[41vw]  sm:px-2 md:px-2  lg:px-2 mt-0">
+        <div className="w-[90%] m-auto h-[41vw]  sm:px-2 md:px-2  lg:px-2 mt-0 ">
 
-        <div className="sm:max-h-[90vh]  sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 md:max-h-[90vh]  md:overflow-hidden md:overflow-y-auto">
+        <div className="sm:max-h-[90vh] sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 md:max-h-[90vh]  md:overflow-hidden md:overflow-y-auto ">
 
           {/* top title */}
-          <div className="flex justify-between px-1  pt-4">
+          <div className="flex justify-between px-1  pt-4 ">
             <h1 className="text-3xl font-bold sm:text-sm sm:pl-3 md:text-2xl md:pl-3 lg:text-3xl">System Setting</h1>
           </div>
 
           <div className="flex my-6 justify-between sm:flex-col sm:mx-2 md:flex-col md:mx-2 md:gap-y-4 sm:gap-1">
             {/* left section */}
-            <div className="w-[60%] md:w-[100%] boxShadow rounded-2xl sm:w-[98%] ">
+            <div className="w-[60%] md:w-[100%] boxShadow rounded-2xl sm:w-[100%] sm:px-2  ">
               {/* category */}
-              <h1 className="my-2 mx-5 text-blue-300 sm:text-sm sm:mx-2 md:mx-2 lg:text-xl">Category</h1>
-              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[96%] sm:py-1 md:w-[96%] md:py-1 lg:w-[94%] lg:py-1">
+              <h1 className="my-2 mx-5 text-blue-300 sm:text-sm sm:mx-2 md:mx-5 lg:text-xl">Category</h1>
+              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[98%] sm:py-1 md:w-[94%] md:py-1 lg:w-[94%] lg:py-1 ">
 
 
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-start mb-1 gap-2 pr-2 ">
@@ -73,7 +73,7 @@ export default function SystemSetting() {
               {/* relation */}
 
               <h1 className="my-3 mx-5 text-blue-300 sm:mx-2 lg:text-xl">Relation</h1>
-              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md lg:py-1 py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[96%] sm:py-1 lg:w-[94%]">
+              <div className="flex flex-wrap border gap-3 w-[95%] rounded-md lg:py-1 py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[98%] sm:py-1 lg:w-[94%]">
                 <li className="bg-[#BCC1D0]  rounded-full  text-sm flex justify-center py-1 gap-2 px-5">
                   <span className="lg:text-md">Father</span>
                   <i className="text-lg text-black">
@@ -84,12 +84,12 @@ export default function SystemSetting() {
               </div>
 
               {/* admin management */}
-              <div className="flex ml-5 mt-10 gap-3 sm:flex-col sm:mt-0 sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 ">
+              <div className="flex ml-5 mt-10 gap-3 sm:flex-col sm:mt-0 sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 sm:w-[100%]">
                 <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:text-sm sm:py-0 sm:pt-4 sm:ml-0 lg:w-[100%] lg:text-xl lg:py-0 lg:pt-3"   >
                   Admin Management
                 </span>
 
-                <div className="font-normal text-secondary lg:w-[48%]">
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
                   <h1 className="sm:text-sm">Level 1</h1>
                   <input
                     type="text"
@@ -98,7 +98,7 @@ export default function SystemSetting() {
                   />
                 </div>
 
-                <div className="font-normal text-secondary lg:w-[48%]">
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
                   <h1 className="sm:text-sm">Level 2</h1>
                   <input
                     type="text"
@@ -109,12 +109,12 @@ export default function SystemSetting() {
               </div>
 
               {/* user management */}
-              <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1">
+              <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 sm:w-[100%]">
                 <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:py-1 lg:w-[100%] lg:py-0 lg:pt-3">
                   User Management
                 </span>
 
-                <div className="font-normal text-secondary lg:w-[48%]">
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
                   <h1 className="sm:text-sm">Level 1</h1>
                   <input
                     type="text"
@@ -123,7 +123,7 @@ export default function SystemSetting() {
                   />
                 </div>
 
-                <div className="font-normal text-secondary lg:w-[48%]">
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
                   <h1 className="sm:text-sm">Level 2</h1>
                   <input
                     type="text"
@@ -175,12 +175,12 @@ export default function SystemSetting() {
             <div className="w-[38%]  md:w-[100%] boxShadow rounded-2xl sm:w-[98%] sm:mt-5">
               <h1 className="font-bold mx-5 my-5 sm:text-sm tg:text-xl">About Us</h1>
 
-              <div className="flex pl-5 mt-4 gap-2 sm:flex-col sm:gap-y-1 sm:pl-3 lg:flex-wrap">
-                <h4 className="text-blue-300 w-[25%] font-medium text-sm py-3 sm:py-1  sm:w-[96%] sm:text-sm lg:w-[96%] lg:py-0">
+              <div className="flex flex-wrap pl-5 mt-4 gap-2 sm:flex-col sm:gap-y-1 sm:pl-3">
+                <h4 className="text-blue-300 w-[25%] font-medium text-sm py-3 sm:py-1  sm:w-[96%] sm:text-sm lg:w-[96%] lg:py-0 xl:w-[96%]">
                   Upload Document
                 </h4>
 
-                <div className="flex w-[71%] items-center border rounded-lg py-1 px-1 border-borderOutlineColor-900 sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] lg:py-1">
+                <div className="flex w-[71%] items-center border rounded-lg py-1 px-1 border-borderOutlineColor-900 sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] lg:py-1 xl:w-[96%]">
                   <label
                     htmlFor="file-upload-document"
                     className="flex items-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
@@ -213,19 +213,19 @@ export default function SystemSetting() {
               <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3 ">Text</h2>
               <textarea
                 name="text"
-                className="border mx-5 my-2 w-[94%] resize-none h-40 rounded-md border-borderOutlineColor-900 outline-none px-2 sm:mx-3 sm:w-[92%] lg:w-[90%] lg:max-h-[100px]"
+                className="border mx-5 my-2 w-[94%] resize-none h-[100px] rounded-md border-borderOutlineColor-900 outline-none px-2 sm:mx-3 sm:w-[92%] lg:w-[90%] lg:max-h-[100px] xl:w-[90%] xl:max-h-[100px] md:w-[92%]"
               ></textarea>
 
               {/*  divider*/}
               <hr className="border-borderOutlineColor-900" />
-              <h1 className="font-bold mx-5 my-5 sm:my-1 lg:my-2">Privacy Policy</h1>
+              <h1 className="font-bold mx-5 my-5 sm:my-1 lg:my-2 xl:my-0 xl:mt-2">Privacy Policy</h1>
 
-              <div className="flex pl-5 mt-4 gap-2 sm:flex-col lg:flex-wrap lg:mt-2">
-                <h4 className="text-blue-300 w-[25%] lg:w-[100%] font-medium text-sm py-3 sm:w-[100%]">
+              <div className="flex pl-5 mt-4 gap-2 sm:flex-col flex-wrap lg:mt-2 xl:mt-1">
+                <h4 className="text-blue-300 w-[25%] lg:w-[100%] font-medium text-sm py-3 sm:w-[100%] xl:w-[100%] xl:mt-0">
                   Upload Document
                 </h4>
 
-                <div className="flex w-[71%] items-center border rounded-lg py-1 px-1 border-borderOutlineColor-900 sm:w-[96%] sm:flex-col sm:gap-y-1">
+                <div className="flex w-[71%] items-center border rounded-lg py-1 px-1 border-borderOutlineColor-900 sm:w-[96%] sm:flex-col sm:gap-y-1 xl:w-[96%]">
                   <label
                     htmlFor="file-upload-privacy"
                     className="flex items-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
@@ -260,7 +260,7 @@ export default function SystemSetting() {
               <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3">Text</h2>
               <textarea
                 name="text"
-                className="border mx-5 my-2 w-[94%] resize-none h-40 rounded-md border-borderOutlineColor-900 outline-none px-2 sm:mx-3 sm:w-[92%]  lg:w-[90%] lg:max-h-[100px]"
+                className="border mx-5 my-2 w-[94%] resize-none h-[100px] rounded-md border-borderOutlineColor-900 outline-none px-2 sm:mx-3 sm:w-[92%]  lg:w-[90%] lg:max-h-[100px] xl:w-[90%] xl:max-h-[100px] md:w-[92%]"
               ></textarea>
             </div>
           </div>

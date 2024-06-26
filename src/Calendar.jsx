@@ -6,7 +6,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState } from "react";
-
+// calendar website
+// https://fullcalendar.io/
 function Calendar() {
   const [eventData, setEventData] = useState([
     {
@@ -41,12 +42,12 @@ function Calendar() {
       <Header />
 
       {/* menu section */}
-      <div className="flex justify-start ">
+      <div className="flex justify-start">
         {/* left nav bar */}
         <NavBar />
 
         {/* right side section */}
-        <div className="flex justify-center mx-4 w-[85vw] my-5 ml-9 sm:h-[80vh] sm:w-[90%] sm:m-0">
+        <div className="flex justify-center w-[85vw] mt-8  sm:w-[90%] sm:m-0 h-[90vh] mx-auto sm:h-auto">
           <FullCalendar
             plugins={[
               dayGridPlugin,
@@ -64,7 +65,7 @@ function Calendar() {
             // dateClick={(info) => alert('Date: ' + info.dateStr)}
             dateClick={handleDateClick}
             eventContent={(eventInfo) => (
-              <div className=" p-1 px-2 rounded-md text-sm">
+              <div className="p-1 px-2 rounded-md text-sm">
                 <b>{eventInfo.timeText}</b>
                 <i>{eventInfo.event.title}</i>
               </div>
