@@ -7,6 +7,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
@@ -16,6 +17,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -31,28 +33,14 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-td,
-th {
-  border-right: 1px solid #9f9f9f;
-}
-td:last-child,
-th:last-child {
-  border: none;
-}
-tr {
-  border-bottom: 1px solid#9f9f9f;
-}
-
-tr {
-  border-bottom: 1px solid rgb(209, 209, 209);
 }
 
 .mainFormSection::-webkit-scrollbar {
@@ -80,10 +68,6 @@ a.fc-col-header-cell-cushion {
   color: #2a2f3e;
 }
 
-td a {
-  color: #686b76 !important;
-}
-
 /* current date active  */
 .fc-day-today {
   background-color: #2a2f3e !important;
@@ -98,6 +82,7 @@ button.fc-listWeek-button.fc-button.fc-button-primary {
   box-shadow: 3px 0px 11px 4px rgb(241, 241, 241);
   border-bottom-right-radius: 60px;
 }
+
 button.fc-prev-button.fc-button.fc-button-primary,
 button.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
   background-color: rgb(255, 255, 255);
@@ -112,6 +97,7 @@ button.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
   background-color: #686b76 !important;
   color: white !important;
 }
+
 button.fc-timeGridWeek-button.fc-button.fc-button-primary,
 button.fc-timeGridDay-button.fc-button.fc-button-primary {
   background-color: rgb(255, 255, 255);
@@ -138,10 +124,12 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
 }
 
 @media screen and (max-width: 639px) {
+
   /* top container */
   .fc .fc-toolbar {
     display: block;
   }
+
   /* <,> today container */
   .fc-toolbar-chunk:first-child {
     width: 100%;
@@ -150,12 +138,14 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
     margin: 5% 0;
     justify-content: space-between;
   }
+
   /* current month  */
   .fc .fc-toolbar-title {
     display: flex;
     font-size: 4vw;
     justify-content: center;
   }
+
   /* month , week,day,list container */
   .fc-toolbar-chunk:last-child {
     display: flex;
@@ -164,10 +154,25 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
     font-size: 3vw;
     justify-content: center;
   }
+
   /* calendar table */
   .fc-dayGridMonth-view.fc-view.fc-daygrid,
-  .fc .fc-view-harness-active > .fc-view {
+  .fc .fc-view-harness-active>.fc-view {
     height: 80vw;
     font-size: 3vw;
   }
+}
+
+
+table thead tr th {
+  padding: 25px 20px;
+  border-bottom: 1px solid #ccc;
+}
+table tbody tr td {
+  padding: 25px 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+td a {
+  color: #686b76 !important;
 }

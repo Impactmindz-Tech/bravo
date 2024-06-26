@@ -2,10 +2,10 @@ import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup";
-import { profileValidation } from "./utils/validation/FormValidation";
-import { LoginApi } from "./utils/service/AuthService";
 import { useNavigate } from "react-router-dom";
-import { setLocalStorage } from "./utils/LocalStorageUtills";
+import { profileValidation } from "../../utils/validation/FormValidation";
+import { LoginApi } from "../../utils/service/AuthService";
+import { setLocalStorage } from "../../utils/LocalStorageUtills";
 
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -19,7 +19,7 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const responce = await LoginApi(data)
+      const responce = await  LoginApi(data)
       if (responce?.isSuccess) {
         setLocalStorage("token", responce?.token)
         console.log(responce)

@@ -1,80 +1,36 @@
 import { CiUser } from "react-icons/ci";
 import { CiHome } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { SlCalender } from "react-icons/sl";
 import { GrGroup } from "react-icons/gr";
 import { VscSettingsGear } from "react-icons/vsc";
-import { useLocation } from "react-router-dom";
-export default function NavBar() {
-  const location = useLocation();
-  return (<>
 
-    <nav className="flex justify-center bg-blue-900 h-screen w-[80px] sm:h-[100vh]  sm:w-[10%] md:h-[100vh] md:w-[10%] ">
+
+const NavBar = () => {
+  const navLinks = [
+    { to: "/dashboard", label: "Dashboard", icon: <CiHome /> },
+    { to: "/adminmanagement", label: "Admin Management", icon: <CiUser /> },
+    { to: "/groupmanagement", label: "Group Management", icon: <GrGroup /> },
+    { to: "/calender", label: "Calender", icon: <SlCalender /> },
+    { to: "/settings", label: "Settings", icon: <VscSettingsGear /> },
+  ];
+  return (
+    <nav className="flex justify-center ">
       <ul className="mt-8 w-full">
-        <Link to="/" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl lg:text-3xl">
-          <li
-            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/" ? "bg-white text-black" : "text-white"
-              }`}
-          >
-            <CiHome />
-          </li>
-        </Link>
-
-        <Link
-          to="/adminmanagement"
-          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl lg:text-3xl"
-        >
-          <li
-            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/adminmanagement"
-              ? "bg-white text-black"
-              : "text-white"
-              }`}
-          >
-            <CiUser />
-          </li>
-        </Link>
-
-        <Link
-          to="/groupmanagement"
-          className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl lg:text-3xl"
-        >
-          <li
-            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/groupmanagement"
-              ? "bg-white text-black"
-              : "text-white"
-              }`}
-          >
-            <GrGroup />
-          </li>
-        </Link>
-
-        <Link to="/calender" className="text-gray-950 text-2xl hover:text-gray-950 sm:text-sm md:text-2xl lg:text-3xl">
-          <li
-            className={
-              location.pathname == "/calender"
-                ? "bg-white w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer text-black hover:text-black"
-                : "w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer text-white hover:text-black"
-            }
-          >
-            <SlCalender />
-          </li>
-        </Link>
-
-        <Link
-          to="/systemsetting"
-          className="text-gray-950 text-2xl hover:text-gray-950 lg:text-3xl sm:text-sm md:text-2xl"
-        >
-          <li
-            className={`w-full  py-3 flex justify-center mb-2 hover:bg-white  cursor-pointer  hover:text-black ${location.pathname === "/systemsetting"
-              ? "bg-white text-black"
-              : "text-white"
-              }`}
-          >
-            <VscSettingsGear />
-          </li>
-        </Link>
+        {
+          navLinks?.map((item, index) => {
+            return (
+              <li key={index} className="cursor-pointer hover:text-black" >
+                <NavLink to={item.to} className={({ isActive }) => `w-full py-3 hover:bg-white hover:text-blue-900 mb-2 flex flex-col items-center text-xl ${isActive ? "bg-white text-blue-900" : "text-white"}`}>
+                  {item.icon}
+                </NavLink>
+              </li>
+            )
+          })
+        }
       </ul>
     </nav>
-    </>
-  );
+  )
 }
+
+export default NavBar

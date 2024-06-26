@@ -1,11 +1,11 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import Header from "./components/Header/Header";
-import NavBar from "./components/NavBar/NavBar";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState } from "react";
+import Header from "../../components/Header/Header";
+import NavBar from "../../components/NavBar/NavBar";
 // calendar website
 // https://fullcalendar.io/
 function Calendar() {
@@ -38,16 +38,7 @@ function Calendar() {
   };
   return (
     <>
-      {/* header section */}
-      <Header />
-
-      {/* menu section */}
-      <div className="flex justify-start">
-        {/* left nav bar */}
-        <NavBar />
-
-        {/* right side section */}
-        <div className="flex justify-center w-[85vw] mt-8  sm:w-[90%] sm:m-0 h-[90vh] mx-auto sm:h-auto">
+        <div className="flex justify-center  mt-8  sm:w-[90%] sm:m-0 h-[90vh] mx-auto sm:h-auto">
           <FullCalendar
             plugins={[
               dayGridPlugin,
@@ -72,7 +63,6 @@ function Calendar() {
             )}
           />
         </div>
-      </div>
     </>
   );
 }

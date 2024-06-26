@@ -1,11 +1,35 @@
 import axios from 'axios'
+import { getLocalStorage } from '../LocalStorageUtills'
 
 const axiosInstance = axios.create({
     baseURL: 'https://impactmindz.in/client/artie/bravo/back_end/api',
     // API_VERSION: "/api",
-    headers: {
-        'Content-Type': 'application/json',
-    },
 })
+
+// axiosInstance.interceptors.request.use(
+//     (config) => {
+//         const token = getLocalStorage('token');
+//         if (token) {
+//             config.headers['Authorization'] = token;
+//         }
+//         return config;
+//     },
+//     (error) => {
+//         return Promise.reject(error);
+//     }
+// );
+
+axiosInstance.interceptors.request.use(
+    (config) => {
+      const token = getLocalStorage('token');
+      if (token) {
+        config.headers['Authorization'] = `${token}`; // Typically tokens are passed with 'Bearer ' prefix
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
 
 export default axiosInstance
