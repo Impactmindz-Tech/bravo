@@ -1,39 +1,44 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import UserManagementModalComponent from "../../components/Modal/UserManagementModal";
 import { IoChevronDown } from "react-icons/io5";
-import Header from "../../components/Header/Header";
-import NavBar from "../../components/NavBar/NavBar";
 import { FaEye } from "react-icons/fa";
 import adminUserProfile from "../../assets/images/adminUserProfile.svg";
 import ViewRelativeModal from "../../components/Modal/ViewRelativeModal";
 import editIcon from "../../assets/images/editIcon.svg";
 import deleteIcon from "../../assets/images/deleteIcon.svg";
 import { DashboardApi } from "../../utils/service/DashboardService";
+import { useLoaderData } from "react-router-dom";
+import { setUser } from '../../store/Slice/UserSlice';
 
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const [relativeModal, setRelativeModal] = useState(false);
-
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
   const openRelativeModal = () => setRelativeModal(true);
   const closeRelativeModal = () => setRelativeModal(false);
+  const dispatch = useDispatch();
+  const dataDetails = useSelector((state) => state.user.user)
 
-  const dashboardData = async () => {
+  const fetchDashboardData = async () => {
     try {
-      const responce = await DashboardApi()
-      console.log(responce)
+      const response = await DashboardApi();
+      dispatch(setUser(response));
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      throw new Error('Failed to load dashboard data');
     }
+  };
 
-  }
 
   useEffect(() => {
-    dashboardData()
-  }, [])
+    fetchDashboardData()
+    // dispatch(setUser(userData));
+  }, []);
+
 
   return (
     <>
@@ -66,7 +71,7 @@ export default function Dashboard() {
       </div>
 
 
-      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1" style={{height:"calc(100vh - 205px)"}}>
+      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1" style={{ height: "calc(100vh - 205px)" }}>
         <table className="min-w-full">
           <thead>
             <tr>
@@ -81,61 +86,65 @@ export default function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="text-left">
-                <div className="flex gap-2 ">
-                  <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">
-                    <img
-                      src={adminUserProfile}
-                      alt="user "
-                      className="rounded-full"
-                    />
+            {dataDetails?.data?.map((item, index) => (
+              <tr key={index}>
+                <td className="text-left">
+                  <div className="flex gap-2 ">
+                    <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">
+                      <img
+                        src={adminUserProfile}
+                        alt="user "
+                        className="rounded-full"
+                      />
+                    </div>
+                    <span className="md:text-xl lg:text-2xl">{item.Username}</span>
                   </div>
-                  <span className="md:text-xl lg:text-2xl">Devon Lane </span>
-                </div>
-              </td>
+                </td>
 
                 <td className="text-left">
-                debra.holt@exaple.com
-              </td>
-              <td className="text-left">(406) 555-0120</td>
-              <td className="text-left">3467895768</td>
+                  {item.Email}
+                </td>
+                <td className="text-left">{item.PhoneNumber}</td>
+                <td className="text-left">3467895768</td>
 
-              <td className="text-left">
-                <select
-                  id="role"
-                  name="role"
-                  className="py-1 px-6 rounded-full bg-[#E2E9D7]  focus:outline-none  text-[#036507] focus:border-none "
-                >
-                  <option value="admin">Active</option>
-                  <option value="user">Inactive</option>
-                </select>
-              </td>
-              <td className="text-left">student</td>
-              <td className="text-left">
-                <div
-                  className="flex justify-center text-[#065813] cursor-pointer"
-                  onClick={openRelativeModal}
-                >
-                  <FaEye />
-                </div>
-              </td>
-              <td className="text-left">
-                <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
-                  <img
-                    src={editIcon}
-                    alt="edit icon"
-                    className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
-                  />
+                <td className="text-left">
+                  {item.Status}
+                  {/* <select
+                    id="role"
+                    name="role"
+                    className="py-1 px-6 rounded-full bg-[#E2E9D7]  focus:outline-none  text-[#036507] focus:border-none "
+                  >
+                    <option value="admin">Active</option>
+                    <option value="user">Inactive</option>
+                  </select> */}
+                </td>
+                <td className="text-left">student</td>
+                <td className="text-left">
+                  <div
+                    className="flex justify-center text-[#065813] cursor-pointer"
+                    onClick={openRelativeModal}
+                  >
+                    <FaEye />
+                  </div>
+                </td>
+                <td className="text-left">
+                  <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
+                    <img
+                      src={editIcon}
+                      alt="edit icon"
+                      className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
+                    />
 
-                  <img
-                    src={deleteIcon}
-                    alt="edit icon"
-                    className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0"
-                  />
-                </div>
-              </td>
-            </tr>
+                    <img
+                      src={deleteIcon}
+                      alt="edit icon"
+                      className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0"
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))
+            }
           </tbody>
         </table>
       </div>
