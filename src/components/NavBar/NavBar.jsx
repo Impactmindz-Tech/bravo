@@ -8,11 +8,11 @@ import { VscSettingsGear } from "react-icons/vsc";
 
 const NavBar = () => {
   const navLinks = [
-    { to: "/dashboard", label: "Dashboard", icon: <CiHome /> },
-    { to: "/adminmanagement", label: "Admin Management", icon: <CiUser /> },
-    { to: "/groupmanagement", label: "Group Management", icon: <GrGroup /> },
-    { to: "/calender", label: "Calender", icon: <SlCalender /> },
-    { to: "/settings", label: "Settings", icon: <VscSettingsGear /> },
+    { to: "/admin/dashboard", label: "Dashboard", icon: <CiHome /> },
+    { to: "/admin/adminmanagement", label: "Admin Management", icon: <CiUser /> },
+    { to: "/admin/groupmanagement", label: "Group Management", icon: <GrGroup /> },
+    { to: "/admin/calender", label: "Calender", icon: <SlCalender /> },
+    { to: "/admin/settings", label: "Settings", icon: <VscSettingsGear /> },
   ];
   return (
     <nav className="flex justify-center ">
