@@ -82,7 +82,7 @@ export default function UserManagement() {
                     <th className="text-left sticky top-0 bg-white border-gray-200  px-4 md:text-xl lg:text-2xl">
                       Email Id
                     </th>
-                    <th className=" text-center md:text-xl sticky top-0 bg-white border-gray-200 md:px-2 lg:text-2xl lg:px-4">
+                    <th className=" text-center md:text-xl sticky top-0 bg-white border-gray-200  lg:text-2xl px-2">
                       Contact No
                     </th>
                     <th className=" text-center md:text-xl sticky top-0 bg-white border-gray-200 w-[150px] px-9 sm:w-auto sm:px-3 lg:text-2xl">
@@ -91,7 +91,7 @@ export default function UserManagement() {
                     <th className="text-center  md:text-xl sticky top-0 bg-white lg:text-2xl">
                       Status
                     </th>
-                    <th className="text-center  md:text-xl sticky top-0 bg-white lg:text-2xl  lg:px-4">
+                    <th className="text-center  md:text-xl sticky top-0 bg-white lg:text-2xl px-2">
                       Relation
                     </th>
                     <th className="px-2 text-center  md:text-xl sticky top-0 bg-white lg:text-2xl" >

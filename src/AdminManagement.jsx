@@ -78,10 +78,10 @@ export default function AdminManagement() {
                     <th className="text-left   sticky top-0 bg-white border-gray-200  px-4 md:text-xl lg:text-2xl">
                       Email Id
                     </th>
-                    <th className=" text-center   md:text-xl sticky top-0 bg-white border-gray-200 md:px-3 lg:text-2xl">
+                    <th className=" text-center   md:text-xl sticky top-0 bg-white border-gray-200 px-2 lg:text-2xl">
                       Contact No
                     </th>
-                    <th className=" text-center md:text-xl sticky top-0 bg-white border-gray-200 w-[150px] px-9 lg:text-2xl">
+                    <th className=" text-center md:text-xl sticky top-0 bg-white border-gray-200 w-[150px] px-2 lg:text-2xl">
                       Authentication Code
                     </th>
                     <th className="text-center  md:text-xl sticky top-0 bg-white">
