@@ -27,7 +27,9 @@ export default function GroupManagement() {
         <div className="w-[90%] m-auto h-[41vw]  sm:px-2 md:px-2  lg:px-2 mt-0">
           {/* top title */}
           <div className="flex justify-between px-1 mt-12 sm:mt-5 sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5 md:mt-5">
-            <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">Group Management</h1>
+            <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">
+              Group Management
+            </h1>
             {/* search bar */}
             <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3">
               <div className="flex justify-center items-center  border border-borderOutlineColor-900 rounded-md bg-white text-[#3c3c3c] lg:w-[68%] md:w-[100%] sm:w-[100%]">
@@ -41,15 +43,12 @@ export default function GroupManagement() {
                   <IoIosSearch />
                 </i>
               </div>
-
               {/* create group btn */}
               <button className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3 lg:text-2xl">
                 <i className="my-0.4 pr-2 text-2xl sm:my-1 md:text-md md:my-1 sm:text-sm">
                   <IoMdAddCircleOutline />
                 </i>
-                <span className="sm:text-sm">
-                Create Group
-                </span>
+                <span className="sm:text-sm">Create Group</span>
               </button>
             </div>
           </div>
@@ -71,7 +70,7 @@ export default function GroupManagement() {
                     <th className=" text-center  max-w-[450px] sticky top-0 bg-white border-gray-200 md:text-xl lg:text-2xl">
                       Members Name
                     </th>
-                  
+
                     <th className="px-2 text-center  sticky top-0 bg-white md:text-xl lg:text-2xl">
                       Action
                     </th>
@@ -96,21 +95,17 @@ export default function GroupManagement() {
                     </td>
 
                     {/* admin email id */}
-                    <td className="py-2 text-center px-4 lg:text-2xl">
-                      50
-                    </td>
-                   
+                    <td className="py-2 text-center px-4 lg:text-2xl">50</td>
+
                     <td className="px-4 py-4">
                       <div className="flex gap-2 justify-center">
                         <div className="flex justify-center w-[200px] lg:text-2xl">
-                        Jaini shah, Dipal Shah, Kinjal Bholi, Kinal Patel,Yash Patel, vibha shah...
-                      </div>
+                          Jaini shah, Dipal Shah, Kinjal Bholi, Kinal Patel,Yash
+                          Patel, vibha shah...
+                        </div>
                       </div>
                     </td>
-                    
 
-                    
-                    
                     <td className="px-4 py-2 sm:px-0 sm:py-0 lg:px-0 lg:py-0">
                       <div className="flex justify-center gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center lg:flex-col lg:items-center">
                         <img
