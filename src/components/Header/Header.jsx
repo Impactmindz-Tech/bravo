@@ -21,7 +21,7 @@ export default function Header() {
         <span className="font-semibold pl-1 py-3 cursor-pointer sm:py-[4vw] sm:font-medium md:text-md lg:text-xl sm:text-sm">
           My Account
         </span>
-        <i className="mt-4 cursor-pointer sm:mt-5 md:mt-5">
+        <i className="mt-4 cursor-pointer sm:mt-[4.5vw] md:mt-5">
           <IoIosArrowDown />
         </i>
       </div>

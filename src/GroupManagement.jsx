@@ -44,11 +44,10 @@ export default function GroupManagement() {
 
               {/* create group btn */}
               <button className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3 lg:text-2xl">
-                <i className="my-0.4 pr-2 text-2xl sm:text-md sm:my-0 md:text-md md:my-1">
+                <i className="my-0.4 pr-2 text-2xl sm:my-1 md:text-md md:my-1 sm:text-sm">
                   <IoMdAddCircleOutline />
-                </i>{" "}
+                </i>
                 <span className="sm:text-sm">
-
                 Create Group
                 </span>
               </button>
