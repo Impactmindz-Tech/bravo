@@ -2,10 +2,14 @@ import { FiUpload } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useState } from "react";
+import { Modal } from "@mui/material";
 // eslint-disable-next-line react/prop-types
-const GroupManagementModel = ({ isOpen, onClose }) => {
+const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
+
   const [selectedFile, setSelectedFile] = useState(null);
-  if (!isOpen) return null;
+
+
+ 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -13,9 +17,14 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
   const handleRemoveFile = () => {
     setSelectedFile(null);
   };
+
+
+ 
+
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center mainFormSection overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
-      <div className="relative w-full  mx-auto rounded-lg sm:h-[60vh] max-w-[45vw] overflow-hidden  2xl:max-w-[70vw] 3xl:max-w-[65vw]   2xl:h-[70vh]  2xl:mt-[10vw]">
+    <Modal open={groupModalOpen} onClose={()=>setGroupModalOpen(false)}>
+      <div   className="relative w-full  mx-auto rounded-lg sm:h-[60vh] max-w-[85vw] overflow-hidden  2xl:max-w-[70vw] 3xl:max-w-[65vw]  4xl:max-w-[65vw]  2xl:h-[70vh]  2xl:mt-[10vw]">
         <div className="relative bg-white  rounded-lg shadow-md pb-4">
           {/* top model section */}
           <div className="flex justify-between items-center mb-4 bg-blue-900 py-2">
@@ -23,7 +32,7 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
               Edit Group
             </h2>
             <button
-              onClick={onClose}
+              onClick={()=>setGroupModalOpen(false)}
               className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none"
             >
               <IoClose />
@@ -105,7 +114,7 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
               Submit
             </button>
             <button
-              onClick={onClose}
+              onClick={()=>setGroupModalOpen(false)}
               className="border border-black bg-white  text-black font-semibold rounded-lg focus:outline-none hover:border-black"
             >
               cancel
@@ -113,7 +122,8 @@ const GroupManagementModel = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+        </Modal>
+    // </div>
   );
 };
 

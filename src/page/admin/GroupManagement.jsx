@@ -5,13 +5,9 @@ import editIcon from "../../assets/images/editIcon.svg";
 import deleteIcon from "../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import ModalComponent from "../../components/Modal/GroupManagementModal";
-import NavBar from "../../components/NavBar/NavBar";
-import Header from "../../components/Header/Header";
-export default function GroupManagement() {
-  const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+export default function GroupManagement() {
+  const [groupModalOpen, setGroupModalOpen] = useState(false);
 
   return (
     <>
@@ -45,7 +41,10 @@ export default function GroupManagement() {
 
       {/* table section */}
 
-      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1" style={{ height: "calc(100vh - 205px)" }}>
+      <div
+        className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1"
+        style={{ height: "calc(100vh - 205px)" }}
+      >
         <table className="min-w-full">
           <thead>
             <tr>
@@ -70,13 +69,19 @@ export default function GroupManagement() {
                 </div>
               </td>
 
+              <td className="text-left">debra.holt@exaple.com</td>
               <td className="text-left">
-                debra.holt@exaple.com
+                Jaini Shah, Dipal Shah, kinjal Bhoil, Kinal Patel, Yash Patel,
+                vibha shah...
               </td>
-              <td className="text-left">Jaini Shah, Dipal Shah, kinjal Bhoil, Kinal Patel, Yash Patel, vibha shah...</td>
               <td className="text-left">
                 <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
-                  <img onClick={openModal} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0" />
+                  <img
+                    onClick={() => setGroupModalOpen(true)}
+                    src={editIcon}
+                    alt="edit icon"
+                    className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
+                  />
 
                   <img
                     src={deleteIcon}
@@ -92,7 +97,10 @@ export default function GroupManagement() {
 
       {/* popup model */}
       <div className="flex items-center">
-        <ModalComponent isOpen={isOpen} onClose={closeModal} />
+        <ModalComponent
+          groupModalOpen={groupModalOpen}
+          setGroupModalOpen={setGroupModalOpen}
+        />
       </div>
     </>
   );

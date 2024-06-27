@@ -6,10 +6,7 @@ import editIcon from "../../assets/images/editIcon.svg";
 import deleteIcon from "../../assets/images/deleteIcon.svg";
 import AdminManagementModalComponent from "../../components/Modal/UserManagementModal";
 export default function AdminManagement() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const [addAdminModalOpen, setAddAdminModalOpen] = useState(false);
 
   return (
     <>
@@ -40,7 +37,7 @@ export default function AdminManagement() {
           {/* add admin btn */}
           <button
             className="bg-blue-900 text-white flex justify-center  hover:border-[#ccc] sm:text-sm md:text-xl"
-            onClick={openModal}
+            onClick={() => setAddAdminModalOpen(true)}
           >
             <i className="my-0.4 pr-2 text-2xl sm:text-sm sm:my-1  md:text-md md:my-0 lg:my-2">
               <IoMdAddCircleOutline />
@@ -90,7 +87,7 @@ export default function AdminManagement() {
               <td className="text-left">
                 <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
                   <img
-                    onClick={() => setIsOpen(true)}
+                    // onClick={() => setIsOpen(true)}
                     src={editIcon}
                     alt="edit icon"
                     className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
@@ -110,7 +107,10 @@ export default function AdminManagement() {
 
       {/* popup model */}
       <div className="flex items-center ">
-        <AdminManagementModalComponent isOpen={isOpen} onClose={closeModal} />
+        <AdminManagementModalComponent
+          addAdminModalOpen={addAdminModalOpen}
+          setAddAdminModalOpen={setAddAdminModalOpen}
+        />
       </div>
     </>
   );

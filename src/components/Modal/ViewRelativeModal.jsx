@@ -1,11 +1,14 @@
 import { IoMdClose } from "react-icons/io";
+import { Modal } from "@mui/material";
 import adminUserProfile from "../../assets/images/adminUserProfile.svg";
 // eslint-disable-next-line react/prop-types
-const ViewRelativeModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
+const ViewRelativeModal = ({ viewUserModalOpen, setViewUserModalOpen }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
+    <Modal
+      open={viewUserModalOpen}
+      onClose={() => setViewUserModalOpen(false)}
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter   bg-opacity-50"
+    >
       <div className="h-[600px] overflow-y-auto mt-6 mainFormSection sm:mt-1 sm:h-auto md:h-auto lg:h-auto xl:h-auto 2xl:h-auto 3xl:h-auto 4xl:h-auto">
         <div className="relative w-full max-w-5xl mx-auto rounded-lg overflow-hidden sm:w-[98vw] md:w-[98vw] lg:w-[98vw] xl:w-[98vw] 2xl:w-[98vw] 3xl:w-[98vw] 4xl:max-w-[98vw]">
           <div className="relative bg-white  rounded-lg shadow-md pb-2 ">
@@ -15,7 +18,7 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
                 View Relative
               </h2>
               <button
-                onClick={onClose}
+                onClick={() => setViewUserModalOpen(false)}
                 className="text-red text-white  hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg"
               >
                 <IoMdClose />
@@ -85,7 +88,7 @@ const ViewRelativeModal = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

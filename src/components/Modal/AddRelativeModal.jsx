@@ -2,20 +2,30 @@ import { IoMdClose } from "react-icons/io";
 import { MdAddCircleOutline } from "react-icons/md";
 import { BiSolidEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-// eslint-disable-next-line react/prop-types
-const AddRelativeModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
+import { Modal } from "@mui/material";
 
-  // add more relation on btn click
-  const addRelation = () => { };
+// eslint-disable-next-line react/prop-types
+const AddRelativeModal = ({
+  addRelativeModalOpen,
+  setAddRelativeModalOpen,
+}) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter  bg-black bg-opacity-50">
+    <Modal
+      open={addRelativeModalOpen}
+      onClose={() => setAddRelativeModalOpen(false)}
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto backdrop-filter   bg-opacity-50"
+    >
       <div className="overflow-y-auto mainFormSection">
         <div className="relative w-[30vw] md:w-[60vw] 2xl:w-[70vw] sm:w-full px-2 rounded-lg overflow-hidden">
           <div className="relative bg-white  rounded-lg shadow-md pb-2 ">
             <div className="flex justify-between items-center  bg-blue-900 py-2">
-              <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">Add Relative</h2>
-              <button onClick={onClose} className="text-red text-white  hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg">
+              <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">
+                Add Relative
+              </h2>
+              <button
+                onClick={() => setAddRelativeModalOpen(false)}
+                className="text-red text-white  hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg"
+              >
                 <IoMdClose />
               </button>
             </div>
@@ -46,12 +56,12 @@ const AddRelativeModal = ({ isOpen, onClose }) => {
                       <RiDeleteBin6Line className="cursor-pointer text-3xl hover:text-blue-300" />
                     </i>
                   </div>
-                    <div className="text-3xl text-blue-900">
-                      <MdAddCircleOutline
-                        className="cursor-pointer hover:text-blue-300"
-                        onClick={addRelation}
-                      />
-                    </div>
+                  <div className="text-3xl text-blue-900">
+                    <MdAddCircleOutline
+                      className="cursor-pointer hover:text-blue-300"
+                      // onClick={addRelation}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -62,7 +72,7 @@ const AddRelativeModal = ({ isOpen, onClose }) => {
                 Save
               </button>
               <button
-                onClick={onClose}
+                onClick={() => setAddRelativeModalOpen(false)}
                 className="border border-black bg-white  text-black font-semibold rounded-lg focus:outline-none"
               >
                 cancel
@@ -71,7 +81,7 @@ const AddRelativeModal = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 
