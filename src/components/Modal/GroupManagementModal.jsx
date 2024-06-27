@@ -23,7 +23,7 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
 
 
   return (
-    <Modal open={groupModalOpen} onClose={()=>setGroupModalOpen(false)}>
+    <Modal open={groupModalOpen} onClose={()=>setGroupModalOpen(false)} className="fixed inset-0 z-50 flex items-center justify-center  overflow-x-hidden overflow-y-auto  bg-opacity-50">
       <div   className="relative w-full  mx-auto rounded-lg sm:h-[60vh] max-w-[85vw] overflow-hidden  2xl:max-w-[70vw] 3xl:max-w-[65vw]  4xl:max-w-[65vw]  2xl:h-[70vh]  2xl:mt-[10vw]">
         <div className="relative bg-white  rounded-lg shadow-md pb-4">
           {/* top model section */}
