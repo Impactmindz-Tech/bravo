@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { profileValidation } from "../../utils/validation/FormValidation";
 import { LoginApi } from "../../utils/service/AuthService";
 import { setLocalStorage } from "../../utils/LocalStorageUtills";
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -18,12 +19,17 @@ export default function Login() {
   };
 
   const onSubmit = async (data) => {
+    const formData = new FormData()
+    formData.append("username", data?.username)
+    formData.append("password", data?.password)
     try {
-      const responce = await  LoginApi(data)
+      const responce = await LoginApi(formData)
       if (responce?.isSuccess) {
         setLocalStorage("token", responce?.token)
-        console.log(responce)
+        toast.success(responce?.message)
         navigate("/")
+      } else {
+        toast.error(responce?.response?.data?.message)
       }
     } catch (error) {
       console.log(error)
@@ -35,8 +41,8 @@ export default function Login() {
       <h1 className="text-2xl font-bold mb-6">Welcome Back</h1>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <fieldset className="">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2" >Email</label>
-          <input type="email" name="email" id="email" className="w-full px-3 py-2 border border-[#ccc] rounded-lg outline-none focus:outline-none" {...register("email")} />
+          <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2" >Email</label>
+          <input type="email" name="username" id="username" className="w-full px-3 py-2 border border-[#ccc] rounded-lg outline-none focus:outline-none" {...register("username")} />
         </fieldset>
         <p>{errors?.email?.message}</p>
         <fieldset className="relative">

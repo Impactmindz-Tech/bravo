@@ -36,12 +36,12 @@ export default function Header() {
               </svg>
             </div>
           </div>
-          {dropdown && <div className="absolute border border-[#ccc] right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+          {dropdown && <div className="absolute border border-[#ccc] right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
             <div className="py-1 cursor-pointer">
-              <butoon href="#" className="block px-4 py-2 font-semibold text-sm">Support</butoon>
-              <butoon href="#" className="block px-4 py-2 font-semibold text-sm">License</butoon>
-              <butoon href="#" className="block px-4 py-2 font-semibold text-sm">Account settings</butoon>
-              <butoon onClick={logout} href="#" className="block px-4 py-2 font-semibold text-sm">Singout</butoon>
+              <div href="#" className="block px-4 py-2 font-semibold text-sm">Support</div>
+              <div href="#" className="block px-4 py-2 font-semibold text-sm">License</div>
+              <div href="#" className="block px-4 py-2 font-semibold text-sm">Account settings</div>
+              <div onClick={logout} href="#" className="block px-4 py-2 font-semibold text-sm">Singout</div>
             </div>
           </div>}
         </div>

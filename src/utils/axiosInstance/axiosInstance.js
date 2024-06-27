@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getLocalStorage } from '../LocalStorageUtills'
 
 const axiosInstance = axios.create({
-    baseURL: 'https://impactmindz.in/client/artie/bravo/back_end/api',
+    baseURL: 'https://impactmindz.in/client/artie/bravo/back_end',
     // API_VERSION: "/api",
 })
 
