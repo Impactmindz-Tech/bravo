@@ -26,7 +26,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black bg-opacity-50">
         <div className="h-[600px] overflow-y-auto mt-6 sm:h-[80vh] mainFormSection md:h-[80vh] lg:h-[80vh] xl:h-[80vh] 2xl:h-[80vh] 3xl:h-[80vh] 4xl:h-[80vh]">
-          <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[85vw] xl:max-w-[85vw] 2xl:max-w-[85vw] 3xl:max-w-[85vw] 4xl:max-w-[85vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
+          <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[85vw] xl:max-w-[85vw] 2xl:max-w-[85vw]  mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
             <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
               <div className="flex w-full justify-between items-center bg-blue-900 py-2">
                 <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">
@@ -108,7 +108,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="flex flex-wrap list-none mt-6 gap-6">
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">
                       {" "}
                       Authentication Code{" "}
@@ -121,7 +121,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                       className="input"
                     />
                   </div>
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">
                       {" "}
                       First Name<span className="text-red-500 pl-1">
@@ -136,7 +136,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">
                       {" "}
                       Last Name<span className="text-red-500 pl-1">*</span>{" "}
@@ -149,7 +149,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">
                       Gender<span className="text-red-500 pl-1">*</span>{" "}
                     </h6>
@@ -158,7 +158,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     </select>
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">
                       Email Id<span className="text-red-500 pl-1">*</span>
                     </h6>
@@ -169,7 +169,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">
                       Contact No<span className="text-red-500 pl-1">*</span>
                     </h6>
@@ -180,7 +180,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">DOB</h6>
                     <input
                       type="date"
@@ -189,7 +189,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">Age</h6>
                     <input
                       type="text"
@@ -198,7 +198,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">
                       Address<span className="text-red-500 pl-1">*</span>
                     </h6>
@@ -209,7 +209,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">Postal Code</h6>
                     <input
                       type="text"
@@ -217,21 +217,21 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                       className="input"
                     />
                   </div>
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">Suburb</h6>
                     <select name="gender" className="input">
                       <option value="">Select</option>
                     </select>
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">State</h6>
                     <select name="gender" className="input">
                       <option value="">Select</option>
                     </select>
                   </div>
 
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">Country</h6>
                     <input
                       type="text"
@@ -239,7 +239,7 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
                       className="input"
                     />
                   </div>
-                  <div className="flex flex-col w-[23%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                  <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">Action</h6>
                     <select name="gender" className="input">
                       <option value="">Adult</option>
