@@ -16,7 +16,7 @@ export default {
       transparent: "transparent",
       blue: {
         900: "#2A2F3E",
-        300: "#686B76",
+        300: "#928A8A",
       },
       textMainColor: {
         900: "#FFFFFF",

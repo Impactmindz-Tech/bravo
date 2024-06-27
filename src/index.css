@@ -162,3 +162,14 @@ table tbody tr td {
 td a {
   color: #686b76 !important;
 }
+
+.input {
+  padding:10px;
+  outline: none;
+  border: 1px solid #EAEAEA;
+  border-radius: 10px;
+}
+
+.no_scroll::-webkit-scrollbar{
+  display: none;
+}

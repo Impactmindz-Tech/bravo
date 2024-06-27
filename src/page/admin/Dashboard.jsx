@@ -10,7 +10,6 @@ import ViewRelativeModal from "../../components/Modal/ViewRelativeModal";
 import editIcon from "../../assets/images/editIcon.svg";
 import deleteIcon from "../../assets/images/deleteIcon.svg";
 import { DashboardApi } from "../../utils/service/DashboardService";
-import { useLoaderData } from "react-router-dom";
 import { setUser } from '../../store/Slice/UserSlice';
 
 export default function Dashboard() {
@@ -36,7 +35,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchDashboardData()
-    // dispatch(setUser(userData));
   }, []);
 
 
