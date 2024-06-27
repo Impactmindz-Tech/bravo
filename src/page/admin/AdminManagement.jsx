@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { IoChevronDown } from "react-icons/io5";
 import adminUserProfile from "../../assets/images/adminUserProfile.svg";
 import editIcon from "../../assets/images/editIcon.svg";
 import deleteIcon from "../../assets/images/deleteIcon.svg";
 import AdminManagementModalComponent from "../../components/Modal/UserManagementModal";
-import Header from "../../components/Header/Header";
-import NavBar from "../../components/NavBar/NavBar";
 export default function AdminManagement() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,10 +13,11 @@ export default function AdminManagement() {
 
   return (
     <>
-
       {/* top title */}
       <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
-        <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">Admin Management</h1>
+        <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">
+          Admin Management
+        </h1>
         {/* search bar */}
         <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3">
           <div className="flex justify-center items-center border border-[#ccc] rounded-md bg-white text-[#3c3c3c] lg:w-[68%] md:w-[100%] sm:w-[100%]">
@@ -36,11 +34,8 @@ export default function AdminManagement() {
           </div>
 
           {/* filter btn */}
-          <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 sm:text-sm md:text-xl lg:gap-3 lg:text-2xl ">
+          <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 sm:text-sm md:text-xl lg:gap-3 lg:text-2xl px-8">
             Filter
-            <i className="text-white text-md my-1">
-              <IoChevronDown />
-            </i>
           </button>
           {/* add admin btn */}
           <button
@@ -57,13 +52,16 @@ export default function AdminManagement() {
 
       {/* table section */}
 
-      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1" style={{ height: "calc(100vh - 205px)" }}>
+      <div
+        className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1"
+        style={{ height: "calc(100vh - 205px)" }}
+      >
         <table className="min-w-full">
           <thead>
             <tr>
               <th className="text-left">User Name</th>
               <th className="text-left">Email id</th>
-              <th className="text-left">Contact  No</th>
+              <th className="text-left">Contact No</th>
               <th className="text-left">Authentication Code</th>
               <th className="text-left">Role</th>
               <th className="text-left">Action</th>
@@ -84,18 +82,15 @@ export default function AdminManagement() {
                 </div>
               </td>
 
-              <td className="text-left">
-                debra.holt@exaple.com
-              </td>
+              <td className="text-left">debra.holt@exaple.com</td>
               <td className="text-left">(406) 555-0120</td>
               <td className="text-left">3467895768</td>
 
-              <td className="text-left">
-                admin
-              </td>
+              <td className="text-left">admin</td>
               <td className="text-left">
                 <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
-                  <img onClick={() => setIsOpen(true)}
+                  <img
+                    onClick={() => setIsOpen(true)}
                     src={editIcon}
                     alt="edit icon"
                     className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"

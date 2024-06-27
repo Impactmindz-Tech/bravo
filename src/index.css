@@ -109,8 +109,51 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-@media screen and (max-width: 639px) {
+table thead tr th {
+  padding: 25px 20px;
+  border-bottom: 1px solid #ccc;
+}
+table tbody tr td {
+  padding: 20px 20px;
+  border-bottom: 1px solid #ccc;
+}
 
+td a {
+  color: #686b76 !important;
+}
+
+.input {
+  padding: 10px;
+  outline: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+}
+
+.no_scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* event marked in calendar target */
+.p-1.px-2.rounded-md.text-sm {
+  width: 100%;
+}
+.fc-h-event {
+  border: none;
+  background: none;
+}
+
+.fc-dayGridMonth-view.fc-view.fc-daygrid{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+
+}
+@media screen and (max-width: 639px) {
+.p-1.px-2.rounded-md.text-sm {
+  font-size: 2vw;
+padding: 0;
+display: flex;
+justify-content: center;
+}
   /* top container */
   .fc .fc-toolbar {
     display: block;
@@ -121,7 +164,6 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
     width: 100%;
     display: flex;
     font-size: 3vw;
-    margin: 5% 0;
     justify-content: space-between;
   }
 
@@ -143,33 +185,8 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
 
   /* calendar table */
   .fc-dayGridMonth-view.fc-view.fc-daygrid,
-  .fc .fc-view-harness-active>.fc-view {
-    height: 80vw;
+  .fc .fc-view-harness-active > .fc-view {
+    height: 90vw;
     font-size: 3vw;
   }
-}
-
-
-table thead tr th {
-  padding: 25px 20px;
-  border-bottom: 1px solid #ccc;
-}
-table tbody tr td {
-  padding: 20px 20px;
-  border-bottom: 1px solid #ccc;
-}
-
-td a {
-  color: #686b76 !important;
-}
-
-.input {
-  padding:10px;
-  outline: none;
-  border: 1px solid #EAEAEA;
-  border-radius: 10px;
-}
-
-.no_scroll::-webkit-scrollbar{
-  display: none;
 }

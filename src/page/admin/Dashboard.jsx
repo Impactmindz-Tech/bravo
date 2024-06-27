@@ -50,11 +50,9 @@ export default function Dashboard() {
             </i>
           </div>
 
-          <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 md:text-xl sm:text-sm lg:gap-3 lg:text-2xl">
+          <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 md:text-xl sm:text-sm lg:gap-3 lg:text-2xl px-8">
             Filter
-            <i className="text-white text-md my-1 ">
-              <IoChevronDown />
-            </i>
+            
           </button>
           <button
             className="bg-blue-900 text-white flex justify-center  hover:border-[#ccc] sm:text-sm md:text-xl"

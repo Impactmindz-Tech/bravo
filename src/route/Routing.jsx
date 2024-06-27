@@ -1,4 +1,8 @@
-import { Routes, Route, BrowserRouter, useNavigate, createBrowserRouter } from "react-router-dom";
+import {
+
+  useNavigate,
+  createBrowserRouter,
+} from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import Dashboard from "../page/admin/Dashboard";
 import Login from "../page/auth/Login";
@@ -14,16 +18,15 @@ import { useEffect } from "react";
 
 const Root = () => {
   const navigate = useNavigate();
-  const isAuthenticated = getLocalStorage('token')
+  const isAuthenticated = getLocalStorage("token");
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/admin/dashboard')
+      navigate("/admin/dashboard");
     } else {
-      navigate('/auth/login')
+      navigate("/auth/login");
     }
-  }, [isAuthenticated, navigate])
-}
-
+  }, [isAuthenticated, navigate]);
+};
 
 const router = createBrowserRouter([
   {
@@ -94,57 +97,3 @@ const router = createBrowserRouter([
 
 export default router;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const Routing = () => {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<Root />} />
-//         <Route path="/auth" element={<AuthProteced />}>
-//           <Route path="login" element={<AuthLayout><Login /></AuthLayout>} />
-//         </Route>
-//         <Route path="/admin" element={<DashboardProtected />}>
-//           <Route path="dashboard" loader={fetchDashboardData} element={<DashboardLayout><Dashboard /></DashboardLayout>} />
-//           <Route path="adminmanagement" element={<DashboardLayout><AdminManagement /></DashboardLayout>} />
-//           <Route path="groupmanagement" element={<DashboardLayout><GroupManagement /></DashboardLayout>} />
-//           <Route path="calender" element={<DashboardLayout><Calendar /></DashboardLayout>} />
-//           <Route path="settings" element={<DashboardLayout><SystemSetting /></DashboardLayout>} />
-//         </Route>
-
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// };
-
-// export default Routing;

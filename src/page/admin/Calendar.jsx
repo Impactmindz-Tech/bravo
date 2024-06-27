@@ -4,8 +4,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useState } from "react";
-import Header from "../../components/Header/Header";
-import NavBar from "../../components/NavBar/NavBar";
 // calendar website
 // https://fullcalendar.io/
 function Calendar() {
@@ -13,21 +11,27 @@ function Calendar() {
     {
       title: "Event 1",
 
-      start: "2024-06-23T09:00:00",
-      end: "2024-06-23T10:30:00",
+      start: "2024-06-23",
+      end: "2024-06-23",
     },
-
+    
     {
       title: "Event 2",
       start: "2024-06-26",
       // end: '2024-06-28'
     },
+    // {
+    //   title: "Event 1",
+
+    //   start: "2024-06-23T09:00:00",
+    //   end: "2024-06-23T10:30:00",
+    // },
   ]);
   //   add events on specific date
   const handleDateClick = (arg) => {
     let date = arg.dateStr;
     let eventData = prompt("Enter Event Name to Insert: ");
-    if (eventData != null) {
+    if (eventData != null && eventData!=="") {
       const newEvent = {
         title: eventData,
         start: date,
@@ -38,7 +42,7 @@ function Calendar() {
   };
   return (
     <>
-        <div className="flex justify-center  mt-8  sm:w-[90%] sm:m-0 h-[90vh] mx-auto sm:h-auto">
+        <div className="flex justify-center sm:w-[100%] sm:m-0 h-[90vh] mx-auto sm:h-[75vh]">
           <FullCalendar
             plugins={[
               dayGridPlugin,
