@@ -2,14 +2,37 @@ import { useNavigate } from 'react-router-dom';
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/headerLogo.png";
-import { useState } from "react";
+import { useState ,useRef, useEffect} from "react";
 export default function Header() {
+  const modalRef = useRef();
   const [dropdown, setDropdown] = useState(false)
+
+
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
     navigate("/auth/login")
   };
+
+
+  // drop down close on outside click
+  // Detect clicks outside the modal
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    if (dropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+  }, [dropdown]);
+
+
   return (
     <header className="flex justify-between border-gray-100 py-2 px-10 shadow-md  min-w-[100%] sm:px-2 md:px-1 lg:px-2 xl:px-2 2xl:px-1 sm:py-1">
       <div className="logo pl-2 sm:pl-0 sm:pt-1 ">
@@ -27,8 +50,8 @@ export default function Header() {
           <FaRegUserCircle className="md:text-xl lg:text-2xl sm:text-sm" />
         </i>
 
-        <div className="relative inline-block text-left">
-          <div onClick={() => setDropdown(!dropdown)} className="">
+        <div className="relative inline-block text-left" ref={modalRef}>
+          <div onClick={() => setDropdown(!dropdown)} className="" >
             <div type="button" className="cursor-pointer inline-flex w-full justify-center items-center gap-x-1.5 bg-white px-3 py-2 text-sm font-semibold text-gray-900" id="menu-button" aria-expanded="true" aria-haspopup="true">
               My Account
               <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
