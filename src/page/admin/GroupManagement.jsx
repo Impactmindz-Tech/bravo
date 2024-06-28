@@ -4,10 +4,10 @@ import adminUserProfile from "../../assets/images/adminUserProfile.svg";
 import editIcon from "../../assets/images/editIcon.svg";
 import deleteIcon from "../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import ModalComponent from "../../components/Modal/GroupManagementModal";
+import EditGroupManagementModal from "../../components/Modal/EditGroupManagementModal";
 import CreateGroupModal from "../../components/Modal/CreateGroupModal";
 export default function GroupManagement() {
-  const [groupModalOpen, setGroupModalOpen] = useState(false);
+ const [editGroupModalOpen, setEditGroupModalOpen] = useState(false);
 const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
   return (
     <>
@@ -77,7 +77,7 @@ const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
               <td className="text-left">
                 <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
                   <img
-                    onClick={() => setGroupModalOpen(true)}
+                    onClick={() => setEditGroupModalOpen(true)}
                     src={editIcon}
                     alt="edit icon"
                     className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
@@ -97,9 +97,9 @@ const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
 
       {/* popup model */}
       <div className="flex items-center">
-        <ModalComponent
-          groupModalOpen={groupModalOpen}
-          setGroupModalOpen={setGroupModalOpen}
+        <EditGroupManagementModal
+          editGroupModalOpen={editGroupModalOpen}
+          setEditGroupModalOpen={setEditGroupModalOpen}
         />
       </div>
       <div className="flex items-center">

@@ -1,13 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FiUpload } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import AddRelativeModal from "./AddRelativeModal";
+
 import { Modal } from "@mui/material";
 import TagsInput from 'react-tagsinput'
-
 import 'react-tagsinput/react-tagsinput.css'
 import {
   CitySelect,
@@ -107,14 +105,7 @@ const handleChange = (tags) => {
 
 
                       <TagsInput value={memberTag} onChange={handleChange} className="input w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " />
-                      {/* <input
-                        type="text"
-                        name="Authentication_Code"
-                      
-                        
-                        className="input w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] "
-                        placeholder="Add Text Here"
-                      /> */}
+                   
                     </div>
                   </div>
 

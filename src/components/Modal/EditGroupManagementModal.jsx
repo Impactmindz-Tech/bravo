@@ -3,9 +3,12 @@ import { IoClose } from "react-icons/io5";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useState } from "react";
 import { Modal } from "@mui/material";
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
 // eslint-disable-next-line react/prop-types
-const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
-
+const GroupManagementModel = ({ editGroupModalOpen, setEditGroupModalOpen }) => {
+  // insert member data here 
+  const[groupMemberList,setGroupMemberList]=useState(['Jaini Shah'])
   const [selectedFile, setSelectedFile] = useState(null);
 
 
@@ -20,10 +23,14 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
 
 
  
+// handle space bar 
+const handleChange = (tags) => {
+  setGroupMemberList(tags)
+ }
 
 
   return (
-    <Modal open={groupModalOpen} onClose={()=>setGroupModalOpen(false)} className="fixed modalContainer inset-0 z-50 flex items-center justify-center  overflow-x-hidden overflow-y-auto">
+    <Modal open={editGroupModalOpen} onClose={()=>setEditGroupModalOpen(false)} className="fixed modalContainer inset-0 z-50 flex items-center justify-center  overflow-x-hidden overflow-y-auto">
       
       <div className="overflow-y-auto mainFormSection sm:w-[90vw] sm:h-[70vh] md:w-[90vw] md:h-[70vh] lg:w-[80vw] lg:h-[65vh] xl:w-[60vw] xl:h-[60vh] w-[55vw] h-[60vh]">
       <div   className="relative w-full  mx-auto rounded-lg  overflow-hidden ">
@@ -34,7 +41,7 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
               Edit Group
             </h2>
             <button
-              onClick={()=>setGroupModalOpen(false)}
+              onClick={()=>setEditGroupModalOpen(false)}
               className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none"
             >
               <IoClose />
@@ -100,12 +107,9 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
                 <span className="text-red-500 font-extrabold">*</span>
               </h4>
               <div className="flex flex-wrap  gap-3 w-[80%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] input py-2 px-2 list-none ">
-                <li className="bg-blue-300 px-6 py-1.5 rounded-full text-sm flex justify-center mb-1 gap-2 ">
-                  Jaini Shah
-                  <i className="text-lg text-textMainColor-900">
-                    <IoIosCloseCircleOutline className="cursor-pointer" />
-                  </i>
-                </li>
+              
+              <TagsInput value={groupMemberList} onChange={handleChange} className="editGroup min-w-[100%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " />
+        
               </div>
             </div>
           </div>
@@ -116,7 +120,7 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
               Submit
             </button>
             <button
-              onClick={()=>setGroupModalOpen(false)}
+              onClick={()=>setEditGroupModalOpen(false)}
               className="border border-black bg-white  text-black font-semibold rounded-lg focus:outline-none hover:border-black"
             >
               cancel
