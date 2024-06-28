@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { FiUpload } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useState } from "react";
@@ -5,14 +6,25 @@ import { IoMdClose } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import AddRelativeModal from "./AddRelativeModal";
 import { Modal } from "@mui/material";
+import {
+  CitySelect,
+  CountrySelect,
+  StateSelect,
+  LanguageSelect,
+} from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
+import { CreateUser } from "../../utils/service/DashboardService";
+import { useForm } from "react-hook-form"
+import { createUser } from '../../utils/validation/FormValidation';
 
 // eslint-disable-next-line react/prop-types
-const AdminManagementModalComponent = ({
-  addAdminModalOpen,
-  setAddAdminModalOpen,
-}) => {
+const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen, }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
+  const [countryid, setCountryid] = useState(0);
+  const [stateid, setstateid] = useState(0);
+
+  const { handleSubmit, register, formState: { errors } } = useForm({ resolver: yupResolver(createUser) })
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -22,6 +34,19 @@ const AdminManagementModalComponent = ({
     setSelectedFile(null);
   };
 
+  const userCreate = async () => {
+    try {
+      const response = await CreateUser()
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onSubmit = (e)=>{
+    e.preventDefault()
+  }
+
   return (
     <>
       <Modal
@@ -29,22 +54,22 @@ const AdminManagementModalComponent = ({
         onClose={() => setAddAdminModalOpen(false)}
         className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 "
       >
-        
-          <div className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
-            <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
-              <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
-                <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
-                  <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">
-                    Add User
-                  </h2>
-                  <button
-                    onClick={() => setAddAdminModalOpen(false)}
-                    className="text-red text-white hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg"
-                  >
-                    <IoMdClose />
-                  </button>
-                </div>
 
+        <div className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
+          <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
+            <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
+              <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
+                <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">
+                  Add User
+                </h2>
+                <button
+                  onClick={() => setAddAdminModalOpen(false)}
+                  className="text-red text-white hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg"
+                >
+                  <IoMdClose />
+                </button>
+              </div>
+              <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="p-8 flex flex-col gap-y-4 w-full">
                   <div className="flex flex-col space-y-2">
                     <h1 className="text-gray-500">
@@ -59,52 +84,29 @@ const AdminManagementModalComponent = ({
 
                   <div className="flex gap-3">
                     <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="fav_language"
-                        className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent"
-                      />
+                      <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent"/>
                       <span className="ml-2 text-gray-700">Admin</span>
                     </label>
 
                     <label className="inline-flex items-center">
-                      <input
-                        type="radio"
-                        name="fav_language"
-                        className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent"
-                      />
+                      <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent"/>
                       <span className="ml-2 text-gray-700">Relatives</span>
                     </label>
                   </div>
 
                   {/* file upload section */}
                   <div className="flex gap-2">
-                    <h4 className="text-blue-300 pt-2 sm:text-sm">
-                      Profile Picture
-                    </h4>
+                    <h4 className="text-blue-300 pt-2 sm:text-sm"> Profile Picture</h4>
                     <div className="flex w-[75%] items-center border input rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
-                      <label
-                        htmlFor="file-upload"
-                        className="flex items-center sm:justify-center sm:text-center bg-blue-900 text-white px-4 py-1 rounded-lg cursor-pointer font-semibold sm:w-[100%]"
-                      >
+                      <label htmlFor="file-upload" className="flex items-center sm:justify-center sm:text-center bg-blue-900 text-white px-4 py-1 rounded-lg cursor-pointer font-semibold sm:w-[100%]" >
                         <FiUpload className="font-semibold mr-1" />
                         Upload
                       </label>
-                      <input
-                        id="file-upload"
-                        type="file"
-                        className="hidden"
-                        onChange={handleFileChange}
-                      />
+                      <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
                       {selectedFile && (
                         <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
-                          <span className="text-sm pl-2">
-                            {selectedFile.name}
-                          </span>
-                          <button
-                            onClick={handleRemoveFile}
-                            className="text-black text-sm bg-transparent border-none"
-                          >
+                          <span className="text-sm pl-2">{selectedFile.name}</span>
+                          <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                             <IoIosCloseCircleOutline className="text-lg bg-none" />
                           </button>
                         </div>
@@ -114,46 +116,17 @@ const AdminManagementModalComponent = ({
 
                   <div className="flex flex-wrap list-none mt-6 gap-6">
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">
-                        {" "}
-                        Authentication Code{" "}
-                        <span className="text-red-500 pl-1">*</span>
-                      </h6>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
-                        placeholder="385555"
-                        className="input"
-                      />
+                      <h6 className="text-blue-300 text-sm"> Authentication Code{" "} <span className="text-red-500 pl-1">*</span></h6>
+                      <input type="text" name="Authentication_Code" placeholder="385555" className="input"  {...register("authenticationCode")} />
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">
-                        {" "}
-                        First Name<span className="text-red-500 pl-1">
-                          *
-                        </span>{" "}
-                      </h6>
-                      <input
-                        type="text"
-                        name="firstname"
-                        placeholder="Wade"
-                        className="input"
-                      />
+                      <h6 className="text-blue-300 text-sm"> First Name<span className="text-red-500 pl-1"> *</span>{" "} </h6>
+                      <input type="text" name="firstname" placeholder="Wade" className="input" />
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">
-                        {" "}
-                        Last Name<span className="text-red-500 pl-1">
-                          *
-                        </span>{" "}
-                      </h6>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
-                        placeholder="Willams"
-                        className="input"
-                      />
+                      <h6 className="text-blue-300 text-sm">Last Name<span className="text-red-500 pl-1"> *</span>{" "}</h6>
+                      <input type="text" name="Authentication_Code" placeholder="Willams" className="input"/>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
@@ -226,25 +199,51 @@ const AdminManagementModalComponent = ({
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <h6 className="text-blue-300 text-sm">Suburb</h6>
-                      <select name="gender" className="input">
-                        <option value="">Select</option>
-                      </select>
+                      <CitySelect
+                        containerClassName="p-0"
+                        inputClassName="w-full outline-none border-set"
+                        countryid={countryid}
+                        stateid={stateid}
+                        onChange={(e) => {
+                          console.log(e);
+                        }}
+                        placeHolder="Select City"
+                      />
+                      {/* <select name="gender" className="input">
+                      <option value="">Select</option>
+                    </select> */}
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <h6 className="text-blue-300 text-sm">State</h6>
-                      <select name="gender" className="input">
-                        <option value="">Select</option>
-                      </select>
+                      <StateSelect
+                        containerClassName="p-0"
+                        inputClassName="w-full outline-none border-set"
+                        countryid={countryid}
+                        onChange={(e) => {
+                          setstateid(e.id);
+                        }}
+                        placeHolder="Select State"
+                      />
+                      {/* <select name="gender" className="input ove">
+                      <option value="">Select</option>
+                    </select> */}
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <h6 className="text-blue-300 text-sm">Country</h6>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
-                        className="input"
+                      <CountrySelect
+                        containerClassName="p-0"
+                        inputClassName="w-full outline-none border-set"
+                        showFlag={true}
+                        onChange={(e) => setCountryid(e.id)}
+                        placeHolder="Select Country"
                       />
+                      {/* <input
+                      type="text"
+                      name="Authentication_Code"
+                      className="input"
+                    /> */}
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <h6 className="text-blue-300 text-sm">Action</h6>
@@ -294,10 +293,11 @@ const AdminManagementModalComponent = ({
                     Cancel
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
-    
+        </div>
+
       </Modal>
       <div className="flex items-center">
         <AddRelativeModal

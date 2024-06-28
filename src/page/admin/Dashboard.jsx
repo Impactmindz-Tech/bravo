@@ -22,6 +22,7 @@ export default function Dashboard() {
   const fetchDashboardData = async () => {
     try {
       const response = await DashboardApi();
+      console.log(response)
       dispatch(setUser(response));
     } catch (error) {
       console.log(error);
@@ -97,27 +98,26 @@ export default function Dashboard() {
                       />
                     </div>
                     <span className="md:text-xl lg:text-2xl">
-                      {item.Username}
+                      {item.username}
                     </span>
                   </div>
                 </td>
 
-                <td className="text-left">{item.Email}</td>
-                <td className="text-left">{item.PhoneNumber}</td>
+                <td className="text-left">{item.email}</td>
+                <td className="text-left">{item.phone}</td>
                 <td className="text-left">3467895768</td>
 
                 <td className="text-left">
-                  {item.Status}
-                  {/* <select
+                  {/* {item.Status} */}
+                  <select
                     id="role"
                     name="role"
                     className="py-1 px-6 rounded-full bg-[#E2E9D7]  focus:outline-none  text-[#036507] focus:border-none "
                   >
-                    <option value="admin">Active</option>
-                    <option value="user">Inactive</option>
-                  </select> */}
+                    <option value="admin">{item.is_active == '1' ? 'Active' : 'item.is_active'}</option>
+                  </select>
                 </td>
-                <td className="text-left">student</td>
+                <td className="text-left">{item.relation}</td>
                 <td className="text-left">
                   <div
                     className="flex justify-center text-[#065813] cursor-pointer"

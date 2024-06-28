@@ -5,10 +5,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { Modal } from "@mui/material";
 
 // eslint-disable-next-line react/prop-types
-const AddRelativeModal = ({
-  addRelativeModalOpen,
-  setAddRelativeModalOpen,
-}) => {
+const AddRelativeModal = ({ addRelativeModalOpen, setAddRelativeModalOpen, }) => {
   return (
     <Modal
       open={addRelativeModalOpen}
@@ -49,18 +46,11 @@ const AddRelativeModal = ({
                 </div>
                 <div className="flex w-[33%]  md:w-full pt-6 items-center justify-between">
                   <div className="flex items-center gap-2 text-2xl">
-                    <i>
-                      <BiSolidEdit className="cursor-pointer text-3xl hover:text-blue-300" />
-                    </i>
-                    <i>
-                      <RiDeleteBin6Line className="cursor-pointer text-3xl hover:text-blue-300" />
-                    </i>
+                    <i> <BiSolidEdit className="cursor-pointer text-3xl hover:text-blue-300" /> </i>
+                    <i> <RiDeleteBin6Line className="cursor-pointer text-3xl hover:text-blue-300" /></i>
                   </div>
                   <div className="text-3xl text-blue-900">
-                    <MdAddCircleOutline
-                      className="cursor-pointer hover:text-blue-300"
-                      // onClick={addRelation}
-                    />
+                    <MdAddCircleOutline className="cursor-pointer hover:text-blue-300" />
                   </div>
                 </div>
               </div>
@@ -68,13 +58,8 @@ const AddRelativeModal = ({
 
             {/* bottom button */}
             <div className="flex justify-end  mr-9 gap-2 my-8">
-              <button className=" bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
-                Save
-              </button>
-              <button
-                onClick={() => setAddRelativeModalOpen(false)}
-                className="border border-black bg-white  text-black font-semibold rounded-lg focus:outline-none"
-              >
+              <button className=" bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]"> Save </button>
+              <button onClick={() => setAddRelativeModalOpen(false)} className="border border-black bg-white  text-black font-semibold rounded-lg focus:outline-none">
                 cancel
               </button>
             </div>
