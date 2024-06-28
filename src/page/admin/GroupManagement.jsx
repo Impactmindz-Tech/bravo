@@ -69,7 +69,7 @@ const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
                 </div>
               </td>
 
-              <td className="text-left">debra.holt@exaple.com</td>
+              <td className="text-left">50</td>
               <td className="text-left">
                 Jaini Shah, Dipal Shah, kinjal Bhoil, Kinal Patel, Yash Patel,
                 vibha shah...
@@ -108,6 +108,11 @@ const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
           setCreateGroupModalOpen={setCreateGroupModalOpen}
         />
       </div>
+
+
+
+
+      
     </>
   );
 }

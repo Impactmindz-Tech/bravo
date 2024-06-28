@@ -1,11 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FiUpload } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import AddRelativeModal from "./AddRelativeModal";
 import { Modal } from "@mui/material";
+import TagsInput from 'react-tagsinput'
+
+import 'react-tagsinput/react-tagsinput.css'
 import {
   CitySelect,
   CountrySelect,
@@ -23,6 +26,7 @@ const CreateGroupModal = ({
   setCreateGroupModalOpen,
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+const[memberTag,setMemberTag]=useState([])
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -54,6 +58,12 @@ const CreateGroupModal = ({
     e.preventDefault();
   };
 
+
+// handle space bar 
+const handleChange = (tags) => {
+   setMemberTag(tags)
+  }
+
   return (
     <>
       <Modal
@@ -79,7 +89,9 @@ const CreateGroupModal = ({
                 <div className="flex flex-col min-w-[50vw] gap-y-3 p-2 my-5">
                   <div className="flex flex-col gap-2 p-4">
                     <div className="flex gap-2 justify-between flex-wrap">
-                      <h1 className="text-gray-500 sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[25%]">Group Name</h1>
+                      <h1 className="text-gray-500 sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[25%]">
+                        Group Name
+                      </h1>
                       <input
                         type="text"
                         name="Authentication_Code"
@@ -87,23 +99,22 @@ const CreateGroupModal = ({
                         placeholder="Add Text Here"
                       />
                     </div>
+
                     <div className="flex gap-2 justify-between flex-wrap">
-                      <h1 className="text-gray-500 sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[25%]">Total Members</h1>
-                      <input
+                      <h1 className="text-gray-500 sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[25%] ">
+                        Members Name
+                      </h1>
+
+
+                      <TagsInput value={memberTag} onChange={handleChange} className="input w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " />
+                      {/* <input
                         type="text"
                         name="Authentication_Code"
-                        className="input w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%]"
-                        placeholder="Add Text Here"
-                      />
-                    </div>
-                    <div className="flex gap-2 justify-between flex-wrap">
-                      <h1 className="text-gray-500 sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[25%] ">Members Name</h1>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
+                      
+                        
                         className="input w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] "
                         placeholder="Add Text Here"
-                      />
+                      /> */}
                     </div>
                   </div>
 
