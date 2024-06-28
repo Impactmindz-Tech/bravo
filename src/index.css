@@ -147,6 +147,13 @@ td a {
 
 
 }
+
+.modalContainer{
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: none;
+}
 @media screen and (max-width: 639px) {
 .p-1.px-2.rounded-md.text-sm {
   font-size: 2vw;

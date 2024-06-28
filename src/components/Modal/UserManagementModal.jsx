@@ -27,13 +27,13 @@ const AdminManagementModalComponent = ({
       <Modal
         open={addAdminModalOpen}
         onClose={() => setAddAdminModalOpen(false)}
-        className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50"
+        className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 "
       >
-        <div>
-          <div className="h-[600px] overflow-y-auto mt-6 sm:h-[80vh] mainFormSection md:h-[80vh] lg:h-[80vh] xl:h-[80vh] 2xl:h-[80vh] 3xl:h-[80vh] 4xl:h-[80vh]">
-            <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[85vw] xl:max-w-[85vw] 2xl:max-w-[85vw]  mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
+        
+          <div className="h-[600px] overflow-y-auto mt-6 sm:h-[80vh] mainFormSection md:h-[80vh] lg:h-[65vh] xl:h-[70vh]  2xl:h-[70vh] 4xl:h-[60vh]">
+            <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[75vw] xl:max-w-[65vw] 2xl:max-w-[65vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
               <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
-                <div className="flex w-full justify-between items-center bg-blue-900 py-2">
+                <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
                   <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">
                     Add User
                   </h2>
@@ -85,7 +85,7 @@ const AdminManagementModalComponent = ({
                     <div className="flex w-[75%] items-center border input rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
                       <label
                         htmlFor="file-upload"
-                        className="flex items-center bg-blue-900 text-white px-4 py-1 rounded-lg cursor-pointer font-semibold sm:w-[100%]"
+                        className="flex items-center sm:justify-center sm:text-center bg-blue-900 text-white px-4 py-1 rounded-lg cursor-pointer font-semibold sm:w-[100%]"
                       >
                         <FiUpload className="font-semibold mr-1" />
                         Upload
@@ -297,7 +297,7 @@ const AdminManagementModalComponent = ({
               </div>
             </div>
           </div>
-        </div>
+    
       </Modal>
       <div className="flex items-center">
         <AddRelativeModal

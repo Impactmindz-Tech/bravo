@@ -132,7 +132,7 @@ export default function SystemSetting() {
               <div className="flex w-[72%] items-center  py-1 px-2 input  sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] ">
                 <label
                   htmlFor="file-upload"
-                  className="flex items-center bg-blue-900 px-4 py-2 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%] lg:py-1"
+                  className="flex items-center sm:justify-center sm:text-center bg-blue-900 px-4 py-2 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%] lg:py-1"
                 >
                   <FiUpload className="font-semibold mr-1" />
                   Upload
@@ -172,7 +172,7 @@ export default function SystemSetting() {
               <div className="flex w-[71%] items-center  py-1 px-1 input sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] lg:py-1 ">
                 <label
                   htmlFor="file-upload-document"
-                  className="flex items-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
+                  className="flex items-center sm:justify-center sm:text-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
                 >
                   <FiUpload className="font-semibold mr-1 text-sm" />
                   Upload
@@ -221,7 +221,7 @@ export default function SystemSetting() {
               <div className="flex w-[71%] items-center  py-1 px-1 input sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] lg:py-1 ">
               <label
                   htmlFor="file-upload-privacy"
-                  className="flex items-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
+                  className="flex items-center sm:justify-center sm:text-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
                 >
                   <FiUpload className="font-semibold mr-1 text-sm" />
                   Upload
