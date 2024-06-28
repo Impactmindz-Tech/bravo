@@ -5,10 +5,10 @@ import editIcon from "../../assets/images/editIcon.svg";
 import deleteIcon from "../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import ModalComponent from "../../components/Modal/GroupManagementModal";
-
+import CreateGroupModal from "../../components/Modal/CreateGroupModal";
 export default function GroupManagement() {
   const [groupModalOpen, setGroupModalOpen] = useState(false);
-
+const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
   return (
     <>
       {/* top title */}
@@ -30,7 +30,7 @@ export default function GroupManagement() {
             </i>
           </div>
           {/* create group btn */}
-          <button className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3 lg:text-2xl">
+          <button onClick={()=>setCreateGroupModalOpen(true)}className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3 lg:text-2xl">
             <i className="my-0.4 pr-2 text-2xl sm:my-1 md:text-md md:my-1 sm:text-sm">
               <IoMdAddCircleOutline />
             </i>
@@ -100,6 +100,12 @@ export default function GroupManagement() {
         <ModalComponent
           groupModalOpen={groupModalOpen}
           setGroupModalOpen={setGroupModalOpen}
+        />
+      </div>
+      <div className="flex items-center">
+        <CreateGroupModal
+          createGroupModalOpen={createGroupModalOpen}
+          setCreateGroupModalOpen={setCreateGroupModalOpen}
         />
       </div>
     </>
