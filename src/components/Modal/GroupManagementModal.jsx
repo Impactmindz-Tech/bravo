@@ -25,7 +25,7 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
   return (
     <Modal open={groupModalOpen} onClose={()=>setGroupModalOpen(false)} className="fixed modalContainer inset-0 z-50 flex items-center justify-center  overflow-x-hidden overflow-y-auto">
       
-      <div className="overflow-y-auto mainFormSection w-[60vw]">
+      <div className="overflow-y-auto mainFormSection sm:w-[90vw] sm:h-[70vh] md:w-[90vw] md:h-[70vh] lg:w-[80vw] lg:h-[65vh] xl:w-[60vw] xl:h-[60vh] w-[55vw] h-[60vh]">
       <div   className="relative w-full  mx-auto rounded-lg  overflow-hidden ">
         <div className="relative bg-white  rounded-lg shadow-md pb-4">
           {/* top model section */}
@@ -44,11 +44,11 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
           <div className="p-8 flex flex-col gap-y-4 ">
             {/* file upload section */}
             <div className="flex justify-center sm:flex-col md:flex-col sm:gap-y-2 md:gap-y-2 lg:flex-col lg:gap-y-1">
-              <h4 className="text-blue-300 font-semibold w-[20%] lg:w-[100%] sm:w-[100%] 3xl:text-xl md:w-[100%]">
+              <h4 className="text-blue-300 font-semibold w-[20%] lg:w-[100%] xl:w-[25%] sm:w-[100%] 3xl:text-xl md:w-[100%]">
                 Group Picture{" "}
               </h4>
 
-              <div className="flex w-[80%] lg:w-[100%] items-center input   py-1 px-2 sm:flex-col sm:gap-y-1 sm:w-[100%] md:w-[100%]">
+              <div className="flex w-[80%] lg:w-[100%] xl:w-[75%] items-center input   py-1 px-2 sm:flex-col sm:gap-y-1 sm:w-[100%] md:w-[100%]">
                 <label
                   htmlFor="file-upload"
                   className="flex items-center bg-blue-900 px-4 py-2 sm:justify-center sm:text-center rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]"
@@ -78,11 +78,11 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
 
             {/* group name section */}
             <div className="flex  sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
-              <h4 className=" text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%]">
+              <h4 className=" text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
                 Group Name{" "}
                 <span className="text-red-500 font-extrabold">*</span>
               </h4>
-              <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%]">
+              <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
                 <input
                   type="text"
                   name=""
@@ -95,11 +95,11 @@ const GroupManagementModel = ({ groupModalOpen, setGroupModalOpen }) => {
 
             {/*  group member*/}
             <div className="flex  sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
-              <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%]">
+              <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
                 Group Member{" "}
                 <span className="text-red-500 font-extrabold">*</span>
               </h4>
-              <div className="flex flex-wrap  gap-3 w-[80%] md:w-[100%] lg:w-[100%] sm:w-[100%] input py-2 px-2 list-none ">
+              <div className="flex flex-wrap  gap-3 w-[80%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] input py-2 px-2 list-none ">
                 <li className="bg-blue-300 px-6 py-1.5 rounded-full text-sm flex justify-center mb-1 gap-2 ">
                   Jaini Shah
                   <i className="text-lg text-textMainColor-900">

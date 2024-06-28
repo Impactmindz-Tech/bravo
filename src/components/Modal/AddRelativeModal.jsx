@@ -15,8 +15,8 @@ const AddRelativeModal = ({
       onClose={() => setAddRelativeModalOpen(false)}
       className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto "
     >
-      <div className="overflow-y-auto mainFormSection 4xl:h-[20vh]">
-        <div className="relative w-[30vw] md:w-[60vw]  sm:w-full px-2 rounded-lg overflow-hidden xl:w-[60vw] 2xl:w-[50vw] 4xl:w-[55vw]">
+      <div className="overflow-y-auto  4xl:h-[40vh] 3xl:h-[40vh] 2xl:h-[45vh] xl:h-[45vh] lg:h-[45vh] md:h-[55vh] sm:h-[50vh]">
+        <div className="relative w-[30vw] sm:w-[80vw] px-2 rounded-lg overflow-hidden md:w-[70vw] lg:w-[50vw] xl:w-[50vw] 2xl:w-[40vw] 3xl:w-[40vw] 4xl:w-[45vw]">
           <div className="relative bg-white  rounded-lg shadow-md pb-2 ">
             <div className="flex justify-between items-center  bg-blue-900 py-2">
               <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">

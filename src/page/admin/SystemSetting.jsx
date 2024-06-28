@@ -73,12 +73,12 @@ export default function SystemSetting() {
             </div>
 
             {/* admin management */}
-            <div className="flex ml-5 mt-10 gap-3 sm:flex-col sm:mt-0 sm:ml-2 lg:w-[94%]  ">
-              <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:text-sm sm:py-0 sm:pt-4 sm:ml-0 lg:w-[100%] lg:text-xl lg:py-0 lg:pt-3 "   >
+            <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 sm:w-[100%]">
+              <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:py-1 lg:w-[100%] lg:py-0 lg:pt-3">
                 Admin Management
               </span>
 
-              <div className="font-normal text-secondary lg:w-[48%]  sm:w-[100%]">
+              <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
                 <h1 className="sm:text-sm">Level 1</h1>
                 <input
                   type="text"
@@ -92,7 +92,7 @@ export default function SystemSetting() {
                 <input
                   type="text"
                   name="level1"
-                  className="input rounded-lg px-2 outline-none py-1 mt-2 font-normal text-black sm:w-[96%] lg:w-[100%]"
+                  className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]"
                 />
               </div>
             </div>
