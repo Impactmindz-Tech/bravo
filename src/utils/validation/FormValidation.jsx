@@ -25,8 +25,8 @@ export const profileValidation = yup.object({
 
 export const createUser = yup.object({
     authenticationCode: yup.string().required('Authentication Code  is requird'),
-    firstName: yup.string().required('First Name is requird'),
-    lastName: yup.string().required('Last Name is requird'),
+    first_name: yup.string().required('First Name is requird'),
+    last_name: yup.string().required('Last Name is requird'),
     Gender: yup.string().required('Gender is requird'),
     email: emailValidation,
     contactNo: yup.string().required('Contact No is requird'),

@@ -20,7 +20,6 @@ const AdminManagementModalComponent = ({ isOpen, onClose }) => {
       <div className="h-[600px] overflow-y-auto mt-6 sm:h-[80vh] md:h-auto mainFormSection">
         <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[92vw]">
           <div className="relative bg-white  rounded-lg shadow-md pb-2">
-            {/* top model section */}
             <div className="flex justify-between items-center  bg-blue-900 py-2">
               <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">
                 Add Admin

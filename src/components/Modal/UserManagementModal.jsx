@@ -23,7 +23,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-
+  const [city, setCity] = useState(0);
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: yupResolver(createUser) })
 
   const handleFileChange = (event) => {
@@ -32,6 +32,17 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
+  };
+  const handleCountry = (country) => {
+    setCountryid(country);
+  };
+
+  const handleState = (state) => {
+    setstateid(state);
+  };
+
+  const handleCity = (city) => {
+    setCity(city);
   };
 
   const userCreate = async () => {
@@ -43,7 +54,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     }
   }
 
-  const onSubmit = (e)=>{
+  const onSubmit = (e) => {
     e.preventDefault()
   }
 
@@ -84,12 +95,12 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
 
                   <div className="flex gap-3">
                     <label className="flex items-center">
-                      <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent"/>
+                      <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" />
                       <span className="ml-2 text-gray-700">Admin</span>
                     </label>
 
                     <label className="inline-flex items-center">
-                      <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent"/>
+                      <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" />
                       <span className="ml-2 text-gray-700">Relatives</span>
                     </label>
                   </div>
@@ -116,142 +127,107 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
 
                   <div className="flex flex-wrap list-none mt-6 gap-6">
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm"> Authentication Code{" "} <span className="text-red-500 pl-1">*</span></h6>
+                      <label className="text-blue-300 text-sm"> Authentication Code{" "} <span className="text-red-500 pl-1">*</span></label>
                       <input type="text" name="Authentication_Code" placeholder="385555" className="input"  {...register("authenticationCode")} />
+                      <p>{errors?.authenticationCode?.message}</p>
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm"> First Name<span className="text-red-500 pl-1"> *</span>{" "} </h6>
-                      <input type="text" name="firstname" placeholder="Wade" className="input" />
-                    </div>
-
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">Last Name<span className="text-red-500 pl-1"> *</span>{" "}</h6>
-                      <input type="text" name="Authentication_Code" placeholder="Willams" className="input"/>
+                      <label className="text-blue-300 text-sm" htmlFor='first_name'>First Name<span className="text-red-500 pl-1"> *</span>{" "} </label>
+                      <input type="text" name="first_name" id='first_name' placeholder="Wade" className="input" {...register("first_name")} />
+                      <p>{errors?.first_name?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">
-                        Gender<span className="text-red-500 pl-1">*</span>{" "}
-                      </h6>
-                      <select name="gender" className="input">
-                        <option value="">Select</option>
+                      <label className="text-blue-300 text-sm" htmlFor='last_name'>Last Name<span className="text-red-500 pl-1"> *</span>{" "}</label>
+                      <input type="text" name="last_name" id='last_name' placeholder="Willams" className="input" {...register("last_name")} />
+                      <p>{errors?.last_name?.message}</p>
+                    </div>
+                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                      <label className="text-blue-300 text-sm" htmlFor='Gender'>Gender<span className="text-red-500 pl-1">*</span>{" "}</label>
+                      <select name="Gender" className="input" id='Gender' {...register("Gender")}>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
                       </select>
+                      <p>{errors?.Gender?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">
-                        Email Id<span className="text-red-500 pl-1">*</span>
-                      </h6>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
-                        className="input"
-                      />
+                      <label className="text-blue-300 text-sm" htmlFor='email'>Email Id<span className="text-red-500 pl-1">*</span></label>
+                      <input type="text" name="email" id='email' className="input" {...register("email")} />
+                      <p>{errors?.email?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">
-                        Contact No<span className="text-red-500 pl-1">*</span>
-                      </h6>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
-                        className="input"
-                      />
+                      <label className="text-blue-300 text-sm" htmlFor='contactNo'>Contact No<span className="text-red-500 pl-1">*</span></label>
+                      <input type="text" name="contactNo" id='contactNo' className="input" {...register("contactNo")} />
+                      <p>{errors?.contactNo?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">DOB</h6>
-                      <input
-                        type="date"
-                        name="Authentication_Code"
-                        className="input"
-                      />
+                      <label className="text-blue-300 text-sm" htmlFor='DOB'>DOB</label>
+                      <input type="date" name="DOB" id='DOB' className="input" {...register("DOB")} />
+                      <p>{errors?.DOB?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">Age</h6>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
-                        className="input"
-                      />
+                      <label className="text-blue-300 text-sm" htmlFor='Age'>Age</label>
+                      <input type="text" name="Age" id='Age' className="input" {...register("Age")} />
+                      <p>{errors?.Age?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">
-                        Address<span className="text-red-500 pl-1">*</span>
-                      </h6>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
-                        className="input"
-                      />
+                      <label className="text-blue-300 text-sm" htmlFor='Address'>Address<span className="text-red-500 pl-1">*</span>
+                      </label>
+                      <input type="text" name="Address" id='Address' className="input" {...register("Address")} />
+                      <p>{errors?.Address?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">Postal Code</h6>
-                      <input
-                        type="text"
-                        name="Authentication_Code"
-                        className="input"
-                      />
+                      <label className="text-blue-300 text-sm" htmlFor='postalCode'>Postal Code</label>
+                      <input type="text" name="postalCode" id='postalCode' className="input" {...register("postalCode")} />
+                      <p>{errors?.postalCode?.message}</p>
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">Suburb</h6>
+                      <label className="text-blue-300 text-sm">Suburb</label>
                       <CitySelect
                         containerClassName="p-0"
                         inputClassName="w-full outline-none border-set"
-                        countryid={countryid}
-                        stateid={stateid}
-                        onChange={(e) => {
-                          console.log(e);
-                        }}
+                        countryid={countryid.id}
+                        stateid={stateid.id}
+                        onChange={handleCity}
                         placeHolder="Select City"
                       />
-                      {/* <select name="gender" className="input">
-                      <option value="">Select</option>
-                    </select> */}
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">State</h6>
+                      <label className="text-blue-300 text-sm">State</label>
                       <StateSelect
                         containerClassName="p-0"
                         inputClassName="w-full outline-none border-set"
-                        countryid={countryid}
-                        onChange={(e) => {
-                          setstateid(e.id);
-                        }}
+                        countryid={countryid.id}
+                        onChange={handleState}
                         placeHolder="Select State"
                       />
-                      {/* <select name="gender" className="input ove">
-                      <option value="">Select</option>
-                    </select> */}
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">Country</h6>
+                      <label className="text-blue-300 text-sm">Country</label>
                       <CountrySelect
                         containerClassName="p-0"
                         inputClassName="w-full outline-none border-set"
                         showFlag={true}
-                        onChange={(e) => setCountryid(e.id)}
+                        onChange={handleCountry}
                         placeHolder="Select Country"
                       />
-                      {/* <input
-                      type="text"
-                      name="Authentication_Code"
-                      className="input"
-                    /> */}
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <h6 className="text-blue-300 text-sm">Action</h6>
-                      <select name="gender" className="input">
+                      <label className="text-blue-300 text-sm" htmlFor='Action'>Action</label>
+                      <select name="Action" id='Action' className="input" {...register("Action")}>
                         <option value="">Adult</option>
                         <option value="">Teen</option>
                         <option value="">Old</option>
                       </select>
+                      <p>{errors?.Action?.message}</p>
                     </div>
                   </div>
 
