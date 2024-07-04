@@ -13,13 +13,14 @@ import {
   LanguageSelect,
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { CreateUser, getAllGroup, getAllRoles } from "../../utils/service/DashboardService";
+import { CreateUser, EditUser, getAllGroup, getAllRoles } from "../../utils/service/DashboardService";
 import { useForm } from "react-hook-form"
 import { createUser } from '../../utils/validation/FormValidation';
 import toast from 'react-hot-toast';
 
 // eslint-disable-next-line react/prop-types
-const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen, }) => {
+const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen, items }) => {
+  console.log(items)
   const [selectedFile, setSelectedFile] = useState(null);
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [countryid, setCountryid] = useState(0);
@@ -27,8 +28,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
   const [group, setGroup] = useState('');
   const [role, setRole] = useState('');
   const [city, setCity] = useState(0);
-  const { handleSubmit, register, formState: { errors } } = useForm({ resolver: yupResolver(createUser) })
-
+  const { handleSubmit, register, formState: { errors }, setValue, reset } = useForm({ resolver: yupResolver(createUser) })
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -48,6 +48,50 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     setCity(city);
   };
 
+  const getAllGroups = async () => {
+    try {
+      const response = await getAllGroup()
+      setGroup(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const getAllRoless = async () => {
+    try {
+      const response = await getAllRoles()
+      setRole(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    getAllGroups()
+    getAllRoless()
+  }, [])
+  useEffect(() => {
+    console.log(items, 'tinku')
+    if (items) {
+      setValue("authrization_code", items?.authrization_code || '')
+      setValue("first_name", items?.first_name || '')
+      setValue("last_name", items?.last_name)
+      setValue("username", items?.username)
+      setValue("phone", items?.phone)
+      setValue("dob", items?.date_of_birth)
+      setValue("Age", items?.Age)
+      setValue("address", items?.address)
+      setValue("postal_code", items?.postal_code)
+      setValue("role_id", items?.role_name)
+      setValue("password", items?.password)
+      setValue("group_id", items?.group_id)
+      setValue("email", items?.email)
+      setCountryid({ id: items.country, name: items.country });
+      setstateid({ id: items.state, name: items.state });
+      setCity({ id: items.suburb, name: items.suburb });
+    } else {
+      reset()
+    }
+
+  }, [items, reset, setValue])
 
   const onSubmit = async (data) => {
     const formData = new FormData()
@@ -67,38 +111,26 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     formData.append("country", countryid?.name)
     formData.append("group_id", data.group_id);
     formData.append("email", data?.email)
-    try {
-      const response = await CreateUser(formData)
-      if(response?.success){
-        toast.success(response?.message)
+    if (items?.user_id) {
+      try {
+        const responce = await EditUser(items?.user_id, formData)
+      } catch (error) {
+        console.log(error)
       }
-      console.log(response)
-    } catch (error) {
-      console.log(error)
+    } else {
+      try {
+        const response = await CreateUser(formData)
+        if (response?.success) {
+          toast.success(response?.message)
+        }
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
-  const getAllGroups = async () => {
-    try {
-      const response = await getAllGroup()
-      setGroup(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const getAllRoless = async () => {
-    try {
-      const response = await getAllRoles()
-      setRole(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
-  useEffect(() => {
-    getAllGroups()
-    getAllRoless()
-  }, [])
 
   return (
     <>
@@ -139,7 +171,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                       role?.data?.map((item, index) => {
                         return (
                           <div className='flex items-center' key={index}>
-                            <input type="radio" name="fav_language" value={item.role_id} className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
+                            <input type="radio" checked={items ? item.role_id == items?.role_id : null} name="role_name" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
                             <span className="ml-2 text-gray-700">{item.role_name}</span>
                           </div>
                         )
@@ -240,6 +272,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                         containerClassName="p-0"
                         inputClassName="w-full outline-none border-set"
                         countryid={countryid.id}
+                        defaultValue={city}
                         stateid={stateid.id}
                         onChange={handleCity}
                         placeHolder="Select City"
@@ -252,6 +285,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                         containerClassName="p-0"
                         inputClassName="w-full outline-none border-set"
                         countryid={countryid.id}
+                        defaultValue={stateid}
                         onChange={handleState}
                         placeHolder="Select State"
                       />
@@ -263,6 +297,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                         containerClassName="p-0"
                         inputClassName="w-full outline-none border-set"
                         showFlag={true}
+                        defaultValue={countryid}
                         onChange={handleCountry}
                         placeHolder="Select Country"
                       />
@@ -288,7 +323,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                     />
                   </div>
 
-                  <div className="flex text gap-3 mt-3 sm:flex-col">
+                  {/* <div className="flex text gap-3 mt-3 sm:flex-col">
                     <span className="text-md font-medium text-blue-300 pt-2">
                       Relative Details
                     </span>
@@ -302,12 +337,12 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                       </i>{" "}
                       Add Relative
                     </button>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
                   <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
-                    Save
+                    {items ? 'Update' : 'Save'}
                   </button>
                   <button
                     onClick={() => setAddAdminModalOpen(false)}

@@ -25,6 +25,7 @@ export default function Login() {
     try {
       const responce = await LoginApi(formData)
       if (responce?.isSuccess) {
+        console.log(responce)
         setLocalStorage("token", responce?.token)
         toast.success(responce?.message)
         navigate("/")

@@ -16,6 +16,14 @@ export const CreateUser = async (payload) => {
         console.log(error)
     }
 }
+export const EditUser = async (id ,payload) => {
+    try {
+        const responce = await axiosInstance.put(`?page=editUser/${id}`, payload)
+        return responce.data
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const getAllGroup = async (payload) => {
     try {

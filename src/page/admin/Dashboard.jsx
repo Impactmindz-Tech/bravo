@@ -19,16 +19,17 @@ export default function Dashboard() {
   const [addAdminModalOpen, setAddAdminModalOpen] = useState(false);
   const [viewUserModalOpen, setViewUserModalOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const dispatch = useDispatch();
   const dataDetails = useSelector((state) => state.user.user);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = async (user_id) => {
     const formData = new FormData();
     formData.append("user_id", user_id)
-    console.log(user_id, 'tinku sie')
     try {
       const response = await userStateUpdate(formData)
       console.log(response, 'id update')
@@ -111,15 +112,9 @@ export default function Dashboard() {
                 <td className="text-left">
                   <div className="flex gap-2 ">
                     <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">
-                      <img
-                        src={adminUserProfile}
-                        alt="user "
-                        className="rounded-full"
-                      />
+                      <img src={adminUserProfile} alt="user " className="rounded-full" />
                     </div>
-                    <span className="md:text-xl lg:text-2xl">
-                      {item.username}
-                    </span>
+                    <span className="md:text-xl lg:text-2xl">{item.username}</span>
                   </div>
                 </td>
 
@@ -131,14 +126,7 @@ export default function Dashboard() {
                   <Button onClick={handleClick} >
                     {item.is_active == '1' ? 'Active' : 'Inactive'}
                   </Button>
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      'aria-labelledby': 'fade-button',
-                    }}
-                  >
+                  <Menu anchorEl={anchorEl} open={open} onClose={handleClose} MenuListProps={{ 'aria-labelledby': 'fade-button', }}>
                     {
                       item?.is_active == 1 ?
                         <MenuItem onClick={() => handleClose(item?.user_id)}>InActive</MenuItem>
@@ -159,6 +147,11 @@ export default function Dashboard() {
                 <td className="text-left">
                   <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
                     <img
+                      onClick={() => {
+                        setSelectedUserId(item);
+                        setAddAdminModalOpen(true)
+                      }
+                      }
                       src={editIcon}
                       alt="edit icon"
                       className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
@@ -182,6 +175,7 @@ export default function Dashboard() {
         <UserManagementModalComponent
           addAdminModalOpen={addAdminModalOpen}
           setAddAdminModalOpen={setAddAdminModalOpen}
+          items={selectedUserId}
         />
       </div>
 
