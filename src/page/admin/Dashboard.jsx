@@ -3,43 +3,38 @@ import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import UserManagementModalComponent from "../../components/Modal/UserManagementModal";
-import { IoChevronDown } from "react-icons/io5";
 import { FaEye } from "react-icons/fa";
-import adminUserProfile from "../../assets/images/adminUserProfile.svg";
-import ViewRelativeModal from "../../components/Modal/ViewRelativeModal";
 import editIcon from "../../assets/images/editIcon.svg";
-import deleteIcon from "../../assets/images/deleteIcon.svg";
+import adminUserProfile from "../../assets/images/adminUserProfile.svg";
 import { DashboardApi, userStateUpdate } from "../../utils/service/DashboardService";
 import { setUser } from "../../store/Slice/UserSlice";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-export default function Dashboard() {
+const Dashboard = () => {
   const [addAdminModalOpen, setAddAdminModalOpen] = useState(false);
-  const [viewUserModalOpen, setViewUserModalOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const dispatch = useDispatch();
   const dataDetails = useSelector((state) => state.user.user);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = async (user_id) => {
     const formData = new FormData();
-    formData.append("user_id", user_id)
+    formData.append("user_id", user_id);
     try {
-      const response = await userStateUpdate(formData)
-      console.log(response, 'id update')
+      const response = await userStateUpdate(formData);
+      console.log(response, 'id update');
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
     setAnchorEl(null);
   };
-
-
 
   const fetchDashboardData = async () => {
     try {
@@ -53,7 +48,17 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchDashboardData();
-  }, []);
+  }, [dispatch]);
+
+  const handleEditUser = (user) => {
+    setSelectedUser(user);
+    setAddAdminModalOpen(true);
+  };
+
+  const handleAddUser = () => {
+    setSelectedUser(null);
+    setAddAdminModalOpen(true);
+  };
 
   return (
     <>
@@ -74,12 +79,9 @@ export default function Dashboard() {
             </i>
           </div>
 
-          <button onClick={() => setViewUserModalOpen(true)} className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 md:text-xl sm:text-sm lg:gap-3 lg:text-2xl px-8">
-            Filter
-          </button>
           <button
             className="bg-blue-900 text-white flex justify-center  hover:border-[#ccc] sm:text-sm md:text-xl"
-            onClick={() => setAddAdminModalOpen(true)}
+            onClick={handleAddUser}
           >
             <i className="my-0.4 pr-2 text-2xl sm:text-lg sm:my-0  md:text-md md:my-0 lg:my-2">
               <IoMdAddCircleOutline />
@@ -124,11 +126,11 @@ export default function Dashboard() {
 
                 <td className="text-left">
                   <Button onClick={handleClick} >
-                    {item.is_active == '1' ? 'Active' : 'Inactive'}
+                    {item.is_active === '1' ? 'Active' : 'Inactive'}
                   </Button>
                   <Menu anchorEl={anchorEl} open={open} onClose={handleClose} MenuListProps={{ 'aria-labelledby': 'fade-button', }}>
                     {
-                      item?.is_active == 1 ?
+                      item?.is_active === 1 ?
                         <MenuItem onClick={() => handleClose(item?.user_id)}>InActive</MenuItem>
                         :
                         <MenuItem onClick={() => handleClose(item?.user_id)}>Active</MenuItem>
@@ -139,7 +141,6 @@ export default function Dashboard() {
                 <td className="text-left">
                   <div
                     className="flex justify-center text-[#065813] cursor-pointer"
-                  // onClick={openRelativeModal}
                   >
                     <FaEye />
                   </div>
@@ -147,21 +148,11 @@ export default function Dashboard() {
                 <td className="text-left">
                   <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
                     <img
-                      onClick={() => {
-                        setSelectedUserId(item);
-                        setAddAdminModalOpen(true)
-                      }
-                      }
+                      onClick={() => handleEditUser(item)}
                       src={editIcon}
                       alt="edit icon"
                       className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
                     />
-
-                    {/* <img
-                      src={deleteIcon}
-                      alt="edit icon"
-                      className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0"
-                    /> */}
                   </div>
                 </td>
               </tr>
@@ -170,22 +161,16 @@ export default function Dashboard() {
         </table>
       </div>
 
-      {/* popup model */}
+      {/* Modal for User Management */}
       <div className="flex items-center ">
         <UserManagementModalComponent
           addAdminModalOpen={addAdminModalOpen}
           setAddAdminModalOpen={setAddAdminModalOpen}
-          items={selectedUserId}
-        />
-      </div>
-
-      {/* relative modal */}
-      <div className="flex items-center ">
-        <ViewRelativeModal
-          viewUserModalOpen={viewUserModalOpen}
-          setViewUserModalOpen={setViewUserModalOpen}
+          items={selectedUser}
         />
       </div>
     </>
   );
-}
+};
+
+export default Dashboard;

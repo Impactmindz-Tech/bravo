@@ -171,7 +171,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                       role?.data?.map((item, index) => {
                         return (
                           <div className='flex items-center' key={index}>
-                            <input type="radio" checked={items ? item.role_id == items?.role_id : null} name="role_name" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
+                            <input type="radio" checked={item.role_id == items?.role_id} name="role_name" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
                             <span className="ml-2 text-gray-700">{item.role_name}</span>
                           </div>
                         )
