@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FiUpload } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import AddRelativeModal from "./AddRelativeModal";
@@ -13,9 +13,10 @@ import {
   LanguageSelect,
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { CreateUser } from "../../utils/service/DashboardService";
+import { CreateUser, getAllGroup, getAllRoles } from "../../utils/service/DashboardService";
 import { useForm } from "react-hook-form"
 import { createUser } from '../../utils/validation/FormValidation';
+import toast from 'react-hot-toast';
 
 // eslint-disable-next-line react/prop-types
 const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen, }) => {
@@ -23,6 +24,8 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
+  const [group, setGroup] = useState('');
+  const [role, setRole] = useState('');
   const [city, setCity] = useState(0);
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: yupResolver(createUser) })
 
@@ -45,27 +48,61 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     setCity(city);
   };
 
-  const userCreate = async () => {
+
+  const onSubmit = async (data) => {
+    const formData = new FormData()
+    formData.append("authrization_code", data?.authrization_code)
+    formData.append("first_name", data?.first_name)
+    formData.append("last_name", data?.last_name)
+    formData.append("username", data?.email)
+    formData.append("phone", data?.phone)
+    formData.append("dob", data?.dob)
+    formData.append("Age", data?.Age)
+    formData.append("address", data?.address)
+    formData.append("postal_code", data?.postal_code)
+    formData.append("role_id", data?.role_id)
+    formData.append("password", data?.password)
+    formData.append("suburb", city?.name)
+    formData.append("state", stateid?.name)
+    formData.append("country", countryid?.name)
+    formData.append("group_id", data.group_id);
+    formData.append("email", data?.email)
     try {
-      const response = await CreateUser()
+      const response = await CreateUser(formData)
+      if(response?.success){
+        toast.success(response?.message)
+      }
       console.log(response)
     } catch (error) {
       console.log(error)
     }
   }
 
-  const onSubmit = (e) => {
-    e.preventDefault()
+  const getAllGroups = async () => {
+    try {
+      const response = await getAllGroup()
+      setGroup(response)
+    } catch (error) {
+      console.log(error)
+    }
   }
+  const getAllRoless = async () => {
+    try {
+      const response = await getAllRoles()
+      setRole(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getAllGroups()
+    getAllRoless()
+  }, [])
 
   return (
     <>
-      <Modal
-        open={addAdminModalOpen}
-        onClose={() => setAddAdminModalOpen(false)}
-        className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 "
-      >
-
+      <Modal open={addAdminModalOpen} onClose={() => setAddAdminModalOpen(false)} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 " >
         <div className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
           <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
             <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
@@ -87,22 +124,27 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                       Choose Group <span className="text-red-500">*</span>
                     </h1>
                     <div>
-                      <select name="groupSection" className="input w-full">
-                        <option value="">Select</option>
+                      <select name="groupSection" className="input w-full" {...register("group_id")}>
+                        {
+                          group?.data?.map((item, index) => (
+                            <option key={index} value={item.group_id}>{item.name}</option>
+                          ))
+                        }
                       </select>
                     </div>
                   </div>
 
                   <div className="flex gap-3">
-                    <label className="flex items-center">
-                      <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" />
-                      <span className="ml-2 text-gray-700">Admin</span>
-                    </label>
-
-                    <label className="inline-flex items-center">
-                      <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" />
-                      <span className="ml-2 text-gray-700">Relatives</span>
-                    </label>
+                    {
+                      role?.data?.map((item, index) => {
+                        return (
+                          <div className='flex items-center' key={index}>
+                            <input type="radio" name="fav_language" value={item.role_id} className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
+                            <span className="ml-2 text-gray-700">{item.role_name}</span>
+                          </div>
+                        )
+                      })
+                    }
                   </div>
 
                   {/* file upload section */}
@@ -127,9 +169,14 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
 
                   <div className="flex flex-wrap list-none mt-6 gap-6">
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm"> Authentication Code{" "} <span className="text-red-500 pl-1">*</span></label>
-                      <input type="text" name="Authentication_Code" placeholder="385555" className="input"  {...register("authenticationCode")} />
-                      <p>{errors?.authenticationCode?.message}</p>
+                      <label className="text-blue-300 text-sm" htmlFor='authrization_code'> Authentication Code{" "} <span className="text-red-500 pl-1">*</span></label>
+                      <input type="text" name="authrization_code" id='authrization_code' placeholder="385555" className="input"  {...register("authrization_code")} />
+                      <p>{errors?.authrization_code?.message}</p>
+                    </div>
+                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                      <label className="text-blue-300 text-sm" htmlFor='password'>passowrd{" "} <span className="text-red-500 pl-1">*</span></label>
+                      <input type="text" name="password" id='password' placeholder="385555" className="input"  {...register("password")} />
+                      <p>{errors?.password?.message}</p>
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor='first_name'>First Name<span className="text-red-500 pl-1"> *</span>{" "} </label>
@@ -158,15 +205,15 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm" htmlFor='contactNo'>Contact No<span className="text-red-500 pl-1">*</span></label>
-                      <input type="text" name="contactNo" id='contactNo' className="input" {...register("contactNo")} />
-                      <p>{errors?.contactNo?.message}</p>
+                      <label className="text-blue-300 text-sm" htmlFor='phone'>Contact No<span className="text-red-500 pl-1">*</span></label>
+                      <input type="text" name="phone" id='phone' className="input" {...register("phone")} />
+                      <p>{errors?.phone?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm" htmlFor='DOB'>DOB</label>
-                      <input type="date" name="DOB" id='DOB' className="input" {...register("DOB")} />
-                      <p>{errors?.DOB?.message}</p>
+                      <label className="text-blue-300 text-sm" htmlFor='dob'>DOB</label>
+                      <input type="date" name="dob" id='dob' className="input" {...register("dob")} />
+                      <p>{errors?.dob?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
@@ -176,16 +223,16 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm" htmlFor='Address'>Address<span className="text-red-500 pl-1">*</span>
+                      <label className="text-blue-300 text-sm" htmlFor='address'>Address<span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="text" name="Address" id='Address' className="input" {...register("Address")} />
-                      <p>{errors?.Address?.message}</p>
+                      <input type="text" name="address" id='address' className="input" {...register("address")} />
+                      <p>{errors?.address?.message}</p>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm" htmlFor='postalCode'>Postal Code</label>
-                      <input type="text" name="postalCode" id='postalCode' className="input" {...register("postalCode")} />
-                      <p>{errors?.postalCode?.message}</p>
+                      <label className="text-blue-300 text-sm" htmlFor='postal_code'>Postal Code</label>
+                      <input type="text" name="postal_code" id='postal_code' className="input" {...register("postal_code")} />
+                      <p>{errors?.postal_code?.message}</p>
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm">Suburb</label>
@@ -222,12 +269,12 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor='Action'>Action</label>
-                      <select name="Action" id='Action' className="input" {...register("Action")}>
+                      <select name="Action" id='Action' className="input" >
                         <option value="">Adult</option>
                         <option value="">Teen</option>
                         <option value="">Old</option>
                       </select>
-                      <p>{errors?.Action?.message}</p>
+                      {/* <p>{errors?.Action?.message}</p> */}
                     </div>
                   </div>
 

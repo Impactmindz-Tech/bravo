@@ -92,7 +92,6 @@ export default function AdminManagement() {
                     alt="edit icon"
                     className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
                   />
-
                   <img
                     src={deleteIcon}
                     alt="edit icon"
