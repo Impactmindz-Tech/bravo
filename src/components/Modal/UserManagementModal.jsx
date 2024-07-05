@@ -20,7 +20,6 @@ import toast from 'react-hot-toast';
 
 // eslint-disable-next-line react/prop-types
 const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen, items }) => {
-  console.log(items)
   const [selectedFile, setSelectedFile] = useState(null);
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [countryid, setCountryid] = useState(0);
@@ -88,6 +87,9 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
       setstateid({ id: items.state, name: items.state });
       setCity({ id: items.suburb, name: items.suburb });
     } else {
+      setCountryid({ id: '', name: '' });
+      setstateid({ id: '', name: '' });
+      setCity({ id: '', name: '' });
       reset()
     }
 
@@ -114,16 +116,18 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     if (items?.user_id) {
       try {
         const responce = await EditUser(items?.user_id, formData)
+        if (responce?.isSuccess) {
+          toast.success(response?.message)
+        }
       } catch (error) {
         console.log(error)
       }
     } else {
       try {
         const response = await CreateUser(formData)
-        if (response?.success) {
+        if (response?.isSuccess) {
           toast.success(response?.message)
         }
-        console.log(response)
       } catch (error) {
         console.log(error)
       }
@@ -171,7 +175,12 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                       role?.data?.map((item, index) => {
                         return (
                           <div className='flex items-center' key={index}>
-                            <input type="radio" checked={item.role_id == items?.role_id} name="role_name" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
+                            <input type="radio"
+                              value={item.role_id}
+                              name="role_id"
+                              className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent"
+                              {...register("role_id")}
+                              defaultChecked={items ? item.role_id == items?.role_id : false} />
                             <span className="ml-2 text-gray-700">{item.role_name}</span>
                           </div>
                         )
