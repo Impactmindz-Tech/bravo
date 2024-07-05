@@ -4,7 +4,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import AddRelativeModal from "./AddRelativeModal";
+import AddRelativeModal from "../AddRelativeModal";
 import { Modal } from "@mui/material";
 import {
   CitySelect,
@@ -13,13 +13,13 @@ import {
   LanguageSelect,
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { CreateUser, EditUser, getAllGroup, getAllRoles } from "../../utils/service/DashboardService";
+import { CreateUser, EditUser, getAllGroup, getAllRoles } from "../../../utils/service/DashboardService";
 import { useForm } from "react-hook-form"
-import { createUser } from '../../utils/validation/FormValidation';
+import { createUser } from '../../../utils/validation/FormValidation';
 import toast from 'react-hot-toast';
 
 // eslint-disable-next-line react/prop-types
-const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen, items }) => {
+const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [countryid, setCountryid] = useState(0);
@@ -96,33 +96,52 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
   }, [items, reset, setValue])
 
   const onSubmit = async (data) => {
-    const formData = new FormData()
-    formData.append("authrization_code", data?.authrization_code)
-    formData.append("first_name", data?.first_name)
-    formData.append("last_name", data?.last_name)
-    formData.append("username", data?.email)
-    formData.append("phone", data?.phone)
-    formData.append("dob", data?.dob)
-    formData.append("Age", data?.Age)
-    formData.append("address", data?.address)
-    formData.append("postal_code", data?.postal_code)
-    formData.append("role_id", data?.role_id)
-    formData.append("password", data?.password)
-    formData.append("suburb", city?.name)
-    formData.append("state", stateid?.name)
-    formData.append("country", countryid?.name)
-    formData.append("group_id", data.group_id);
-    formData.append("email", data?.email)
+
     if (items?.user_id) {
+      const formData = new FormData()
+      formData.append("authrization_code", data?.authrization_code)
+      formData.append("first_name", data?.first_name)
+      formData.append("last_name", data?.last_name)
+      formData.append("username", data?.email)
+      formData.append("phone", data?.phone)
+      formData.append("dob", data?.dob)
+      formData.append("Age", data?.Age)
+      formData.append("address", data?.address)
+      formData.append("postal_code", data?.postal_code)
+      formData.append("role_id", data?.role_id)
+      formData.append("password", data?.password)
+      formData.append("suburb", city?.name)
+      formData.append("state", stateid?.name)
+      formData.append("country", countryid?.name)
+      formData.append("group_id", data.group_id)
+      formData.append("email", data?.email)
+      formData.append("user_id", items?.user_id)
       try {
-        const responce = await EditUser(items?.user_id, formData)
+        const responce = await EditUser(formData)
         if (responce?.isSuccess) {
-          toast.success(response?.message)
+          toast.success(responce?.message)
         }
       } catch (error) {
         console.log(error)
       }
     } else {
+      const formData = new FormData()
+      formData.append("authrization_code", data?.authrization_code)
+      formData.append("first_name", data?.first_name)
+      formData.append("last_name", data?.last_name)
+      formData.append("username", data?.email)
+      formData.append("phone", data?.phone)
+      formData.append("dob", data?.dob)
+      formData.append("Age", data?.Age)
+      formData.append("address", data?.address)
+      formData.append("postal_code", data?.postal_code)
+      formData.append("role_id", data?.role_id)
+      formData.append("password", data?.password)
+      formData.append("suburb", city?.name)
+      formData.append("state", stateid?.name)
+      formData.append("country", countryid?.name)
+      formData.append("group_id", data.group_id)
+      formData.append("email", data?.email)
       try {
         const response = await CreateUser(formData)
         if (response?.isSuccess) {
@@ -376,4 +395,4 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
   );
 };
 
-export default AdminManagementModalComponent;
+export default UserManagementModal;

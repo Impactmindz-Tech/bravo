@@ -4,7 +4,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import adminUserProfile from "../../assets/images/adminUserProfile.svg";
 import editIcon from "../../assets/images/editIcon.svg";
 import deleteIcon from "../../assets/images/deleteIcon.svg";
-import AdminManagementModalComponent from "../../components/Modal/UserManagementModal";
+import AdminManagementModalComponent from "../../components/Modal/user-management/UserManagementModal";
 export default function AdminManagement() {
   const [addAdminModalOpen, setAddAdminModalOpen] = useState(false);
 

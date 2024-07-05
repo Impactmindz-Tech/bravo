@@ -1,13 +1,16 @@
 import axiosInstance from "../axiosInstance/axiosInstance"
 
-export const DashboardApi = async () => {
+export const DashboardApi = async (payload) => {
+    const { items_per_page, page } = payload;
     try {
-        const responce = await axiosInstance.get(`?page=getAllUserData`)
-        return responce.data
+        const response = await axiosInstance.get(`?page=getAllUserData&items_per_page=${items_per_page}&pg=${page}`);
+        return response.data;
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        throw new Error("Failed to load dashboard data");
     }
 }
+
 export const CreateUser = async (payload) => {
     try {
         const responce = await axiosInstance.post(`?page=createUser`, payload)
@@ -16,9 +19,9 @@ export const CreateUser = async (payload) => {
         console.log(error)
     }
 }
-export const EditUser = async (id ,payload) => {
+export const EditUser = async (payload) => {
     try {
-        const responce = await axiosInstance.put(`?page=editUser/${id}`, payload)
+        const responce = await axiosInstance.post(`?page=editUser`, payload)
         return responce.data
     } catch (error) {
         console.log(error)

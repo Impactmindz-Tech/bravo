@@ -4,7 +4,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
-import Dashboard from "../page/admin/Dashboard";
+import Dashboard from "../page/admin/User_Management/Dashboard";
 import Login from "../page/auth/Login";
 import GroupManagement from "../page/admin/GroupManagement";
 import AdminManagement from "../page/admin/AdminManagement";
@@ -15,6 +15,7 @@ import AuthProteced from "../authenticat/AuthProteced";
 import { getLocalStorage } from "../utils/LocalStorageUtills";
 import DashboardProtected from "../authenticat/DashboardProtected";
 import { useEffect } from "react";
+import UserDetails from "../page/admin/User_Management/UserDetails";
 
 const Root = () => {
   const navigate = useNavigate();
@@ -56,6 +57,14 @@ const router = createBrowserRouter([
         element: (
           <DashboardLayout>
             <Dashboard />
+          </DashboardLayout>
+        ),
+      },
+      {
+        path: ":id",
+        element: (
+          <DashboardLayout>
+            <UserDetails />
           </DashboardLayout>
         ),
       },
