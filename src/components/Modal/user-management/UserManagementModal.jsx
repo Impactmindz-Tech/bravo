@@ -19,7 +19,7 @@ import { createUser } from '../../../utils/validation/FormValidation';
 import toast from 'react-hot-toast';
 
 // eslint-disable-next-line react/prop-types
-const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items }) => {
+const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items , onUserCreated }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [countryid, setCountryid] = useState(0);
@@ -68,7 +68,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items })
     getAllRoless()
   }, [])
   useEffect(() => {
-    console.log(items, 'tinku')
     if (items) {
       setValue("authrization_code", items?.authrization_code || '')
       setValue("first_name", items?.first_name || '')
@@ -146,6 +145,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items })
         const response = await CreateUser(formData)
         if (response?.isSuccess) {
           toast.success(response?.message)
+          onUserCreated()
           setAddAdminModalOpen(false)
         }
       } catch (error) {

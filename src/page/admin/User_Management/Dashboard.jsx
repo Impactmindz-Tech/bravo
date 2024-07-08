@@ -66,7 +66,7 @@ const Dashboard = () => {
 
   const handleModalClose = () => {
     setAddAdminModalOpen(false);
-    fetchDashboardData();
+    // fetchDashboardData();
   };
 
   return (
@@ -174,6 +174,7 @@ const Dashboard = () => {
         addAdminModalOpen={addAdminModalOpen}
         setAddAdminModalOpen={handleModalClose}
         items={selectedUser}
+        onUserCreated={fetchDashboardData}
       />
     </>
   );

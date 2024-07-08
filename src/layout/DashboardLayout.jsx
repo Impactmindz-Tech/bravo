@@ -6,7 +6,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <div>
       <Header />
-      <div className="flex justify-start">
+      <div className="flex justify-start" style={{ height: 'calc(100vh - 69px)' }}>
         <div className='w-[80px] sm:w-[10%] md:h-[100vh] md:w-[10%] sm:h-[100vh]  bg-blue-900'>
           <NavBar />
         </div>
