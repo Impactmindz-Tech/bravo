@@ -38,12 +38,12 @@ const Dashboard = () => {
   };
 
   const fetchDashboardData = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await DashboardApi({ page: currentPage, items_per_page: itemsPerPage });
       dispatch(setUser(response));
       setTotalPages(Math.ceil(response.total_items / itemsPerPage));
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.log(error);
       throw new Error("Failed to load dashboard data");
@@ -62,6 +62,11 @@ const Dashboard = () => {
   const handleAddUser = () => {
     setSelectedUser(null);
     setAddAdminModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setAddAdminModalOpen(false);
+    fetchDashboardData();
   };
 
   return (
@@ -144,7 +149,7 @@ const Dashboard = () => {
                       alt="edit icon"
                       className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
                     />
-                    <Link to={`/admin/dashboard/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer">
+                    <Link to={`/admin/user/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer">
                       <FaEye />
                     </Link>
                   </div>
@@ -167,7 +172,7 @@ const Dashboard = () => {
       {/* Modal for User Management */}
       <UserManagementModalComponent
         addAdminModalOpen={addAdminModalOpen}
-        setAddAdminModalOpen={setAddAdminModalOpen}
+        setAddAdminModalOpen={handleModalClose}
         items={selectedUser}
       />
     </>

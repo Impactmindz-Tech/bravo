@@ -53,7 +53,7 @@ const router = createBrowserRouter([
     element: <DashboardProtected />,
     children: [
       {
-        path: "dashboard",
+        path: "user",
         element: (
           <DashboardLayout>
             <Dashboard />
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: ":id",
+        path: "user/:id",
         element: (
           <DashboardLayout>
             <UserDetails />

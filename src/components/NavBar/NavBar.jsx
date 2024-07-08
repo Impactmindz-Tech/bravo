@@ -7,7 +7,7 @@ import { VscSettingsGear } from "react-icons/vsc";
 
 const NavBar = () => {
   const navLinks = [
-    { to: "/admin/dashboard", label: "Dashboard", icon: <CiHome /> },
+    { to: "/admin/user", label: "Dashboard", icon: <CiHome /> },
     {
       to: "/admin/adminmanagement",
       label: "Admin Management",

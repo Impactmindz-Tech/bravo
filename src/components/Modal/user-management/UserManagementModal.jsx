@@ -146,6 +146,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items })
         const response = await CreateUser(formData)
         if (response?.isSuccess) {
           toast.success(response?.message)
+          setAddAdminModalOpen(false)
         }
       } catch (error) {
         console.log(error)
