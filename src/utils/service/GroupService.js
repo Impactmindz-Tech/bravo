@@ -8,3 +8,21 @@ export const CreateGroup = async (payload) => {
         console.log(error)
     }
 }
+
+export const getUser = async () => {
+    try {
+        const responce = await axiosInstance.get(`?page=getAllUserData`, )
+        return responce.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getGroup = async () => {
+    try {
+        const responce = await axiosInstance.get(`?page=getAllUserData`, )
+        return responce.data
+    } catch (error) {
+        console.log(error)
+    }
+}

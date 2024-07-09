@@ -7,7 +7,7 @@ import AuthLayout from "../layout/AuthLayout";
 import Dashboard from "../page/admin/User_Management/Dashboard";
 import Login from "../page/auth/Login";
 import GroupManagement from "../page/admin/Group_Management/GroupManagement";
-import AdminManagement from "../page/admin/AdminManagement";
+import AdminManagement from "../page/admin/admin_management/AdminManagement";
 import SystemSetting from "../page/admin/SystemSetting";
 import Calendar from "../page/admin/Calendar";
 import DashboardLayout from "../layout/DashboardLayout";

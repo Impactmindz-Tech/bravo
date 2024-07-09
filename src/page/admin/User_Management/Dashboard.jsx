@@ -30,7 +30,7 @@ const Dashboard = () => {
       const response = await userStateUpdate(formData);
       if (response?.isSuccess) {
         toast.success(response?.message);
-        fetchDashboardData(); // Fetch data for the current page
+        fetchDashboardData();
       }
     } catch (error) {
       console.log(error);

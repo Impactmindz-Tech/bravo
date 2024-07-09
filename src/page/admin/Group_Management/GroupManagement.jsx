@@ -6,9 +6,12 @@ import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import EditGroupManagementModal from "../../../components/Modal/EditGroupManagementModal";
 import CreateGroupModal from "../../../components/Modal/CreateGroupModal";
+
+
 export default function GroupManagement() {
   const [editGroupModalOpen, setEditGroupModalOpen] = useState(false);
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
+
   return (
     <>
       {/* top title */}

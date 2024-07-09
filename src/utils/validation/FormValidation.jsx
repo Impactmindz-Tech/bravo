@@ -37,3 +37,8 @@ export const createUser = yup.object({
     role_id: yup.string().required('Role is required'),
     group_id: yup.string().required('Group is required'),
 })
+
+export const createGroup = yup.object({
+    group_name: yup.string().required('Group Name is required'),
+    group_desc: yup.string().required('Group Description is required'),
+})
