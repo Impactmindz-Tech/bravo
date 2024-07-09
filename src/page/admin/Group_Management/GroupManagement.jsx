@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import adminUserProfile from "../../assets/images/adminUserProfile.svg";
-import editIcon from "../../assets/images/editIcon.svg";
-import deleteIcon from "../../assets/images/deleteIcon.svg";
+import adminUserProfile from "../../../assets/images/adminUserProfile.svg";
+import editIcon from "../../../assets/images/editIcon.svg";
+import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import EditGroupManagementModal from "../../components/Modal/EditGroupManagementModal";
-import CreateGroupModal from "../../components/Modal/CreateGroupModal";
+import EditGroupManagementModal from "../../../components/Modal/EditGroupManagementModal";
+import CreateGroupModal from "../../../components/Modal/CreateGroupModal";
 export default function GroupManagement() {
- const [editGroupModalOpen, setEditGroupModalOpen] = useState(false);
-const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
+  const [editGroupModalOpen, setEditGroupModalOpen] = useState(false);
+  const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
   return (
     <>
       {/* top title */}
@@ -30,7 +30,7 @@ const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
             </i>
           </div>
           {/* create group btn */}
-          <button onClick={()=>setCreateGroupModalOpen(true)}className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3 lg:text-2xl">
+          <button onClick={() => setCreateGroupModalOpen(true)} className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3 lg:text-2xl">
             <i className="my-0.4 pr-2 text-2xl sm:my-1 md:text-md md:my-1 sm:text-sm">
               <IoMdAddCircleOutline />
             </i>
@@ -112,7 +112,7 @@ const[createGroupModalOpen,setCreateGroupModalOpen]=useState(false);
 
 
 
-      
+
     </>
   );
 }

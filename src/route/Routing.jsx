@@ -6,7 +6,7 @@ import {
 import AuthLayout from "../layout/AuthLayout";
 import Dashboard from "../page/admin/User_Management/Dashboard";
 import Login from "../page/auth/Login";
-import GroupManagement from "../page/admin/GroupManagement";
+import GroupManagement from "../page/admin/Group_Management/GroupManagement";
 import AdminManagement from "../page/admin/AdminManagement";
 import SystemSetting from "../page/admin/SystemSetting";
 import Calendar from "../page/admin/Calendar";
@@ -22,7 +22,7 @@ const Root = () => {
   const isAuthenticated = getLocalStorage("token");
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/admin/dashboard");
+      navigate("/admin/user");
     } else {
       navigate("/auth/login");
     }

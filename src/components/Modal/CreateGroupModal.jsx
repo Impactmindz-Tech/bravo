@@ -6,6 +6,7 @@ import { Modal } from "@mui/material";
 import Multiselect from 'multiselect-react-dropdown';
 import 'react-tagsinput/react-tagsinput.css';
 import { DashboardApi } from "../../utils/service/DashboardService";
+import { CreateGroup } from "../../utils/service/GroupService";
 
 const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => {
   const [groupMemberList, setGroupMemberList] = useState([]);
@@ -47,6 +48,19 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
 
   const handleRemove = (selectedList) => setGroupMemberList(selectedList);
 
+  const CreateGroups = async () => {
+    try {
+      const response = await CreateGroup();
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    CreateGroups()
+  },[])
+
   return (
     <Modal open={createGroupModalOpen} onClose={() => setCreateGroupModalOpen(false)} className="fixed modalContainer inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
       <div className="overflow-y-auto mainFormSection sm:w-[90vw] sm:h-[70vh] md:w-[90vw] md:h-[70vh] lg:w-[80vw] lg:h-[65vh] xl:w-[60vw] xl:h-[60vh] w-[55vw] h-[60vh]">
@@ -77,7 +91,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
                   Members Name <span className="text-red-500 font-extrabold">*</span>
                 </h4>
                 <div className="w-[80%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] py-2 px-2 list-none">
-                <Multiselect
+                  <Multiselect
                     options={user.data?.map((user) => ({ name: user.first_name }))}
                     selectedValues={groupMemberList}
                     onSelect={handleSelect}

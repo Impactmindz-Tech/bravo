@@ -5,7 +5,7 @@ import { getLocalStorage } from '../utils/LocalStorageUtills'
 const AuthProteced = () => {
     const admin = getLocalStorage('token')
     return (
-        admin ? <Navigate to='/admin/dashboard/' /> : <Outlet />
+        admin ? <Navigate to='/admin/user/' /> : <Outlet />
     )
 }
 
