@@ -6,11 +6,25 @@ import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import EditGroupManagementModal from "../../../components/Modal/EditGroupManagementModal";
 import CreateGroupModal from "../../../components/Modal/CreateGroupModal";
+import { getAllGroup } from "../../../utils/service/DashboardService";
 
 
 export default function GroupManagement() {
   const [editGroupModalOpen, setEditGroupModalOpen] = useState(false);
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
+
+  const fetchGroup = async ()=>{
+    try {
+      const response = await getAllGroup()
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useState(()=>{
+    fetchGroup()
+  },[])
 
   return (
     <>

@@ -31,7 +31,6 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
   const fetchDashboardData = async () => {
     try {
       const response = await getUser();
-      console.log(response);
       setUser(response);
     } catch (error) {
       console.log(error);
@@ -61,16 +60,14 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
     formData.append("group_desc", payload.group_desc);
     const memberIds = JSON.stringify(groupMemberList.map(member => member.id));
     formData.append("members", memberIds);
-    console.log(groupMemberList.id)
     formData.append("group_picture", selectedFile);
     try {
       const response = await CreateGroup(formData);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
-
+  
   return (
     <Modal open={createGroupModalOpen} onClose={() => setCreateGroupModalOpen(false)} className="fixed modalContainer inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
       <div className="overflow-y-auto mainFormSection sm:w-[90vw] sm:h-[70vh] md:w-[90vw] md:h-[70vh] lg:w-[80vw] lg:h-[65vh] xl:w-[60vw] xl:h-[60vh] w-[55vw] h-[60vh]">

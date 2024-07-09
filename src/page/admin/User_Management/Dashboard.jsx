@@ -41,9 +41,11 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const response = await DashboardApi({ page: currentPage, items_per_page: itemsPerPage });
-      dispatch(setUser(response));
-      setTotalPages(Math.ceil(response.total_items / itemsPerPage));
-      setLoading(false);
+      if(response?.isSuccess){
+        dispatch(setUser(response));
+        setTotalPages(Math.ceil(response.total_items / itemsPerPage));
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
       throw new Error("Failed to load dashboard data");
