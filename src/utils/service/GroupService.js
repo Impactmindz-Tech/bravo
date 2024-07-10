@@ -19,9 +19,9 @@ export const getUser = async () => {
 }
 
 
-export const updateEditGroup = async (id) => {
+export const updateEditGroup = async (payload) => {
     try {
-        const responce = await axiosInstance.get(`?page=getAllGroups&group_id=${id}`, )
+        const responce = await axiosInstance.post(`?page=updateGroup`,payload )
         return responce.data
     } catch (error) {
         console.log(error)

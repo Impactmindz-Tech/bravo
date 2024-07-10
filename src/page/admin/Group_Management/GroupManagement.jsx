@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import adminUserProfile from "../../../assets/images/adminUserProfile.svg";
 import editIcon from "../../../assets/images/editIcon.svg";
 import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
@@ -38,12 +37,19 @@ export default function GroupManagement() {
 
   const handleGroupEdit = (item) => {
     setCreateGroupModalOpen(true);
-    setGroupItem(item)
+    setGroupItem(item);
   };
 
   const handleModalClose = () => {
-    setAddAdminModalOpen(false);
+    setCreateGroupModalOpen(false);
+    setGroupItem(null);
   };
+
+  const handleAddGroup = () => {
+    setGroupItem(null);
+    setCreateGroupModalOpen(true);
+  };
+
 
   return (
     <>
@@ -63,7 +69,7 @@ export default function GroupManagement() {
             <i className="my-0.4 pr-2 text-2xl sm:my-1 md:text-md md:my-1 sm:text-sm">
               <IoMdAddCircleOutline />
             </i>
-            <span className="sm:text-sm">Create Group</span>
+            <span className="sm:text-sm" onClick={handleAddGroup}>Create Group</span>
           </button>
         </div>
       </div>
@@ -116,7 +122,7 @@ export default function GroupManagement() {
 
       {/* popup model */}
       <div className="flex items-center">
-        <CreateGroupModal groupItem={groupItem} createGroupModalOpen={createGroupModalOpen} setCreateGroupModalOpen={setCreateGroupModalOpen} fetchGroup={fetchGroup} />
+        <CreateGroupModal groupItem={groupItem} createGroupModalOpen={createGroupModalOpen} setCreateGroupModalOpen={handleModalClose} fetchGroup={fetchGroup} />
       </div>
     </>
   );
