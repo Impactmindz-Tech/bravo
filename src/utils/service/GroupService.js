@@ -18,9 +18,10 @@ export const getUser = async () => {
     }
 }
 
-export const getGroup = async () => {
+
+export const updateEditGroup = async (id) => {
     try {
-        const responce = await axiosInstance.get(`?page=getAllUserData`, )
+        const responce = await axiosInstance.get(`?page=getAllGroups&group_id=${id}`, )
         return responce.data
     } catch (error) {
         console.log(error)

@@ -10,8 +10,8 @@ import { setUser } from '../../../store/Slice/UserSlice';
 import toast from 'react-hot-toast';
 import Pagination from '../../../components/Pagination';
 import UserManagementModalComponent from '../../../components/Modal/user-management/UserManagementModal';
-import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom';
+import Loading from '../../../components/Loading';
 
 const Dashboard = () => {
   const [addAdminModalOpen, setAddAdminModalOpen] = useState(false);
@@ -73,9 +73,7 @@ const Dashboard = () => {
   return (
     <>
       {loading && (
-        <div className='fixed w-full h-full bg-[#00000067] left-0 top-0 flex items-center justify-center'>
-          <CircularProgress sx={{ color: "#2a2f3e" }} />
-        </div>
+        <Loading/>
       )}
       <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
         <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">

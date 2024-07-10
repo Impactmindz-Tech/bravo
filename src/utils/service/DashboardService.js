@@ -28,14 +28,6 @@ export const EditUser = async (payload) => {
     }
 }
 
-export const getAllGroup = async (payload) => {
-    try {
-        const responce = await axiosInstance.get(`?page=getAllGroups`, payload)
-        return responce.data
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 export const getAllRoles = async (payload) => {
     try {

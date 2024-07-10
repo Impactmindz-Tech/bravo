@@ -13,10 +13,11 @@ import {
   LanguageSelect,
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { CreateUser, EditUser, getAllGroup, getAllRoles } from "../../../utils/service/DashboardService";
+import { CreateUser, EditUser, getAllRoles } from "../../../utils/service/DashboardService";
 import { useForm } from "react-hook-form"
 import { createUser } from '../../../utils/validation/FormValidation';
 import toast from 'react-hot-toast';
+import { getAllGroup } from '../../../utils/service/CommonService';
 
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items , onUserCreated }) => {

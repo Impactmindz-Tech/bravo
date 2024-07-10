@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import adminUserProfile from "../../../assets/images/adminUserProfile.svg";
@@ -6,21 +7,28 @@ import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import EditGroupManagementModal from "../../../components/Modal/EditGroupManagementModal";
 import CreateGroupModal from "../../../components/Modal/CreateGroupModal";
-import { getAllGroup } from "../../../utils/service/DashboardService";
+import Loading from "../../../components/Loading";
+import { setGroup } from "../../../store/Slice/GroupSlice";
+import { getAllGroup } from "../../../utils/service/CommonService";
 
 export default function GroupManagement() {
-  const [editGroupModalOpen, setEditGroupModalOpen] = useState(false);
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
-  const [groupList, setGroupList] = useState([]);
-
+  const [loading, setLoading] = useState(false);
+  const [groupItem, setGroupItem] = useState(null);
+  const dispatch = useDispatch();
+  const groupData = useSelector((state) => state.group.group);
   const fetchGroup = async () => {
     try {
+      setLoading(true);
       const response = await getAllGroup();
       if (response?.isSuccess) {
-        setGroupList(response);
+        dispatch(setGroup(response));
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -28,9 +36,18 @@ export default function GroupManagement() {
     fetchGroup();
   }, []);
 
+  const handleGroupEdit = (item) => {
+    setCreateGroupModalOpen(true);
+    setGroupItem(item)
+  };
+
+  const handleModalClose = () => {
+    setAddAdminModalOpen(false);
+  };
+
   return (
     <>
-      {/* top title */}
+      {loading && <Loading />}
       <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
         <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">Group Management</h1>
         {/* search bar */}
@@ -64,28 +81,29 @@ export default function GroupManagement() {
             </tr>
           </thead>
           <tbody>
-            {groupList?.data?.map((item, index) => {
+            {groupData?.data?.map((item, index) => {
               return (
                 <tr key={index}>
                   <td className="text-left">
                     <div className="flex gap-2 ">
-                      <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">
-                        <img src={`${item.group_picture}`} alt="group_img" className="rounded-full" />
+                      <div className=" flex justify-center">
+                        <img src={`${item.group_picture}`} alt="group_img" className="rounded-full w-[40px] h-[40px]" />
                       </div>
-                      <span className="md:text-xl lg:text-2xl">{item.creator_name}</span>
+                      <span className="md:text-xl lg:text-2xl">{item.name}</span>
                     </div>
                   </td>
 
                   <td className="text-left">{item?.members?.length}</td>
                   <td className="text-left">
-                    {item?.members?.map((member, index) => {
-                      const formattedUsername = member.username.replace(" @ ", " @ ");
-                      return <span key={index}>{formattedUsername}</span>;
-                    })}
+                    <div className="flex gap-3">
+                      {item?.members?.map((member, index) => {
+                        return <p key={index}>{member.first_name}</p>;
+                      })}
+                    </div>
                   </td>
                   <td className="text-left">
                     <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
-                      <img onClick={() => setEditGroupModalOpen(true)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0" />
+                      <img onClick={() => handleGroupEdit(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0" />
                       <img src={deleteIcon} alt="edit icon" className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0" />
                     </div>
                   </td>
@@ -98,10 +116,7 @@ export default function GroupManagement() {
 
       {/* popup model */}
       <div className="flex items-center">
-        <EditGroupManagementModal editGroupModalOpen={editGroupModalOpen} setEditGroupModalOpen={setEditGroupModalOpen} />
-      </div>
-      <div className="flex items-center">
-        <CreateGroupModal createGroupModalOpen={createGroupModalOpen} setCreateGroupModalOpen={setCreateGroupModalOpen} />
+        <CreateGroupModal groupItem={groupItem} createGroupModalOpen={createGroupModalOpen} setCreateGroupModalOpen={setCreateGroupModalOpen} fetchGroup={fetchGroup} />
       </div>
     </>
   );
