@@ -50,7 +50,12 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
     setGroupMemberList(selectedList);
   };
 
-  const handleSelect = (selectedList) => setGroupMemberList(selectedList);
+  const handleSelect = (selectedList) => {
+    if (!groupMemberList) {
+      return 'please enter member'
+    }
+    setGroupMemberList(selectedList);
+  };
 
   const handleRemove = (selectedList) => setGroupMemberList(selectedList);
 
@@ -58,7 +63,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
     const formData = new FormData();
     formData.append("group_name", payload.group_name);
     formData.append("group_desc", payload.group_desc);
-    const memberIds = JSON.stringify(groupMemberList.map(member => member.id));
+    const memberIds = JSON.stringify(groupMemberList.map((member) => member.id));
     formData.append("members", memberIds);
     formData.append("group_picture", selectedFile);
     try {
@@ -67,7 +72,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
       console.log(error);
     }
   };
-  
+
   return (
     <Modal open={createGroupModalOpen} onClose={() => setCreateGroupModalOpen(false)} className="fixed modalContainer inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
       <div className="overflow-y-auto mainFormSection sm:w-[90vw] sm:h-[70vh] md:w-[90vw] md:h-[70vh] lg:w-[80vw] lg:h-[65vh] xl:w-[60vw] xl:h-[60vh] w-[55vw] h-[60vh]">
@@ -82,30 +87,35 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="p-8 flex flex-col gap-y-4">
-                <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
-                  <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
-                    Group Name <span className="text-red-500 font-extrabold">*</span>
-                  </h4>
-                  <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
-                    <input type="text" placeholder="Std 10 Group" className="text-sm w-[100%] py-2 px-2 outline-none input" {...register("group_name")} />
+                <div>
+                  <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
+                    <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
+                      Group Name <span className="text-red-500 font-extrabold">*</span>
+                    </h4>
+                    <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
+                      <input type="text" placeholder="Std 10 Group" className="text-sm w-[100%] py-2 px-2 outline-none input" {...register("group_name")} />
+                    </div>
                   </div>
+                  <p className="text-[red]">{errors?.group_name?.message}</p>
                 </div>
-                <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
-                  <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
-                    Group Description <span className="text-red-500 font-extrabold">*</span>
-                  </h4>
-                  <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
-                    <input type="text" placeholder="Group Description" className="text-sm w-[100%] py-2 px-2 outline-none input" {...register("group_desc")} />
+                <div>
+                  <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
+                    <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
+                      Group Description <span className="text-red-500 font-extrabold">*</span>
+                    </h4>
+                    <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
+                      <input type="text" placeholder="Group Description" className="text-sm w-[100%] py-2 px-2 outline-none input" {...register("group_desc")} />
+                    </div>
                   </div>
+                  <p className="text-[red]">{errors?.group_desc?.message}</p>
                 </div>
-
                 <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
                   <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
                     Members Name <span className="text-red-500 font-extrabold">*</span>
                   </h4>
                   <div className="w-[80%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] py-2 px-2 list-none">
                     <Multiselect
-                      options={user.data?.map((user) => ({ name: user.first_name , id:user.user_id }))}
+                      options={user.data?.map((user) => ({ name: user.first_name, id: user.user_id }))}
                       selectedValues={groupMemberList}
                       onSelect={handleSelect}
                       onRemove={handleRemove}
@@ -117,6 +127,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen }) => 
                       }}
                     />
                   </div>
+                  <p className="text-[red]">{groupMemberList}</p>
                 </div>
 
                 <div className="flex justify-center sm:flex-col md:flex-col sm:gap-y-2 md:gap-y-2 lg:flex-col lg:gap-y-1">

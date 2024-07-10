@@ -115,6 +115,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items , 
       formData.append("group_id", data.group_id)
       formData.append("email", data?.email)
       formData.append("user_id", items?.user_id)
+      formData.append("profile_pic", items?.selectedFile)
       try {
         const responce = await EditUser(formData)
         if (responce?.isSuccess) {
@@ -141,6 +142,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items , 
       formData.append("country", countryid?.name)
       formData.append("group_id", data.group_id)
       formData.append("email", data?.email)
+      formData.append("profile_pic", selectedFile)
       try {
         const response = await CreateUser(formData)
         if (response?.isSuccess) {

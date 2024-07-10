@@ -68,16 +68,15 @@ const Dashboard = () => {
 
   const handleModalClose = () => {
     setAddAdminModalOpen(false);
-    // fetchDashboardData();
   };
 
   return (
     <>
-      {loading ?
+      {loading && (
         <div className='fixed w-full h-full bg-[#00000067] left-0 top-0 flex items-center justify-center'>
           <CircularProgress sx={{ color: "#2a2f3e" }} />
         </div>
-        : null}
+      )}
       <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
         <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">
           User Management
@@ -140,7 +139,7 @@ const Dashboard = () => {
 
                 <td className="text-left cursor-pointer">
                   <div onClick={() => handleClose(item?.user_id)}>
-                    {item.is_active == '1' ? 'Active' : 'Inactive'}
+                    {item.is_active === '1' ? 'Active' : 'Inactive'}
                   </div>
                 </td>
                 <td className="text-left">
@@ -168,7 +167,10 @@ const Dashboard = () => {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
         itemsPerPage={itemsPerPage}
-        onItemsPerPageChange={setItemsPerPage}
+        onItemsPerPageChange={(value) => {
+          setCurrentPage(1);
+          setItemsPerPage(value);
+        }}
       />
 
       {/* Modal for User Management */}
