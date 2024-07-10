@@ -5,7 +5,6 @@ import adminUserProfile from "../../../assets/images/adminUserProfile.svg";
 import editIcon from "../../../assets/images/editIcon.svg";
 import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import EditGroupManagementModal from "../../../components/Modal/EditGroupManagementModal";
 import CreateGroupModal from "../../../components/Modal/CreateGroupModal";
 import Loading from "../../../components/Loading";
 import { setGroup } from "../../../store/Slice/GroupSlice";
@@ -17,6 +16,7 @@ export default function GroupManagement() {
   const [groupItem, setGroupItem] = useState(null);
   const dispatch = useDispatch();
   const groupData = useSelector((state) => state.group.group);
+
   const fetchGroup = async () => {
     try {
       setLoading(true);
