@@ -8,15 +8,15 @@ import { useForm } from "react-hook-form";
 import { createAdmin } from "../../utils/validation/FormValidation";
 import { getAllGroup } from "../../utils/service/CommonService";
 import { Modal } from "@mui/material";
+import { CitySelect, CountrySelect, StateSelect, LanguageSelect } from "react-country-state-city";
 // eslint-disable-next-line react/prop-types
 const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [groupData, setGroupData] = useState([]);
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm({ resolver: yupResolver(createAdmin) });
+  const [countryid, setCountryid] = useState(0);
+  const [stateid, setstateid] = useState(0);
+  const [city, setCity] = useState(0);
+
   const {
     handleSubmit,
     register,
@@ -29,6 +29,18 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     setSelectedFile(event.target.files[0]);
   };
 
+  const handleCountry = (country) => {
+    setCountryid(country);
+  };
+
+  const handleState = (state) => {
+    setstateid(state);
+  };
+
+  const handleCity = (city) => {
+    setCity(city);
+  };
+
   const handleRemoveFile = () => {
     setSelectedFile(null);
   };
@@ -38,7 +50,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
       const response = await getAllGroup();
       if (response?.isSuccess) {
         setGroupData(response?.data);
-        console.log(response);
       }
     } catch (error) {
       console.log(error);
@@ -49,8 +60,30 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     fetchAllGroup();
   }, []);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("group_id", data?.group_id);
+    formData.append("first_name", data?.first_name);
+    formData.append("last_name", data?.last_name);
+    formData.append("email", data?.email);
+    formData.append("gender", data?.gender);
+    formData.append("phone", data?.phone);
+    formData.append("address", data?.address);
+    formData.append("postal_code", data?.postal_code);
+    formData.append("group_id", data?.group_id);
+    formData.append("authrization_code", data?.authrization_code
+      
+    );
+    try {
+      const response = await createAdminApi(formData);
+      if (response?.isSuccess) {
+        reset();
+        setSelectedFile(null);
+        setAddAdminModalOpen(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -116,81 +149,77 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
 
                 {/* form section */}
                 <div className="flex flex-wrap list-none mt-6 gap-6">
-                  <div className="flex flex-col gap-y-2 sm:w-[100%]">
+                  <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="Authentication_Code">
                       Authentication Code <span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="Authentication_Code" id="Authentication_Code" className="input" {...register("authrization_code")} />
+                    <input type="text" name="Authentication_Code" placeholder="Authentication Code" id="Authentication_Code" className="input" {...register("authrization_code")} />
+                    <p>{errors?.authrization_code?.message}</p>
                   </div>
-                  <p>{errors?.authrization_code?.message}</p>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="first_name">
                       First Name<span className="text-red-500 pl-1">*</span>
                     </label>
                     <input type="text" name="first_name" id="first_name" className="input" {...register("first_name")} />
+                    <p>{errors?.first_name?.message}</p>
                   </div>
-                  <p>{errors?.first_name?.message}</p>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="last_name">
                       Last Name<span className="text-red-500 pl-1">*</span>
                     </label>
                     <input type="text" name="last_name" id="last_name" className="input" {...register("last_name")} />
+                    <p>{errors?.last_name?.message}</p>
                   </div>
-                  <p>{errors?.last_name?.message}</p>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%] ">
                     <label className="text-blue-300 text-sm" htmlFor="email">
                       Email Id<span className="text-red-500 pl-1">*</span>
                     </label>
                     <input type="text" name="email" className="input" {...register("email")} />
+                    <p>{errors?.email?.message}</p>
                   </div>
-                  <p>{errors?.email?.message}</p>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="gender">
                       Gender<span className="text-red-500 pl-1">*</span>
                     </label>
-                    <select name="gender" id="gender" className="input w-[180px] sm:w-[100%]" {...register("gender")}>
+                    <select name="gender" id="gender" className="input w-full" {...register("gender")}>
                       <option value="male">Male</option>
                     </select>
+                    <p>{errors?.gender?.message}</p>
                   </div>
-                  <p>{errors?.gender?.message}</p>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="phone">
                       Contact No<span className="text-red-500 pl-1">*</span>
                     </label>
                     <input type="text" name="phone" id="phone" className="input" {...register("phone")} />
+                    <p>{errors?.phone?.message}</p>
                   </div>
-                  <p>{errors?.phone?.message}</p>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="address">
                       Address<span className="text-red-500 pl-1">*</span>
                     </label>
                     <input type="text" name="address" id="address" className="input" {...register("address")} />
+                    <p>{errors?.address?.message}</p>
                   </div>
-                  <p>{errors?.address?.message}</p>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="postal_code">
                       Postal Code
                     </label>
                     <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
+                    <p>{errors?.postal_code?.message}</p>
                   </div>
-                  <p>{errors?.postal_code?.message}</p>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm">Suburb</label>
-                    <select name="gender" className="input w-[180px] sm:w-[100%]">
-                      <option value="">Select</option>
-                    </select>
+                    <CitySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={city} stateid={stateid.id} onChange={handleCity} placeHolder="Select City" />
                   </div>
 
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">State</h6>
-                    <select name="gender" className="input w-[180px] sm:w-[100%]">
-                      <option value="">Select</option>
-                    </select>
+                    <StateSelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={stateid} onChange={handleState} placeHolder="Select State" />
                   </div>
 
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <h6 className="text-blue-300 text-sm">Country</h6>
-                    <input type="text" name="" className="input" />
+                    <CountrySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" showFlag={true} defaultValue={countryid} onChange={handleCountry} placeHolder="Select Country" />
                   </div>
                 </div>
 
