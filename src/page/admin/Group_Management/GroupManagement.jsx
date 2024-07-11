@@ -7,21 +7,39 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import CreateGroupModal from "../../../components/Modal/CreateGroupModal";
 import Loading from "../../../components/Loading";
 import { setGroup } from "../../../store/Slice/GroupSlice";
-import { getAllGroup } from "../../../utils/service/CommonService";
+import { getAllGroups, statusUpdae } from "../../../utils/service/GroupService";
+import Pagination from "../../../components/Pagination";
 
 export default function GroupManagement() {
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [groupItem, setGroupItem] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const groupData = useSelector((state) => state.group.group);
+
+  const groupStatusUpdate = async (id) => {
+    const formData = new FormData();
+    formData.append("group_id", id);
+    try {
+      const responnse = await statusUpdae(formData);
+      if (responnse?.isSuccess) {
+        fetchGroup();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetchGroup = async () => {
     try {
       setLoading(true);
-      const response = await getAllGroup();
+      const response = await getAllGroups({ pg: currentPage, items_per_page: itemsPerPage });
       if (response?.isSuccess) {
         dispatch(setGroup(response));
+        setTotalPages(Math.ceil(response.total_items / itemsPerPage));
       }
       setLoading(false);
     } catch (error) {
@@ -36,20 +54,18 @@ export default function GroupManagement() {
   }, []);
 
   const handleGroupEdit = (item) => {
-    setCreateGroupModalOpen(true);
     setGroupItem(item);
+    setCreateGroupModalOpen(true);
   };
 
   const handleModalClose = () => {
     setCreateGroupModalOpen(false);
-    setGroupItem(null);
   };
 
   const handleAddGroup = () => {
     setGroupItem(null);
     setCreateGroupModalOpen(true);
   };
-
 
   return (
     <>
@@ -69,7 +85,9 @@ export default function GroupManagement() {
             <i className="my-0.4 pr-2 text-2xl sm:my-1 md:text-md md:my-1 sm:text-sm">
               <IoMdAddCircleOutline />
             </i>
-            <span className="sm:text-sm" onClick={handleAddGroup}>Create Group</span>
+            <span className="sm:text-sm" onClick={handleAddGroup}>
+              Create Group
+            </span>
           </button>
         </div>
       </div>
@@ -110,7 +128,7 @@ export default function GroupManagement() {
                   <td className="text-left">
                     <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
                       <img onClick={() => handleGroupEdit(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0" />
-                      <img src={deleteIcon} alt="edit icon" className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0" />
+                      <img src={deleteIcon} onClick={() => groupStatusUpdate(item.group_id)} alt="edit icon" className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0" />
                     </div>
                   </td>
                 </tr>
@@ -119,6 +137,17 @@ export default function GroupManagement() {
           </tbody>
         </table>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        onItemsPerPageChange={(value) => {
+          setCurrentPage(1);
+          setItemsPerPage(value);
+        }}
+      />
 
       {/* popup model */}
       <div className="flex items-center">

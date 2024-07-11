@@ -24,7 +24,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, itemsPerPage, onIte
         >
           Previous
         </button>
-        {[...Array(totalPages)].map((_, index) => (
+        {[...Array(totalPages)]?.map((_, index) => (
           <button
             key={index}
             onClick={() => handlePageChange(index + 1)}

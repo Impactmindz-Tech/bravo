@@ -101,16 +101,27 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
       console.log(error);
     }
   };
+
+  const handleModalClose = ()=>{
+    if(!groupItem){
+      reset();
+      setGroupMemberList([]);
+      setSelectedFile(null);
+      setCreateGroupModalOpen(false);
+    }else{
+      setCreateGroupModalOpen(false);
+    }
+  }
   
 
   return (
-    <Modal open={createGroupModalOpen} onClose={()=>setCreateGroupModalOpen(false)} className="fixed modalContainer inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
+    <Modal open={createGroupModalOpen} onClose={handleModalClose} className="fixed modalContainer inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
       <div className="overflow-y-auto mainFormSection sm:w-[90vw] sm:h-[70vh] md:w-[90vw] md:h-[70vh] lg:w-[80vw] lg:h-[65vh] xl:w-[60vw] xl:h-[60vh] w-[55vw] h-[60vh]">
         <div className="relative w-full mx-auto rounded-lg overflow-hidden">
           <div className="relative bg-white rounded-lg shadow-md pb-4">
             <div className="flex justify-between items-center mb-4 bg-blue-900 py-2">
               <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">Create Group</h2>
-              <button onClick={()=>setCreateGroupModalOpen(false)} className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none">
+              <button onClick={handleModalClose} className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none">
                 <IoClose />
               </button>
             </div>
@@ -182,7 +193,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
 
               <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
                 <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none border-none">{groupItem ? "Update Group" : "Create Group"}</button>
-                <button onClick={()=>setCreateGroupModalOpen(false)} className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none hover:border-black">
+                <button onClick={handleModalClose} className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none hover:border-black">
                   Cancel
                 </button>
               </div>
