@@ -8,6 +8,10 @@ import AdminManagementModalComponent from "../../../components/Modal/AdminManage
 export default function AdminManagement() {
   const [addAdminModalOpen, setAddAdminModalOpen] = useState(false);
 
+  const handleAddUser = ()=>{
+    setAddAdminModalOpen(true);
+  }
+
   return (
     <>
       <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
@@ -25,7 +29,7 @@ export default function AdminManagement() {
           <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 sm:text-sm md:text-xl lg:gap-3 lg:text-2xl px-8">
             Filter
           </button>
-          <button className="bg-blue-900 text-white flex justify-center  hover:border-[#ccc] sm:text-sm md:text-xl" onClick={() => setAddAdminModalOpen(true)} >
+          <button onClick={handleAddUser} className="bg-blue-900 text-white flex justify-center  hover:border-[#ccc] sm:text-sm md:text-xl" >
             <i className="my-0.4 pr-2 text-2xl sm:text-sm sm:my-1  md:text-md md:my-0 lg:my-2"> <IoMdAddCircleOutline /> </i>{" "}
             Add Admin
           </button>
@@ -74,8 +78,8 @@ export default function AdminManagement() {
       {/* popup model */}
       <div className="flex items-center ">
         <AdminManagementModalComponent
-          isOpen={addAdminModalOpen}
-          onClose={setAddAdminModalOpen}
+          addAdminModalOpen={addAdminModalOpen}
+          setAddAdminModalOpen={setAddAdminModalOpen}
         />
       </div>
     </>
