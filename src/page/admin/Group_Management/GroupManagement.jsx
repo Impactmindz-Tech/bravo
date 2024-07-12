@@ -9,6 +9,7 @@ import Loading from "../../../components/Loading";
 import { setGroup } from "../../../store/Slice/GroupSlice";
 import { getAllGroups, statusUpdae } from "../../../utils/service/GroupService";
 import Pagination from "../../../components/Pagination";
+import toast from "react-hot-toast";
 
 export default function GroupManagement() {
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
@@ -26,6 +27,7 @@ export default function GroupManagement() {
     try {
       const responnse = await statusUpdae(formData);
       if (responnse?.isSuccess) {
+        toast.success(responnse?.message);
         fetchGroup();
       }
     } catch (error) {
@@ -94,7 +96,7 @@ export default function GroupManagement() {
 
       {/* table section */}
 
-      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1" style={{ height: "calc(100vh - 205px)" }}>
+      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1" style={{ height: "calc(100vh - 257px)" }}>
         <table className="min-w-full">
           <thead>
             <tr>

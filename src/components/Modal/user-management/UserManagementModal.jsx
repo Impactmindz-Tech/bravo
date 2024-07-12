@@ -170,7 +170,8 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       Choose Group <span className="text-red-500">*</span>
                     </h1>
                     <div>
-                      <select name="groupSection" className="input w-full" {...register("group_id")}>
+                      <select name="groupSection" placeHolder="select group" className="input w-full" {...register("group_id")}>
+                      <option value="">Select group</option>
                         {group?.data?.map((item, index) => (
                           <option key={index} value={item.group_id}>
                             {item.name}
