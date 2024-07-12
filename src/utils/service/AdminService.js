@@ -8,3 +8,11 @@ export const createAdminApi = async (payload) => {
         console.log(error)
     }
 }
+export const getAllAdminsApi = async (payload) => {
+    try {
+        const responce = await axiosInstance.get(`?page=getAdmins`, payload)
+        return responce.data
+    } catch (error) {
+        console.log(error)
+    }
+}

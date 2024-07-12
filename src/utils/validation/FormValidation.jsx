@@ -40,7 +40,7 @@ export const createUser = yup.object({
 export const createAdmin = yup.object({
   authrization_code: yup.string().required("Authorization Code is required"),
   email: yup.string().email("Invalid email format").required("Email is required"),
-  // role_id: yup.string().required("Role is required"),
+  role_id: yup.string().required("Role is required"),
   first_name: yup.string().required("First Name is required"),
   last_name: yup.string().required("Last Name is required"),
   gender: yup.string().required("Gender is required"),

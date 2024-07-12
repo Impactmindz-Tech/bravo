@@ -6,7 +6,7 @@ import { createAdminApi } from "../../utils/service/AdminService";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { createAdmin } from "../../utils/validation/FormValidation";
-import { getAllGroup } from "../../utils/service/CommonService";
+import { getAdminRolesApi, getAllGroup } from "../../utils/service/CommonService";
 import { Modal } from "@mui/material";
 import { CitySelect, CountrySelect, StateSelect, LanguageSelect } from "react-country-state-city";
 // eslint-disable-next-line react/prop-types
@@ -14,6 +14,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
   const [selectedFile, setSelectedFile] = useState(null);
   const [groupData, setGroupData] = useState([]);
   const [countryid, setCountryid] = useState(0);
+  const [adminRole, setAdminRole] = useState([]);
   const [stateid, setstateid] = useState(0);
   const [city, setCity] = useState(0);
 
@@ -56,8 +57,20 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     }
   };
 
+  const getAdminRoles = async () => {
+    try {
+      const response = await getAdminRolesApi();
+      if (response?.isSuccess) {
+        setAdminRole(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchAllGroup();
+    getAdminRoles();
   }, []);
 
   const onSubmit = async (data) => {
@@ -71,9 +84,12 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
     formData.append("address", data?.address);
     formData.append("postal_code", data?.postal_code);
     formData.append("group_id", data?.group_id);
-    formData.append("authrization_code", data?.authrization_code
-      
-    );
+    formData.append("authrization_code", data?.authrization_code);
+    formData.append("role_id", data?.role_id);
+    formData.append("suburb", city?.name);
+    formData.append("state", stateid?.name);
+    formData.append("country", countryid?.name);
+    formData.append("profile_pic", selectedFile);
     try {
       const response = await createAdminApi(formData);
       if (response?.isSuccess) {
@@ -115,16 +131,17 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, setAddAdminModalOpen
                   </div>
                 </div>
                 <p className="text-[red]">{errors?.group_id?.message}</p>
-                <div className="flex gap-3 sm:flex-col">
-                  <label className="flex items-center">
-                    <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" />
-                    <span className="ml-2 text-gray-700">Admin</span>
-                  </label>
-
-                  <label className="inline-flex items-center">
-                    <input type="radio" name="fav_language" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" />
-                    <span className="ml-2 text-gray-700">Regional Admin</span>
-                  </label>
+                <div className="flex gap-4 items-center sm:flex-col">
+                  {adminRole?.data?.map((item, index) => {
+                    return (
+                      <div key={index} className="flex gap-2">
+                        <input type="radio" value={item?.role_id} name="role_id" id="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
+                        <label className="flex items-center" htmlFor="role_id" key={index}>
+                          {item.role_name}
+                        </label>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* file upload section */}
