@@ -1,4 +1,4 @@
-import { Box, Modal } from "@mui/material";
+import {  Modal } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
@@ -7,17 +7,7 @@ import { createEvent } from "../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
 import { setEvent } from "../../store/Slice/EventSlice";
 import { useDispatch } from "react-redux";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+
 
 const CreateEventModal = ({
   calenderModal,
@@ -25,14 +15,14 @@ const CreateEventModal = ({
   currentEventDate,
 }) => {
   const dispatch = useDispatch();
-  const [startTime, setStartTime] = useState(null);
+  const [startTime, setStartTime] = useState('');
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(createEvent) });
-  const [docFile, setDocFile] = useState(null);
+  const [docFile, setDocFile] = useState('');
 
   const handleFileChange = (event) => {
     setDocFile(event.target.files[0]);

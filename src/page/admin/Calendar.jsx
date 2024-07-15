@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import CreateEventModal from "../../components/Modal/CreateEventModal";
 import { getAllEventsApi } from "../../utils/service/EventService";
 import { useSelector } from "react-redux";
+import { MdDelete } from "react-icons/md";
+import { TbEdit } from "react-icons/tb";
 // calendar website
 // https://fullcalendar.io/
 function Calendar() {
@@ -21,11 +23,11 @@ function Calendar() {
     let date = arg.dateStr;
     setCurrentEventDate(date);
   };
-
+  
 
   const fetchAllEventsData = async () => {
     const data = await getAllEventsApi();
-     let newData = [];
+    let newData = [];
     if (data) {
       if (data.data.length != 0) {
         data.data.map((item) => {
@@ -33,14 +35,25 @@ function Calendar() {
             title: item.title,
             start: item.start_time,
             end: item.end_time,
+            id: item.event_id,
           });
         });
         setEventData(newData);
       }
     }
   };
+
+  const editEvent = (event) => {
+    console.log(`Editing event ID: ${event.id}`);
+    // Implement your edit logic here, e.g., open a modal for editing
+  };
+
+  // Function to handle deleting an event
+  const deleteEvent = (event) => {
+    console.log(`Deleting event ID: ${event.id}`);
+    // Implement your delete logic here, e.g., show a confirmation dialog
+  };
   useEffect(() => {
- 
     fetchAllEventsData();
   }, [eventDataState]);
   return (
@@ -59,13 +72,29 @@ function Calendar() {
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
           }}
-          events={eventData}
-          // dateClick={(info) => alert('Date: ' + info.dateStr)}
-          dateClick={handleDateClick}
+          events={eventData}        
           eventContent={(eventInfo) => (
-            <div className="p-1 px-2 rounded-md text-sm">
-              <b>{eventInfo.timeText}</b>
-              <i>{eventInfo.event.title}</i>
+            <div className="p-1 px-2 rounded-md text-sm flex gap-2 items-center justify-between">
+              <div>
+                <b>{eventInfo.timeText}</b>
+                <i>{eventInfo.event.title}</i>
+              </div>
+              <div className="flex">
+                <i>
+                  <TbEdit
+                    className="cursor-pointer  text-lg hover:text-blue-900"
+                    title="Edit"
+                    onClick={() => editEvent(eventInfo.event)}
+                  />
+                </i>
+                <i>
+                  <MdDelete
+                    className="cursor-pointer  text-lg hover:text-blue-900"
+                    title="Delete"
+                    onClick={() => deleteEvent(eventInfo.event)}
+                  />
+                </i>
+              </div>
             </div>
           )}
         />
