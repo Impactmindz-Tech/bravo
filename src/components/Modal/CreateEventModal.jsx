@@ -5,7 +5,8 @@ import React, { useEffect, useState } from "react";
 import { createEventApi } from "../../utils/service/EventService";
 import { createEvent } from "../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
-
+import { setEvent } from "../../store/Slice/EventSlice";
+import { useDispatch } from "react-redux";
 const style = {
   position: "absolute",
   top: "50%",
@@ -18,11 +19,17 @@ const style = {
   p: 4,
 };
 
-const CreateEventModal = ({ calenderModal, setCalenderModal,currentEventDate }) => {
-const[startTime,setStartTime]=useState(null);
+const CreateEventModal = ({
+  calenderModal,
+  setCalenderModal,
+  currentEventDate,
+}) => {
+  const dispatch = useDispatch();
+  const [startTime, setStartTime] = useState(null);
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(createEvent) });
   const [docFile, setDocFile] = useState(null);
@@ -46,11 +53,14 @@ const[startTime,setStartTime]=useState(null);
 
     try {
       const responce = await createEventApi(formData);
-      console.log(responce);
+
       if (responce?.isSuccess) {
         toast.success(responce?.message);
-        setCalenderModal(false)
-        setDocFile([])
+        setCalenderModal(false);
+        setDocFile([]);
+        dispatch(setEvent(responce));
+
+        reset();
       }
     } catch (error) {
       console.log(error);
@@ -58,10 +68,9 @@ const[startTime,setStartTime]=useState(null);
   };
 
   useEffect(() => {
-   
     if (currentEventDate) {
-      setStartTime(currentEventDate)
-    } 
+      setStartTime(currentEventDate);
+    }
   }, [currentEventDate]);
   return (
     <Modal open={calenderModal} onClose={() => setCalenderModal(false)}>
@@ -109,8 +118,8 @@ const[startTime,setStartTime]=useState(null);
                 id="event_start"
                 placeholder="start time"
                 className="input"
-              value={startTime}
-              onChange={(e)=>setStartTime(e.target.value)}
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
                 // {...register("event_start")}
               />
               {/* <p>{errors?.event_start?.message}</p> */}

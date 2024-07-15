@@ -3,53 +3,56 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateEventModal from "../../components/Modal/CreateEventModal";
+import { getAllEventsApi } from "../../utils/service/EventService";
+import { useSelector } from "react-redux";
 // calendar website
 // https://fullcalendar.io/
 function Calendar() {
+  const eventDataState = useSelector((state) => state.event.event);
   const [calenderModal, setCalenderModal] = useState(false);
-  const[currentEventDate,setCurrentEventDate]=useState(null)
-  const [eventData, setEventData] = useState([
-    {
-      title: "Event 1",
+  const [currentEventDate, setCurrentEventDate] = useState(null);
+  const [eventData, setEventData] = useState([]);
 
-      start: "2024-06-23",
-      end: "2024-06-23",
-    },
-
-    {
-      title: "Event 2",
-      start: "2024-06-26",
-      // end: '2024-06-28'
-    },
-    // {
-    //   title: "Event 1",
-
-    //   start: "2024-06-23T09:00:00",
-    //   end: "2024-06-23T10:30:00",
-    // },
-  ]);
   //   add events on specific date
   const handleDateClick = (arg) => {
     setCalenderModal(true);
     let date = arg.dateStr;
-    setCurrentEventDate(date)
-    
-    // let eventData = prompt("Enter Event Name to Insert: ");
-    // if (eventData != null && eventData !== "") {
-    //   const newEvent = {
-    //     title: eventData,
-    //     start: date,
-    //   };
-    //   setEventData((prevEvents) => [...prevEvents, newEvent]);
-    // }
+    setCurrentEventDate(date);
   };
+
+
+  const fetchAllEventsData = async () => {
+    const data = await getAllEventsApi();
+     let newData = [];
+    if (data) {
+      if (data.data.length != 0) {
+        data.data.map((item) => {
+          newData.push({
+            title: item.title,
+            start: item.start_time,
+            end: item.end_time,
+          });
+        });
+        setEventData(newData);
+      }
+    }
+  };
+  useEffect(() => {
+ 
+    fetchAllEventsData();
+  }, [eventDataState]);
   return (
     <>
       <div className="flex justify-center sm:w-[100%] sm:m-0 h-[90vh] mx-auto sm:h-[75vh]">
         <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
+          plugins={[
+            dayGridPlugin,
+            timeGridPlugin,
+            listPlugin,
+            interactionPlugin,
+          ]}
           initialView="dayGridMonth"
           headerToolbar={{
             left: "prev,next today",
@@ -67,7 +70,11 @@ function Calendar() {
           )}
         />
       </div>
-      <CreateEventModal calenderModal={calenderModal} setCalenderModal={setCalenderModal} currentEventDate={currentEventDate}/>
+      <CreateEventModal
+        calenderModal={calenderModal}
+        setCalenderModal={setCalenderModal}
+        currentEventDate={currentEventDate}
+      />
     </>
   );
 }
