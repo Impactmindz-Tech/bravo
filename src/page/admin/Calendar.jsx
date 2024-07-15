@@ -5,8 +5,12 @@ import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useEffect, useState } from "react";
 import CreateEventModal from "../../components/Modal/CreateEventModal";
-import { getAllEventsApi } from "../../utils/service/EventService";
+import {
+  deleteEventApi,
+  getAllEventsApi,
+} from "../../utils/service/EventService";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
 // calendar website
@@ -16,14 +20,15 @@ function Calendar() {
   const [calenderModal, setCalenderModal] = useState(false);
   const [currentEventDate, setCurrentEventDate] = useState(null);
   const [eventData, setEventData] = useState([]);
-
+  const [data, setData] = useState([""]);
+  const [dataBackup, setDataBackup] = useState([""]);
   //   add events on specific date
   const handleDateClick = (arg) => {
     setCalenderModal(true);
+    setData([]);
     let date = arg.dateStr;
     setCurrentEventDate(date);
   };
-  
 
   const fetchAllEventsData = async () => {
     const data = await getAllEventsApi();
@@ -39,19 +44,36 @@ function Calendar() {
           });
         });
         setEventData(newData);
+        setDataBackup(data.data);
       }
     }
   };
 
-  const editEvent = (event) => {
-    console.log(`Editing event ID: ${event.id}`);
-    // Implement your edit logic here, e.g., open a modal for editing
+  const filterData = (id) => {
+    return dataBackup.filter((item) => {
+      return item.event_id == id;
+    });
   };
 
-  // Function to handle deleting an event
-  const deleteEvent = (event) => {
-    console.log(`Deleting event ID: ${event.id}`);
-    // Implement your delete logic here, e.g., show a confirmation dialog
+  // edit events
+  const editEvent = (event) => {
+    setCalenderModal(true);
+    setData(filterData(event.id));
+  };
+
+  // delete events
+  const deleteEvent = async (event) => {
+    const formData = new FormData();
+    formData.append("event_id", event.id);
+    const responce = await deleteEventApi(formData);
+    console.log(responce);
+    try {
+      if (responce?.isSuccess) {
+        toast.success(responce?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     fetchAllEventsData();
@@ -72,7 +94,8 @@ function Calendar() {
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
           }}
-          events={eventData}        
+          events={eventData}
+          dateClick={handleDateClick}
           eventContent={(eventInfo) => (
             <div className="p-1 px-2 rounded-md text-sm flex gap-2 items-center justify-between">
               <div>
@@ -103,6 +126,7 @@ function Calendar() {
         calenderModal={calenderModal}
         setCalenderModal={setCalenderModal}
         currentEventDate={currentEventDate}
+        eventDataToUpdate={data}
       />
     </>
   );

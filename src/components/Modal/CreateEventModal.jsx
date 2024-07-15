@@ -1,30 +1,38 @@
-import {  Modal } from "@mui/material";
+import { Modal } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
-import { createEventApi } from "../../utils/service/EventService";
+import { useEffect, useState } from "react";
+import {
+  createEventApi,
+  updateEventApi,
+} from "../../utils/service/EventService";
 import { createEvent } from "../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
 import { setEvent } from "../../store/Slice/EventSlice";
 import { useDispatch } from "react-redux";
 
-
 const CreateEventModal = ({
   calenderModal,
   setCalenderModal,
   currentEventDate,
+  eventDataToUpdate,
 }) => {
   const dispatch = useDispatch();
-  const [startTime, setStartTime] = useState('');
+  const [updateState, setUpdateState] = useState(false);
+  const [startTime, setStartTime] = useState("");
+  const [eventId, setEventId] = useState("");
+  const [fileUpdate, setFileUpdate] = useState("");
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
+    setValue,
   } = useForm({ resolver: yupResolver(createEvent) });
-  const [docFile, setDocFile] = useState('');
+  const [docFile, setDocFile] = useState([""]);
 
   const handleFileChange = (event) => {
+    console.log(event.target.files[0]);
     setDocFile(event.target.files[0]);
   };
 
@@ -36,24 +44,46 @@ const CreateEventModal = ({
     formData.append("end_time", data?.event_end);
     formData.append("location", data?.event_location);
     formData.append("cost", data?.event_cost);
-    formData.append("event_doc", docFile);
     formData.append("event_notes", data?.event_notes);
-    formData.append("created_by", data?.event_created);
     formData.append("group_id", data?.event_group_id);
-
-    try {
-      const responce = await createEventApi(formData);
-
-      if (responce?.isSuccess) {
-        toast.success(responce?.message);
-        setCalenderModal(false);
-        setDocFile([]);
-        dispatch(setEvent(responce));
-
-        reset();
+    // update
+    if (updateState) {
+      formData.append("event_id", eventId);
+      formData.append("updated_by", data?.event_created);
+      if (fileUpdate !== null) {
+        formData.append("event_doc", docFile);
       }
-    } catch (error) {
-      console.log(error);
+      try {
+        const responce = await updateEventApi(formData);
+        if (responce?.isSuccess) {
+          toast.success(responce?.message);
+          setCalenderModal(false);
+          setDocFile([]);
+          dispatch(setEvent(responce));
+          reset();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    // new event create
+    else {
+      formData.append("event_doc", docFile);
+      formData.append("created_by", data?.event_created);
+      try {
+        const responce = await createEventApi(formData);
+
+        if (responce?.isSuccess) {
+          toast.success(responce?.message);
+          setCalenderModal(false);
+          setDocFile([]);
+          dispatch(setEvent(responce));
+
+          reset();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -62,6 +92,35 @@ const CreateEventModal = ({
       setStartTime(currentEventDate);
     }
   }, [currentEventDate]);
+
+  useEffect(() => {
+    if (eventDataToUpdate[0]) {
+      setEventId(eventDataToUpdate[0]?.event_id);
+      setValue("event_title", eventDataToUpdate[0]?.title);
+      setValue("event_desc", eventDataToUpdate[0]?.description);
+      setValue("event_start", eventDataToUpdate[0]?.start_time);
+      setValue("event_end", eventDataToUpdate[0]?.end_time);
+      setValue("event_location", eventDataToUpdate[0]?.location);
+      setValue("event_cost", eventDataToUpdate[0]?.cost);
+      setValue("event_notes", eventDataToUpdate[0]?.notes);
+      setValue("event_created", eventDataToUpdate[0]?.created_by);
+      setValue("event_group_id", eventDataToUpdate[0]?.group_id);
+      const dateOnly = eventDataToUpdate[0].start_time.split(" ")[0];
+      setStartTime(dateOnly);
+      const endDateOnly = eventDataToUpdate[0].start_time.split(" ")[0];
+      setValue("event_end", endDateOnly);
+
+      if (eventDataToUpdate[0].event_doc) {
+        const url = eventDataToUpdate[0].event_doc;
+        const fileName = url.split("/").pop();
+        setFileUpdate(fileName);
+      }
+      setUpdateState(true);
+    } else {
+      reset();
+      setUpdateState(false);
+    }
+  }, [setValue, reset, eventDataToUpdate, currentEventDate]);
   return (
     <Modal open={calenderModal} onClose={() => setCalenderModal(false)}>
       <div
@@ -168,7 +227,7 @@ const CreateEventModal = ({
                 className="input"
                 onChange={handleFileChange}
               />
-              {/* <p>{errors?.event_doc?.message}</p> */}
+              {/* <p>{docFile && docFile}</p> */}
             </div>
             <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
               <label className="text-blue-300 text-sm" htmlFor="event_notes">
@@ -189,7 +248,7 @@ const CreateEventModal = ({
                 created by<span className="text-red-500 pl-1">*</span>
               </label>
               <input
-                type="text"
+                type="number"
                 name="event_created"
                 id="event_created"
                 placeholder="created by"
@@ -214,10 +273,20 @@ const CreateEventModal = ({
             </div>
           </div>
           <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
-            <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
-              {"Save"}
-            </button>
-            <button className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none">
+            {updateState ? (
+              <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
+                {"Update"}
+              </button>
+            ) : (
+              <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
+                {"Save"}
+              </button>
+            )}
+
+            <button
+              className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none"
+              onClick={() => setCalenderModal(false)}
+            >
               Cancel
             </button>
           </div>
