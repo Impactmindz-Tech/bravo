@@ -9,6 +9,7 @@ import CreateEventModal from "../../components/Modal/CreateEventModal";
 // https://fullcalendar.io/
 function Calendar() {
   const [calenderModal, setCalenderModal] = useState(false);
+  const[currentEventDate,setCurrentEventDate]=useState(null)
   const [eventData, setEventData] = useState([
     {
       title: "Event 1",
@@ -33,15 +34,16 @@ function Calendar() {
   const handleDateClick = (arg) => {
     setCalenderModal(true);
     let date = arg.dateStr;
+    setCurrentEventDate(date)
+    
     // let eventData = prompt("Enter Event Name to Insert: ");
-    if (eventData != null && eventData !== "") {
-      const newEvent = {
-        title: eventData,
-        start: date,
-      };
-
-      // setEventData((prevEvents) => [...prevEvents, newEvent]);
-    }
+    // if (eventData != null && eventData !== "") {
+    //   const newEvent = {
+    //     title: eventData,
+    //     start: date,
+    //   };
+    //   setEventData((prevEvents) => [...prevEvents, newEvent]);
+    // }
   };
   return (
     <>
@@ -65,7 +67,7 @@ function Calendar() {
           )}
         />
       </div>
-      <CreateEventModal calenderModal={calenderModal} setCalenderModal={setCalenderModal} />
+      <CreateEventModal calenderModal={calenderModal} setCalenderModal={setCalenderModal} currentEventDate={currentEventDate}/>
     </>
   );
 }

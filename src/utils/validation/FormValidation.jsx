@@ -57,3 +57,17 @@ export const createGroup = yup.object({
   group_name: yup.string().required("Group Name is required"),
   group_desc: yup.string().required("Group Description is required"),
 });
+
+
+export const createEvent = yup.object({
+  event_title: yup.string().required("Event Title is required"),
+  // event_desc: yup.string().required("Event Description is required"),
+  // event_start: yup.string().required("Event Start Time is required"),
+  event_end: yup.string().required("Event End Time is required"),
+  // event_location: yup.string().required("Event Location is required"),
+  // event_cost: yup.string().required("Event Cost is required"),
+  // event_doc: yup.string().required("Event Doc is required"),
+  // event_notes: yup.string().required("Event Notes is required"),
+  event_created: yup.string().required("Event Created By is required"),
+  event_group_id: yup.string().required("Event Group Id is required")
+});

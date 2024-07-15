@@ -21,6 +21,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   const [group, setGroup] = useState("");
   const [role, setRole] = useState("");
   const [city, setCity] = useState(0);
+  
   const {
     handleSubmit,
     register,
@@ -28,6 +29,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     setValue,
     reset,
   } = useForm({ resolver: yupResolver(createUser) });
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
