@@ -20,7 +20,6 @@ const CreateEventModal = ({
   currentEventDate,
   eventDataToUpdate,
 }) => {
-
   const dispatch = useDispatch();
   const [user, setUser] = useState([]);
   const [startTime, setStartTime] = useState("");
@@ -30,6 +29,9 @@ const CreateEventModal = ({
   const [group, setGroup] = useState("");
   const [fileUpdate, setFileUpdate] = useState("");
   const [filename, setFileName] = useState("");
+
+  const [updateGroupMember, setUpdateGroupMember] = useState([]);
+  const [updateUserMember, setUpdateUserMember] = useState([]);
   const fetchDashboardData = async () => {
     try {
       const response = await getUser();
@@ -56,10 +58,10 @@ const CreateEventModal = ({
     formState: { errors },
     setValue,
   } = useForm({ resolver: yupResolver(createEvent) });
-  const [docFile, setDocFile] = useState([""]);
+  const [docFile, setDocFile] = useState([]);
 
-  const handleSelect = (selectedList) => {
-    setUserMemberList(selectedList);
+  const handleSelect = (userMemberList) => {
+    setUserMemberList(userMemberList);
   };
 
   const handleRemove = (selectedList) => setUserMemberList(selectedList);
@@ -85,29 +87,32 @@ const CreateEventModal = ({
     formData.append("location", data?.event_location);
     formData.append("cost", data?.event_cost);
     formData.append("event_notes", data?.event_notes);
-    const groupIDs = JSON.stringify(
-      groupMemberList?.map((member) => member.id)
-    );
 
-    if (groupIDs.length === 2) {
-      toast.error("Enter Group ID");
-      return;
-    }
-    formData.append("group_id", groupIDs);
-    const userIds = JSON.stringify(userMemberList?.map((member) => member.id));
-
-    if (userIds.length === 2) {
-      toast.error("Enter User ID");
-      return;
-    }
-    formData.append("user_id", userIds);
     // update
-    if (eventDataToUpdate.length!==0) {
-      formData.append("event_id", eventId);
+    if (eventDataToUpdate.length !== 0) {
+      const updatedGroupIDs = JSON.stringify(
+        groupMemberList?.map((member) => member.group_id || member.id)
+      );
 
-      if (fileUpdate !== null) {
+      if (updatedGroupIDs.length === 2) {
+        toast.error("Enter Group ID");
+        return;
+      }
+      formData.append("group_id", updatedGroupIDs);
+      const updatedUserId = JSON.stringify(
+        userMemberList?.map((member) => member.user_id || member.id)
+      );
+      if (updatedUserId.length === 2) {
+        toast.error("Enter Group ID");
+        return;
+      }
+      formData.append("user_id", updatedUserId);
+
+      if (docFile.length == undefined) {
         formData.append("event_doc", docFile);
       }
+      formData.append("event_id", eventId);
+
       try {
         const responce = await updateEventApi(formData);
         if (responce?.isSuccess) {
@@ -124,6 +129,25 @@ const CreateEventModal = ({
 
     // // new event create
     else {
+      const groupIDs = JSON.stringify(
+        groupMemberList?.map((member) => member.id)
+      );
+
+      if (groupIDs.length === 2) {
+        toast.error("Enter Group ID");
+        return;
+      }
+      formData.append("group_id", groupIDs);
+      const userIds = JSON.stringify(
+        userMemberList?.map((member) => member.id)
+      );
+
+      if (userIds.length === 2) {
+        toast.error("Enter User ID");
+        return;
+      }
+      formData.append("user_id", userIds);
+
       formData.append("event_doc", docFile);
       try {
         const responce = await createEventApi(formData);
@@ -149,37 +173,65 @@ const CreateEventModal = ({
   useEffect(() => {
     fetchDashboardData();
     fetchGroupData();
-  }, [groupMemberList]);
+  }, [groupMemberList, userMemberList]);
 
+  const convertToDateTimeLocal = (datetimeString) => {
+    const date = new Date(datetimeString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
   useEffect(() => {
     if (eventDataToUpdate[0]) {
-     
       // converting group id,into array
-      const trimmedGroupString = eventDataToUpdate[0].group_id.trim().slice(1, -1); 
-      const groupIdArray = trimmedGroupString.split(",").map(Number); 
+      if (eventDataToUpdate[0].group_id !== null) {
+        const trimmedGroupString = eventDataToUpdate[0].group_id
+          .trim()
+          .slice(1, -1);
+        const groupIdArray = trimmedGroupString.split(",").map(Number);
+        const filteredGroup = group.data.filter((user) =>
+          groupIdArray.includes(user.group_id)
+        );
+        setGroupMemberList(filteredGroup);
+      }
 
-      // converting user id,into array
-      const trimmedUserString = eventDataToUpdate[0].user_id.trim().slice(1, -1); 
-      const userIdArray = trimmedUserString.split(",").map(Number); 
-      console.log(groupIdArray);
-      console.log(userIdArray);
+      if (eventDataToUpdate[0].user_id !== null) {
+        const trimmedUserString = eventDataToUpdate[0].user_id
+          .trim()
+          .slice(1, -1);
+        const userIdArray = trimmedUserString.split(",").map(Number);
+        const filteredUsers = user.data.filter((user) =>
+          userIdArray.includes(user.user_id)
+        );
 
+        const updatedUsers = filteredUsers.map((user) => ({
+          ...user,
+          name: user.first_name,
+        }));
 
-
+        setUserMemberList(updatedUsers);
+      }
 
       setEventId(eventDataToUpdate[0]?.event_id);
+
       setValue("event_title", eventDataToUpdate[0]?.title);
       setValue("event_desc", eventDataToUpdate[0]?.description);
       setValue("event_start", eventDataToUpdate[0]?.start_time);
       setValue("event_end", eventDataToUpdate[0]?.end_time);
       setValue("event_location", eventDataToUpdate[0]?.location);
       setValue("event_cost", eventDataToUpdate[0]?.cost);
-      setValue("event_notes", eventDataToUpdate[0]?.notes);
+      setValue("event_notes", eventDataToUpdate[0]?.event_notes);
       setValue("event_group_id", eventDataToUpdate[0]?.group_id);
-      const dateOnly = eventDataToUpdate[0].start_time.split(" ")[0];
-      setStartTime(dateOnly);
-      const endDateOnly = eventDataToUpdate[0].start_time.split(" ")[0];
-      setValue("event_end", endDateOnly);
+
+      setStartTime(convertToDateTimeLocal(eventDataToUpdate[0].start_time));
+
+      setValue(
+        "event_end",
+        convertToDateTimeLocal(eventDataToUpdate[0].end_time)
+      );
 
       if (eventDataToUpdate[0].event_doc !== null) {
         const url = eventDataToUpdate[0].event_doc;
@@ -188,14 +240,12 @@ const CreateEventModal = ({
       }
     } else {
       reset();
-
+      setFileName("");
       setUserMemberList([]);
       setGroupMemberList([]);
       setGroup("");
-
+      setUser("");
       setFileUpdate("");
-
-  
     }
   }, [setValue, reset, eventDataToUpdate, currentEventDate]);
   return (
@@ -239,7 +289,7 @@ const CreateEventModal = ({
                 start time<span className="text-red-500 pl-1">*</span>
               </label>
               <input
-                type="date"
+                type="datetime-local"
                 name="event_start"
                 id="event_start"
                 placeholder="start time"
@@ -255,7 +305,7 @@ const CreateEventModal = ({
                 end time<span className="text-red-500 pl-1">*</span>
               </label>
               <input
-                type="date"
+                type="datetime-local"
                 name="event_end"
                 id="event_end"
                 placeholder="end time"
@@ -294,18 +344,27 @@ const CreateEventModal = ({
             </div>
             <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
               <label className="text-blue-300 text-sm" htmlFor="event_doc">
-                event doc
+                event doc <br />
+                {}
               </label>
-              <input
-                type="file"
-                name="event_doc"
-                id="event_doc"
-                placeholder="event doc"
-                className="input"
-                onChange={handleFileChange}
-              />
-
-              <p>{filename && filename}</p>
+              {filename ? (
+                <input
+                  type="text"
+                  id="file-name"
+                  value={filename}
+                  readOnly
+                  onClick={() => setFileName("")}
+                />
+              ) : (
+                <input
+                  type="file"
+                  name="event_doc"
+                  id="event_doc"
+                  placeholder="event doc"
+                  className="input"
+                  onChange={handleFileChange}
+                />
+              )}
             </div>
             <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
               <label className="text-blue-300 text-sm" htmlFor="event_notes">
@@ -342,18 +401,16 @@ const CreateEventModal = ({
                   searchBox: { width: "100%" },
                 }}
               />
-
-              <p>{errors?.event_group_id?.message}</p>
             </div>
 
             {/* user id */}
             <div className="flex flex-col w-[30%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-              <label className="text-blue-300 text-sm" htmlFor="groupId">
+              <label className="text-blue-300 text-sm" htmlFor="userIdId">
                 User id<span className="text-red-500 pl-1">*</span>
               </label>
               <Multiselect
                 options={user.data?.map((user) => ({
-                  name: user.first_name,
+                  name: user.first_name ? user.first_name.toLowerCase() : "", // Check if first_name exists before calling toLowerCase()
                   id: user.user_id,
                 }))}
                 selectedValues={userMemberList}
@@ -366,20 +423,10 @@ const CreateEventModal = ({
                   searchBox: { width: "100%" },
                 }}
               />
-
-              {/* <input */}
-              {/* type="text"
-                name="event Group Id"
-                id="groupId"
-                placeholder="group id"
-                className="input"
-                {...register("event_group_id")}
-              /> */}
-              <p>{errors?.event_group_id?.message}</p>
             </div>
           </div>
           <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
-            {eventDataToUpdate.length!==0 ? (
+            {eventDataToUpdate.length !== 0 ? (
               <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
                 {"Update"}
               </button>
