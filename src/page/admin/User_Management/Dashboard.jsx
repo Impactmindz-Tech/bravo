@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { IoIosSearch } from 'react-icons/io';
-import { IoMdAddCircleOutline } from 'react-icons/io';
-import { FaEye } from 'react-icons/fa';
-import editIcon from '../../../assets/images/editIcon.svg';
-import adminUserProfile from '../../../assets/images/adminUserProfile.svg';
-import { DashboardApi, userStateUpdate } from '../../../utils/service/DashboardService';
-import { setUser } from '../../../store/Slice/UserSlice';
-import toast from 'react-hot-toast';
-import Pagination from '../../../components/Pagination';
-import UserManagementModalComponent from '../../../components/Modal/user-management/UserManagementModal';
-import { Link } from 'react-router-dom';
-import Loading from '../../../components/Loading';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IoIosSearch } from "react-icons/io";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { FaEye } from "react-icons/fa";
+import editIcon from "../../../assets/images/editIcon.svg";
+import adminUserProfile from "../../../assets/images/adminUserProfile.svg";
+import {
+  DashboardApi,
+  userStateUpdate,
+} from "../../../utils/service/DashboardService";
+import { setUser } from "../../../store/Slice/UserSlice";
+import toast from "react-hot-toast";
+import Pagination from "../../../components/Pagination";
+import UserManagementModalComponent from "../../../components/Modal/user-management/UserManagementModal";
+import { Link } from "react-router-dom";
+import Loading from "../../../components/Loading";
 
 const Dashboard = () => {
   const [addAdminModalOpen, setAddAdminModalOpen] = useState(false);
@@ -40,8 +43,11 @@ const Dashboard = () => {
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const response = await DashboardApi({ page: currentPage, items_per_page: itemsPerPage });
-      if(response?.isSuccess){
+      const response = await DashboardApi({
+        page: currentPage,
+        items_per_page: itemsPerPage,
+      });
+      if (response?.isSuccess) {
         dispatch(setUser(response));
         setTotalPages(Math.ceil(response.total_items / itemsPerPage));
         setLoading(false);
@@ -72,9 +78,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {loading && (
-        <Loading/>
-      )}
+      {loading && <Loading />}
       <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
         <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">
           User Management
@@ -125,9 +129,15 @@ const Dashboard = () => {
                 <td className="text-left">
                   <div className="flex gap-2">
                     <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">
-                      <img src={adminUserProfile} alt="user" className="rounded-full" />
+                      <img
+                        src={adminUserProfile}
+                        alt="user"
+                        className="rounded-full"
+                      />
                     </div>
-                    <span className="md:text-xl lg:text-2xl">{item.first_name}</span>
+                    <span className="md:text-xl lg:text-2xl">
+                      {item.first_name}
+                    </span>
                   </div>
                 </td>
 
@@ -137,7 +147,7 @@ const Dashboard = () => {
 
                 <td className="text-left cursor-pointer">
                   <div onClick={() => handleClose(item?.user_id)}>
-                    {item.is_active === '1' ? 'Active' : 'Inactive'}
+                    {item.is_active === "1" ? "Active" : "Inactive"}
                   </div>
                 </td>
                 <td className="text-left">
@@ -148,7 +158,10 @@ const Dashboard = () => {
                       alt="edit icon"
                       className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0"
                     />
-                    <Link to={`/admin/user/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer">
+                    <Link
+                      to={`/admin/user/${item?.user_id}`}
+                      className="flex justify-center text-[#065813] cursor-pointer"
+                    >
                       <FaEye />
                     </Link>
                   </div>

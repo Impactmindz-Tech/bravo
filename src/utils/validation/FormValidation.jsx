@@ -39,7 +39,10 @@ export const createUser = yup.object({
 
 export const createAdmin = yup.object({
   authrization_code: yup.string().required("Authorization Code is required"),
-  email: yup.string().email("Invalid email format").required("Email is required"),
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
   role_id: yup.string().required("Role is required"),
   first_name: yup.string().required("First Name is required"),
   last_name: yup.string().required("Last Name is required"),
@@ -57,7 +60,6 @@ export const createGroup = yup.object({
   group_name: yup.string().required("Group Name is required"),
   group_desc: yup.string().required("Group Description is required"),
 });
-
 
 export const createEvent = yup.object({
   event_title: yup.string().required("Event Title is required"),
