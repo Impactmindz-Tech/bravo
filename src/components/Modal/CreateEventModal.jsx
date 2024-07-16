@@ -2,6 +2,9 @@ import { Modal } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import Multiselect from "multiselect-react-dropdown";
+import { getUser } from "../../utils/service/GroupService";
+import { getAllGroup } from "../../utils/service/CommonService";
 import {
   createEventApi,
   updateEventApi,
@@ -17,11 +20,35 @@ const CreateEventModal = ({
   currentEventDate,
   eventDataToUpdate,
 }) => {
+
   const dispatch = useDispatch();
-  const [updateState, setUpdateState] = useState(false);
+  const [user, setUser] = useState([]);
   const [startTime, setStartTime] = useState("");
   const [eventId, setEventId] = useState("");
+  const [userMemberList, setUserMemberList] = useState([]);
+  const [groupMemberList, setGroupMemberList] = useState([]);
+  const [group, setGroup] = useState("");
   const [fileUpdate, setFileUpdate] = useState("");
+  const [filename, setFileName] = useState("");
+  const fetchDashboardData = async () => {
+    try {
+      const response = await getUser();
+      setUser(response);
+    } catch (error) {
+      console.log(error);
+      throw new Error("Failed to load dashboard data");
+    }
+  };
+
+  const fetchGroupData = async () => {
+    try {
+      const responseGrp = await getAllGroup();
+      setGroup(responseGrp);
+    } catch (error) {
+      console.log(error);
+      throw new Error("Failed to load dashboard data");
+    }
+  };
   const {
     handleSubmit,
     register,
@@ -31,9 +58,22 @@ const CreateEventModal = ({
   } = useForm({ resolver: yupResolver(createEvent) });
   const [docFile, setDocFile] = useState([""]);
 
+  const handleSelect = (selectedList) => {
+    setUserMemberList(selectedList);
+  };
+
+  const handleRemove = (selectedList) => setUserMemberList(selectedList);
+  // group
+  const handleGroupSelect = (groupMemberList) => {
+    setGroupMemberList(groupMemberList);
+  };
+
+  const handleGroupRemove = (groupMemberList) =>
+    setGroupMemberList(groupMemberList);
+
   const handleFileChange = (event) => {
-    console.log(event.target.files[0]);
     setDocFile(event.target.files[0]);
+    setFileName("");
   };
 
   const onSubmit = async (data) => {
@@ -45,11 +85,26 @@ const CreateEventModal = ({
     formData.append("location", data?.event_location);
     formData.append("cost", data?.event_cost);
     formData.append("event_notes", data?.event_notes);
-    formData.append("group_id", data?.event_group_id);
+    const groupIDs = JSON.stringify(
+      groupMemberList?.map((member) => member.id)
+    );
+
+    if (groupIDs.length === 2) {
+      toast.error("Enter Group ID");
+      return;
+    }
+    formData.append("group_id", groupIDs);
+    const userIds = JSON.stringify(userMemberList?.map((member) => member.id));
+
+    if (userIds.length === 2) {
+      toast.error("Enter User ID");
+      return;
+    }
+    formData.append("user_id", userIds);
     // update
-    if (updateState) {
+    if (eventDataToUpdate.length!==0) {
       formData.append("event_id", eventId);
-      formData.append("updated_by", data?.event_created);
+
       if (fileUpdate !== null) {
         formData.append("event_doc", docFile);
       }
@@ -66,10 +121,10 @@ const CreateEventModal = ({
         console.log(error);
       }
     }
-    // new event create
+
+    // // new event create
     else {
       formData.append("event_doc", docFile);
-      formData.append("created_by", data?.event_created);
       try {
         const responce = await createEventApi(formData);
 
@@ -78,8 +133,6 @@ const CreateEventModal = ({
           setCalenderModal(false);
           setDocFile([]);
           dispatch(setEvent(responce));
-
-          reset();
         }
       } catch (error) {
         console.log(error);
@@ -94,7 +147,26 @@ const CreateEventModal = ({
   }, [currentEventDate]);
 
   useEffect(() => {
+    fetchDashboardData();
+    fetchGroupData();
+  }, [groupMemberList]);
+
+  useEffect(() => {
     if (eventDataToUpdate[0]) {
+     
+      // converting group id,into array
+      const trimmedGroupString = eventDataToUpdate[0].group_id.trim().slice(1, -1); 
+      const groupIdArray = trimmedGroupString.split(",").map(Number); 
+
+      // converting user id,into array
+      const trimmedUserString = eventDataToUpdate[0].user_id.trim().slice(1, -1); 
+      const userIdArray = trimmedUserString.split(",").map(Number); 
+      console.log(groupIdArray);
+      console.log(userIdArray);
+
+
+
+
       setEventId(eventDataToUpdate[0]?.event_id);
       setValue("event_title", eventDataToUpdate[0]?.title);
       setValue("event_desc", eventDataToUpdate[0]?.description);
@@ -103,22 +175,27 @@ const CreateEventModal = ({
       setValue("event_location", eventDataToUpdate[0]?.location);
       setValue("event_cost", eventDataToUpdate[0]?.cost);
       setValue("event_notes", eventDataToUpdate[0]?.notes);
-      setValue("event_created", eventDataToUpdate[0]?.created_by);
       setValue("event_group_id", eventDataToUpdate[0]?.group_id);
       const dateOnly = eventDataToUpdate[0].start_time.split(" ")[0];
       setStartTime(dateOnly);
       const endDateOnly = eventDataToUpdate[0].start_time.split(" ")[0];
       setValue("event_end", endDateOnly);
 
-      if (eventDataToUpdate[0].event_doc) {
+      if (eventDataToUpdate[0].event_doc !== null) {
         const url = eventDataToUpdate[0].event_doc;
         const fileName = url.split("/").pop();
-        setFileUpdate(fileName);
+        setFileName(fileName);
       }
-      setUpdateState(true);
     } else {
       reset();
-      setUpdateState(false);
+
+      setUserMemberList([]);
+      setGroupMemberList([]);
+      setGroup("");
+
+      setFileUpdate("");
+
+  
     }
   }, [setValue, reset, eventDataToUpdate, currentEventDate]);
   return (
@@ -227,7 +304,8 @@ const CreateEventModal = ({
                 className="input"
                 onChange={handleFileChange}
               />
-              {/* <p>{docFile && docFile}</p> */}
+
+              <p>{filename && filename}</p>
             </div>
             <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
               <label className="text-blue-300 text-sm" htmlFor="event_notes">
@@ -243,37 +321,65 @@ const CreateEventModal = ({
               />
               {/* <p>{errors?.event_notes?.message}</p> */}
             </div>
-            <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-              <label className="text-blue-300 text-sm" htmlFor="event_created">
-                created by<span className="text-red-500 pl-1">*</span>
-              </label>
-              <input
-                type="number"
-                name="event_created"
-                id="event_created"
-                placeholder="created by"
-                className="input"
-                {...register("event_created")}
-              />
-              <p>{errors?.event_created?.message}</p>
-            </div>
-            <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+
+            {/* group id */}
+            <div className="flex flex-col w-[30%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
               <label className="text-blue-300 text-sm" htmlFor="groupId">
-                group id<span className="text-red-500 pl-1">*</span>
+                Group id<span className="text-red-500 pl-1">*</span>
               </label>
-              <input
-                type="text"
+              <Multiselect
+                options={group.data?.map((group) => ({
+                  name: group.name,
+                  id: group.group_id,
+                }))}
+                selectedValues={groupMemberList}
+                onSelect={handleGroupSelect}
+                onRemove={handleGroupRemove}
+                displayValue="name"
+                placeholder="Group Name"
+                style={{
+                  multiselectContainer: { width: "100%" },
+                  searchBox: { width: "100%" },
+                }}
+              />
+
+              <p>{errors?.event_group_id?.message}</p>
+            </div>
+
+            {/* user id */}
+            <div className="flex flex-col w-[30%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+              <label className="text-blue-300 text-sm" htmlFor="groupId">
+                User id<span className="text-red-500 pl-1">*</span>
+              </label>
+              <Multiselect
+                options={user.data?.map((user) => ({
+                  name: user.first_name,
+                  id: user.user_id,
+                }))}
+                selectedValues={userMemberList}
+                onSelect={handleSelect}
+                onRemove={handleRemove}
+                displayValue="name"
+                placeholder="User Name"
+                style={{
+                  multiselectContainer: { width: "100%" },
+                  searchBox: { width: "100%" },
+                }}
+              />
+
+              {/* <input */}
+              {/* type="text"
                 name="event Group Id"
                 id="groupId"
                 placeholder="group id"
                 className="input"
                 {...register("event_group_id")}
-              />
+              /> */}
               <p>{errors?.event_group_id?.message}</p>
             </div>
           </div>
           <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
-            {updateState ? (
+            {eventDataToUpdate.length!==0 ? (
               <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
                 {"Update"}
               </button>

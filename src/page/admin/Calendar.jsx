@@ -63,13 +63,11 @@ function Calendar() {
 
   // delete events
   const deleteEvent = async (event) => {
-    const formData = new FormData();
-    formData.append("event_id", event.id);
-    const responce = await deleteEventApi(formData);
-    console.log(responce);
+    const responce = await deleteEventApi({"event_id":event.id});
     try {
       if (responce?.isSuccess) {
         toast.success(responce?.message);
+        fetchAllEventsData()
       }
     } catch (error) {
       console.log(error);

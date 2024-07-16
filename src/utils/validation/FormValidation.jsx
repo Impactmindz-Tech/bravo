@@ -68,6 +68,7 @@ export const createEvent = yup.object({
   // event_cost: yup.string().required("Event Cost is required"),
   // event_doc: yup.string().required("Event Doc is required"),
   // event_notes: yup.string().required("Event Notes is required"),
-  event_created: yup.string().required("Event Created By is required"),
-  event_group_id: yup.string().required("Event Group Id is required")
+
+  // event_group_id: yup.string().required("Event Group Id is required")
+  // event_group_id: yup.string().required("Event Group Id is required")
 });
