@@ -27,11 +27,8 @@ const CreateEventModal = ({
   const [userMemberList, setUserMemberList] = useState([]);
   const [groupMemberList, setGroupMemberList] = useState([]);
   const [group, setGroup] = useState("");
-  const [fileUpdate, setFileUpdate] = useState("");
-  const [filename, setFileName] = useState("");
 
-  const [updateGroupMember, setUpdateGroupMember] = useState([]);
-  const [updateUserMember, setUpdateUserMember] = useState([]);
+  const [filename, setFileName] = useState("");
   const fetchDashboardData = async () => {
     try {
       const response = await getUser();
@@ -65,7 +62,6 @@ const CreateEventModal = ({
   };
 
   const handleRemove = (selectedList) => setUserMemberList(selectedList);
-  // group
   const handleGroupSelect = (groupMemberList) => {
     setGroupMemberList(groupMemberList);
   };
@@ -125,10 +121,7 @@ const CreateEventModal = ({
       } catch (error) {
         console.log(error);
       }
-    }
-
-    // // new event create
-    else {
+    } else {
       const groupIDs = JSON.stringify(
         groupMemberList?.map((member) => member.id)
       );
@@ -186,7 +179,6 @@ const CreateEventModal = ({
   };
   useEffect(() => {
     if (eventDataToUpdate[0]) {
-      // converting group id,into array
       if (eventDataToUpdate[0].group_id !== null) {
         const trimmedGroupString = eventDataToUpdate[0].group_id
           .trim()
@@ -245,7 +237,6 @@ const CreateEventModal = ({
       setGroupMemberList([]);
       setGroup("");
       setUser("");
-      setFileUpdate("");
     }
   }, [setValue, reset, eventDataToUpdate, currentEventDate]);
   return (
