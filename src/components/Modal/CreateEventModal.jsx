@@ -3,8 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Multiselect from "multiselect-react-dropdown";
-import { getUser } from "../../utils/service/GroupService";
-import { getAllGroup } from "../../utils/service/CommonService";
+import { getAllGroup, getAllUser } from "../../utils/service/CommonService";
 import {
   createEventApi,
   updateEventApi,
@@ -31,7 +30,7 @@ const CreateEventModal = ({
   const [filename, setFileName] = useState("");
   const fetchDashboardData = async () => {
     try {
-      const response = await getUser();
+      const response = await getAllUser();
       setUser(response);
     } catch (error) {
       console.log(error);
@@ -103,12 +102,10 @@ const CreateEventModal = ({
         return;
       }
       formData.append("user_id", updatedUserId);
-
-      if (docFile.length == undefined) {
-        formData.append("event_doc", docFile);
+      if (docFile.length !== 0) {
+        formData.append("event_image", docFile);
       }
       formData.append("event_id", eventId);
-
       try {
         const responce = await updateEventApi(formData);
         if (responce?.isSuccess) {
