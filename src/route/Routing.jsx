@@ -16,6 +16,7 @@ import { getLocalStorage } from "../utils/LocalStorageUtills";
 import DashboardProtected from "../authenticat/DashboardProtected";
 import { useEffect } from "react";
 import UserDetails from "../page/admin/User_Management/UserDetails";
+import Event_Participants from "../page/admin/Events_Management/Events_Participants";
 
 const Root = () => {
   const navigate = useNavigate();
@@ -89,6 +90,14 @@ const router = createBrowserRouter([
         element: (
           <DashboardLayout>
             <Calendar />
+          </DashboardLayout>
+        ),
+      },
+      {
+        path: "event_participants",
+        element: (
+          <DashboardLayout>
+            <Event_Participants />
           </DashboardLayout>
         ),
       },

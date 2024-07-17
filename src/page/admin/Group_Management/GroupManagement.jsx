@@ -19,6 +19,7 @@ export default function GroupManagement() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
+  
   const groupData = useSelector((state) => state.group.group);
 
   const groupStatusUpdate = async (id) => {

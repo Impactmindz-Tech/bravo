@@ -41,3 +41,14 @@ export const getAllEventsApi = async (payload) => {
     console.log(error);
   }
 };
+
+
+
+export const EventParticipantsApi = async (payload) => {
+  try {
+    const responce = await axiosInstance.get(`?page=eventParticipants`, payload);
+    return responce.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
