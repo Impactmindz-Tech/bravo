@@ -8,7 +8,6 @@ import "react-tagsinput/react-tagsinput.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { systemSetting } from "../../utils/validation/FormValidation";
 
-
 export default function SystemSetting() {
   const {
     handleSubmit,
@@ -18,42 +17,20 @@ export default function SystemSetting() {
     setValue,
   } = useForm({ resolver: yupResolver(systemSetting) });
 
-
-
   const [relationKeyword, setRelationKeyword] = useState([]);
   const [categoryKeyword, setCategoryKeyword] = useState([]);
-  
   const [files, setFiles] = useState({
     postCodeFile: null,
     aboutDocumentFileDocument: null,
     privacyDocumentFileDocument: null,
   });
 
-
-
-  const [text, setText] = useState({
-    postCodeFile: null,
-    aboutDocumentFileDocument: null,
-    privacyDocumentFileDocument: null,
-  });
-  const [userLabel, setUserLabel] = useState({
-    label1: null,
-    label2: null
-  });
-
-  const [groupLabel, setGroupLabel] = useState({
-    label1: null,
-    label2: null
-  });
-
-
-
-
   const handleFileChange = (type) => (event) => {
     setFiles((prevFiles) => ({
       ...prevFiles,
       [type]: event.target.files[0],
     }));
+    console.log(files);
   };
 
   const handleRemoveFile = (type) => () => {
@@ -71,10 +48,7 @@ export default function SystemSetting() {
     setCategoryKeyword(tags);
   };
 
-
-  
   const renderTag = ({ tag, key, disabled, onRemove }) => (
-
     <li
       key={key}
       className="bg-blue-900 text-white rounded-full text-sm flex justify-start mb-1 gap-2 pr-2 "
@@ -91,8 +65,6 @@ export default function SystemSetting() {
         <IoIosCloseCircleOutline className="cursor-pointer" />
       </i>
     </li>
-
-
   );
   return (
     <>

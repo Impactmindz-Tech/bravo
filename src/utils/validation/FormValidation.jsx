@@ -64,13 +64,9 @@ export const createGroup = yup.object({
 export const createEvent = yup.object({
   event_title: yup.string().required("Event Title is required"),
   event_end: yup.string().required("Event End Time is required"),
-
 });
 
-
-
-
-export const systemSetting= yup.object({
+export const systemSetting = yup.object({
   category: yup.string().required("Event Title is required"),
   // event_desc: yup.string().required("Event Description is required"),
   // event_start: yup.string().required("Event Start Time is required"),

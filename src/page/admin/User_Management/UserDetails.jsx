@@ -1,26 +1,24 @@
-import  { useState } from 'react'
-import { getUserDataByID } from '../../../utils/service/DashboardService';
-import { useParams } from 'react-router-dom';
+import { useState } from "react";
+import { getUserDataByID } from "../../../utils/service/DashboardService";
+import { useParams } from "react-router-dom";
 
 const UserDetails = () => {
-  const params = useParams()
+  const params = useParams();
 
   const fetchUserDataByID = async () => {
     try {
       const response = await getUserDataByID(params?.id);
-      console.log(response)
+      console.log(response);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useState(() => {
-    fetchUserDataByID()
-  }, [])
+    fetchUserDataByID();
+  }, []);
 
-  return (
-    <div>UserDetails</div>
-  )
-}
+  return <div>UserDetails</div>;
+};
 
-export default UserDetails
+export default UserDetails;

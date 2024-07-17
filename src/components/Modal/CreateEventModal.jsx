@@ -55,10 +55,6 @@ const CreateEventModal = ({
     setValue,
   } = useForm({ resolver: yupResolver(createEvent) });
 
-
-
-
-  
   const [docFile, setDocFile] = useState([]);
 
   const handleSelect = (userMemberList) => {
