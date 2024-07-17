@@ -31,7 +31,7 @@ function Event_Participants() {
     try {
       setLoading(true);
       const response = await EventParticipantsApi();
-      console.log(response)
+
       if (response?.isSuccess) {
         dispatch(setParticipants(response));
       }
@@ -66,10 +66,7 @@ function Event_Participants() {
         </div>
       </div>
 
-      <div
-        className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1"
-        style={{ height: "calc(100vh - 257px)" }}
-      >
+      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1">
         <table className="min-w-full">
           <thead>
             <tr>
@@ -79,7 +76,7 @@ function Event_Participants() {
               <th className="text-left">Participant Username</th>
               <th className="text-left">Participant Email</th>
               <th className="text-left">Participant Status</th>
-              <th className="text-left">Action</th>
+              <th className="text-left">Location</th>
             </tr>
           </thead>
 
@@ -94,7 +91,25 @@ function Event_Participants() {
                       <td className="text-left">{item.end_time}</td>
                       <td className="text-left">{subItem.username}</td>
                       <td className="text-left">{subItem.email}</td>
-                      <td className="text-left">{subItem.status}</td>
+                      <td className="text-left">
+                        {subItem?.status == "accepted" && (
+                          <button className="bg-[#aaf1ba] border border-success text-green-700 hover:bg-green-200 font-bold py-2 px-4 rounded cursor-text w-[100%]">
+                            {subItem.status}
+                          </button>
+                        )}
+                        {subItem?.status == "declined" && (
+                          <button className="bg-[#f7a0a8] border border-danger text-red-700 hover:bg-red-200 font-bold py-2 px-4 rounded w-[100%]">
+                            {subItem.status}
+                          </button>
+                        )}
+                        {subItem?.status == "invited" && (
+                          <button className="bg-[#fce7a5] border border-[#866e1d] text-red-700 hover:bg-red-200 font-bold py-2 px-4 rounded w-[100%]">
+                            {subItem.status}
+                          </button>
+                        )}
+                      </td>
+                      {/* <td className="text-left">{subItem.status}</td> */}
+                      <td className="text-left">{item.location}</td>
                     </tr>
                   );
                 })}

@@ -98,7 +98,7 @@ const CreateEventModal = ({
         userMemberList?.map((member) => member.user_id || member.id)
       );
       if (updatedUserId.length === 2) {
-        toast.error("Enter Group ID");
+        toast.error("Enter User ID");
         return;
       }
       formData.append("user_id", updatedUserId);

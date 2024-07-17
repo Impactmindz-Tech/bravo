@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    participants: null
-}
+  participants: null,
+};
 
 const ParticipantsSlice = createSlice({
-    name: 'participants',
-    initialState,
-    reducers: {
-         setParticipants: (state, action) => {
-             state.participants = action.payload;
-         },
-    }
-})
+  name: "participants",
+  initialState,
+  reducers: {
+    setParticipants: (state, action) => {
+      state.participants = action.payload;
+    },
+  },
+});
 
-export const { setParticipants } = ParticipantsSlice.actions
-export default ParticipantsSlice
+export const { setParticipants } = ParticipantsSlice.actions;
+export default ParticipantsSlice;

@@ -42,11 +42,12 @@ export const getAllEventsApi = async (payload) => {
   }
 };
 
-
-
 export const EventParticipantsApi = async (payload) => {
   try {
-    const responce = await axiosInstance.get(`?page=eventParticipants`, payload);
+    const responce = await axiosInstance.get(
+      `?page=eventParticipants`,
+      payload
+    );
     return responce.data;
   } catch (error) {
     console.log(error);

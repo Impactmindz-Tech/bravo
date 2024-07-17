@@ -1,8 +1,4 @@
-import {
-
-  useNavigate,
-  createBrowserRouter,
-} from "react-router-dom";
+import { useNavigate, createBrowserRouter } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import Dashboard from "../page/admin/User_Management/Dashboard";
 import Login from "../page/auth/Login";
@@ -114,4 +110,3 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
-
