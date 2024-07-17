@@ -51,6 +51,7 @@ export const userStateUpdate = async (payload) => {
 export const getUserDataByID = async (id) => {
     try {
         const responce = await axiosInstance.get(`?page=getUserDataByID/${id}`)
+       
         return responce.data
     } catch (error) {
         console.log(error)

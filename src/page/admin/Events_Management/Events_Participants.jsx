@@ -17,9 +17,13 @@ import { TbEdit } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { setParticipants } from "../../../store/Slice/EventParticipantsSlice";
 import Loading from "../../../components/Loading";
+import Pagination from "../../../components/Pagination";
 // calendar website
 // https://fullcalendar.io/
 function Event_Participants() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
   const participantsData = useSelector(
     (state) => state.participants.participants
   );
@@ -119,6 +123,17 @@ function Event_Participants() {
           {/* </tbody> */}
         </table>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        onItemsPerPageChange={(value) => {
+          setCurrentPage(1);
+          setItemsPerPage(value);
+        }}
+      />
     </>
   );
 }

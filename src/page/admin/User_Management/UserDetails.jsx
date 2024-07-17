@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { getUserDataByID } from '../../../utils/service/DashboardService';
 import { useParams } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ const UserDetails = () => {
   const fetchUserDataByID = async () => {
     try {
       const response = await getUserDataByID(params?.id);
+      console.log(response)
     } catch (error) {
       console.log(error)
     }

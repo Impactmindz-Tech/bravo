@@ -2,23 +2,58 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
 import { useState } from "react";
 import settingUser from "../../assets/images/settingUser.png";
+import { useForm } from "react-hook-form";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { systemSetting } from "../../utils/validation/FormValidation";
+
+
 export default function SystemSetting() {
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+    setValue,
+  } = useForm({ resolver: yupResolver(systemSetting) });
+
+
+
   const [relationKeyword, setRelationKeyword] = useState([]);
   const [categoryKeyword, setCategoryKeyword] = useState([]);
+  
   const [files, setFiles] = useState({
     postCodeFile: null,
     aboutDocumentFileDocument: null,
     privacyDocumentFileDocument: null,
   });
 
+
+
+  const [text, setText] = useState({
+    postCodeFile: null,
+    aboutDocumentFileDocument: null,
+    privacyDocumentFileDocument: null,
+  });
+  const [userLabel, setUserLabel] = useState({
+    label1: null,
+    label2: null
+  });
+
+  const [groupLabel, setGroupLabel] = useState({
+    label1: null,
+    label2: null
+  });
+
+
+
+
   const handleFileChange = (type) => (event) => {
     setFiles((prevFiles) => ({
       ...prevFiles,
       [type]: event.target.files[0],
     }));
-    console.log(files);
   };
 
   const handleRemoveFile = (type) => () => {
@@ -36,6 +71,8 @@ export default function SystemSetting() {
     setCategoryKeyword(tags);
   };
 
+
+  
   const renderTag = ({ tag, key, disabled, onRemove }) => (
 
     <li

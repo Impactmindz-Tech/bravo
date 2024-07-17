@@ -144,8 +144,7 @@ const Dashboard = () => {
                 <td className="text-left">{item.email}</td>
                 <td className="text-left">{item.phone}</td>
                 <td className="text-left">{item.authrization_code}</td>
-
-                <td className="text-left cursor-pointer">
+     <td className="text-left cursor-pointer">
                   <div onClick={() => handleClose(item?.user_id)}>
                     {item.is_active === "1" ? "Active" : "Inactive"}
                   </div>
