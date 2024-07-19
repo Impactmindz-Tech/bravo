@@ -38,7 +38,8 @@ export const createUser = yup.object({
 });
 
 export const createAdmin = yup.object({
-  authrization_code: yup.string().required("Authorization Code is required"),
+  username: yup.string().required("user name Code is required"),
+  password: yup.string().required("password Code is required"),
   email: yup
     .string()
     .email("Invalid email format")

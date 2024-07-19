@@ -145,11 +145,11 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
   };
 
   const handleCloseModal = () => {
-    if(!adminItem){
+    if (!adminItem) {
       setAddAdminModalOpen(false);
       setSelectedFile(null);
       reset();
-    }else{
+    } else {
       setAddAdminModalOpen(false);
     }
   };
@@ -188,7 +188,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     return (
                       <div key={index} className="flex gap-2">
                         <input type="radio" value={item?.role_id} name="role_id" id="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
-                        <label className="flex items-center" htmlFor="role_id" key={index}>
+                        <label className="flex items-center" htmlFor={item?.role_id} key={index}>
                           {item.role_name}
                         </label>
                       </div>
@@ -196,7 +196,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   })}
                 </div>
 
-                {/* file upload section */}
                 <div className="flex gap-2">
                   <h4 className="text-blue-300 pt-2 sm:text-sm">Profile Picture</h4>
                   <div className="flex w-[75%] items-center border rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
@@ -219,11 +218,18 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                 {/* form section */}
                 <div className="flex flex-wrap list-none mt-6 gap-6">
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <label className="text-blue-300 text-sm" htmlFor="Authentication_Code">
-                      Authentication Code <span className="text-red-500 pl-1">*</span>
+                    <label className="text-blue-300 text-sm" htmlFor="username">
+                      User Name <span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="Authentication_Code" placeholder="Authentication Code" id="Authentication_Code" className="input" {...register("authrization_code")} />
-                    <p>{errors?.authrization_code?.message}</p>
+                    <input type="text" name="username" placeholder="username" id="username" className="input" {...register("username")} />
+                    <p>{errors?.username?.message}</p>
+                  </div>
+                  <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <label className="text-blue-300 text-sm" htmlFor="password">
+                      Password <span className="text-red-500 pl-1">*</span>
+                    </label>
+                    <input type="text" name="password" placeholder="password" id="password" className="input" {...register("password")} />
+                    <p>{errors?.password?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="first_name">
