@@ -123,6 +123,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
         const responce = await EditUser(formData);
         if (responce?.isSuccess) {
           toast.success(responce?.message);
+         
         }
       } catch (error) {
         console.log(error);
@@ -133,6 +134,8 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
         if (response?.isSuccess) {
           toast.success(response?.message);
           onUserCreated();
+          reset();
+          setSelectedFile([])
           setAddAdminModalOpen(false);
         }
       } catch (error) {
@@ -225,7 +228,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="password">
-                        passowrd <span className="text-red-500 pl-1">*</span>
+                        password <span className="text-red-500 pl-1">*</span>
                       </label>
                       <input type="text" name="password" id="password" placeholder="385555" className="input" {...register("password")} />
                       <p>{errors?.password?.message}</p>
@@ -274,7 +277,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="dob">
-                        DOB
+                        DOB<span className="text-red-500 pl-1">*</span>
                       </label>
                       <input type="date" name="dob" id="dob" className="input" {...register("dob")} />
                       <p>{errors?.dob?.message}</p>
@@ -282,7 +285,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="Age">
-                        Age
+                        Age<span className="text-red-500 pl-1">*</span>
                       </label>
                       <input type="text" name="Age" id="Age" className="input" {...register("Age")} />
                       <p>{errors?.Age?.message}</p>
@@ -298,13 +301,13 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="postal_code">
-                        Postal Code
+                        Postal Code<span className="text-red-500 pl-1">*</span>
                       </label>
                       <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
                       <p>{errors?.postal_code?.message}</p>
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">Suburb</label>
+                      <label className="text-blue-300 text-sm">Suburb <span className="text-red-500 pl-1">*</span></label>
                       <CitySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={city} stateid={stateid.id} onChange={handleCity} placeHolder="Select City" />
                     </div>
 
