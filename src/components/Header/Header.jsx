@@ -64,7 +64,7 @@ export default function Header() {
               <Link to="#" className="block px-4 py-2 font-semibold text-sm">Support</Link>
               <Link to="#" className="block px-4 py-2 font-semibold text-sm">License</Link>
               <Link to="#" className="block px-4 py-2 font-semibold text-sm">Account settings</Link>
-              <div onClick={logout} to="#" className="block px-4 py-2 font-semibold text-sm">Singout</div>
+              <div onClick={logout} to="#" className="block px-4 py-2 font-semibold text-sm">Sign out</div>
             </div>
           </div>}
         </div>
