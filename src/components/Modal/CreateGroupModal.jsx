@@ -94,6 +94,9 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
       if (response?.isSuccess) {
         toast.success(response?.message);
         setCreateGroupModalOpen(false);
+        reset()
+        setGroupMemberList([]);
+        setSelectedFile(null);
         fetchGroup();
       } else {
         toast.error(response?.message);
