@@ -8,6 +8,7 @@ export const getAllGroup = async () => {
     console.log(error);
   }
 };
+
 export const getAllUser = async () => {
   try {
     const responce = await axiosInstance.get(`?page=allUsers`);

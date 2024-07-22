@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import { Modal } from "@mui/material";
 import Multiselect from "multiselect-react-dropdown";
 import "react-tagsinput/react-tagsinput.css";
-import { CreateGroup, getUser, updateEditGroup } from "../../utils/service/GroupService";
+import { CreateGroup, updateEditGroup } from "../../utils/service/GroupService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createGroup } from "../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
+import { getAllUser } from "../../utils/service/CommonService";
 
 const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetchGroup, groupItem }) => {
   const [groupMemberList, setGroupMemberList] = useState([]);
@@ -28,7 +29,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
   };
   const fetchDashboardData = async () => {
     try {
-      const response = await getUser();
+      const response = await getAllUser();
       setUser(response);
     } catch (error) {
       console.log(error);
