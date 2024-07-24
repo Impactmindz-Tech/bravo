@@ -7,7 +7,8 @@ import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { systemSetting } from "../../utils/validation/FormValidation";
-import { createRelationApi, deleteRelation, getAdminRoles, getAllCategories, getAllRelation, getAllRoles } from "../../utils/service/SystemSettingService";
+import { createCategoryApi, createRelationApi, deleteRelation, getAdminRoles, getAllCategories, getAllRelation, getAllRoles } from "../../utils/service/SystemSettingService";
+import toast from "react-hot-toast";
 
 export default function SystemSetting() {
   const {
@@ -44,10 +45,6 @@ export default function SystemSetting() {
       ...prevFiles,
       [type]: null,
     }));
-  };
-
-  const handleCategoryKeywordChange = (tags) => {
-    setCategoryKeyword(tags);
   };
 
   const getAllSettingSettingData = async () => {
@@ -90,21 +87,60 @@ export default function SystemSetting() {
       }
     }
 
-
-
-    // create relations
+    // create relations api
     setRelationKeyword(tags);
-    
     let key = "";
     if (relationKeyword.length == 0) {
       key = tags[0];
     } else {
       const lastValue = tags.at(-1);
-     key=lastValue;
+      key = lastValue;
     }
-    const response=createRelationApi({ type_name: key })
-    console.log(response)
+    const formData = new FormData();
+    formData.append("type_name", key);
+    try {
+      const response = await createRelationApi(formData);
+      if (response?.isSuccess) {
+        console.log(response);
+        toast.success(response?.message);
+        reset();
+        getAllSettingSettingData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const handleCategoryKeywordChange = async (tags) => {
+    setCategoryKeyword(tags);
+
+    // create category api
+    let key = "";
+    if (categoryKeyword.length == 0) {
+      key = tags[0];
+    } else {
+      const lastValue = tags.at(-1);
+      key = lastValue;
+    }
+
+    console.log(key);
+
+    const formData = new FormData();
+    formData.append("cat_name", key);
+
+    try {
+      const response = await createCategoryApi(formData);
+      if (response?.isSuccess) {
+        console.log(response);
+        toast.success(response?.message);
+        reset();
+        getAllSettingSettingData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getAllSettingSettingData();
   }, []);
@@ -112,20 +148,14 @@ export default function SystemSetting() {
   const handleSelect = async (relationListNew) => {
     setRelationList(relationListNew);
 
-
-
-
-
-    // update status of 
+    // update status of
     let key = "";
     if (relationList.length == 0) {
       key = relationListNew[0].name;
-     
     } else {
       const lastValue = relationList.at(-1);
       key = lastValue.name;
     }
- 
   };
 
   const handleRemove = (selectedList) => setRelationList(selectedList);
@@ -178,7 +208,7 @@ export default function SystemSetting() {
 
             <h1 className="my-3 mx-5 text-blue-300 sm:mx-2 lg:text-xl">Relation</h1>
             <div className="flex my-4 flex-wrap input gap-3 w-[95%] lg:py-1 py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[98%] sm:py-1 lg:w-[94%]">
-              <TagsInput value={relationKeyword} onChange={handleRelationKeywordChange} className="editGroup  sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " placeholder={null} />
+              <TagsInput value={relationKeyword} onChange={handleRelationKeywordChange} className="editGroup w-[100%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " placeholder={null} />
 
               <Multiselect
                 options={relationData?.map((role) => ({
@@ -189,6 +219,7 @@ export default function SystemSetting() {
                 onSelect={handleSelect}
                 onRemove={handleRemove}
                 displayValue="name"
+                //  className="min-w-[990px]"
                 placeholder="Select Relation"
               />
             </div>
@@ -223,6 +254,9 @@ export default function SystemSetting() {
               </div>
             </div>
 
+            <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5 lg:mr-0">
+              <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none w-[120px]">Update</button>
+            </div>
             {/* file management */}
 
             <div className="flex mb-10 pl-5 mt-4 sm:flex-col sm:pl-3 sm:gap-y-2 lg:flex-wrap lg:gap-2">
