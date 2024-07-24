@@ -68,7 +68,10 @@ export const createEvent = yup.object({
 });
 
 export const systemSetting = yup.object({
-  category: yup.string().required("Event Title is required"),
+  admin_level1: yup.string().required("Admin Level 1 is required"),
+  admin_level2: yup.string().required("Admin Level 2 is required"),
+  user_level1: yup.string().required("User Level 1 is required"),
+  user_level2: yup.string().required("User Level 2 is required"),
   // event_desc: yup.string().required("Event Description is required"),
   // event_start: yup.string().required("Event Start Time is required"),
   // event_location: yup.string().required("Event Location is required"),
