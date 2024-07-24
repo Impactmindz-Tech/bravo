@@ -49,6 +49,34 @@ export const deleteRelation = async (payload) => {
   }
 };
 
+
+
+
+export const deleteCategory = async (payload) => {
+  let id = parseInt(payload.category_id);
+  try {
+    const responce = await axiosInstance.delete(`?page=deleteCategory`, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: { category_id: id },
+    });
+    return responce.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+// export const deleteCategory = async (payload) => {
+//   try {
+//     const responce = await axiosInstance.delete(`?page=deleteCategory`, payload);
+//     return responce.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 export const createRelationApi = async (payload) => {
   try {
     const responce = await axiosInstance.post(`?page=createRelation`, payload);
@@ -61,6 +89,14 @@ export const createRelationApi = async (payload) => {
 export const createCategoryApi = async (payload) => {
   try {
     const responce = await axiosInstance.post(`?page=createCategory`, payload);
+    return responce.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const updateRolesApi = async (payload) => {
+  try {
+    const responce = await axiosInstance.post(`?page=updateRoles`, payload);
     return responce.data;
   } catch (error) {
     console.log(error);

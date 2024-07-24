@@ -7,7 +7,7 @@ import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { systemSetting } from "../../utils/validation/FormValidation";
-import { createCategoryApi, createRelationApi, deleteRelation, getAdminRoles, getAllCategories, getAllRelation, getAllRoles } from "../../utils/service/SystemSettingService";
+import { createCategoryApi, createRelationApi, deleteCategory, deleteRelation, getAdminRoles, getAllCategories, getAllRelation, getAllRoles, updateRolesApi } from "../../utils/service/SystemSettingService";
 import toast from "react-hot-toast";
 
 export default function SystemSetting() {
@@ -23,8 +23,8 @@ export default function SystemSetting() {
   const [categoryKeyword, setCategoryKeyword] = useState([]);
   const [relationData, setRelationData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
-
   const [relationList, setRelationList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
 
   const [files, setFiles] = useState({
     postCodeFile: null,
@@ -37,7 +37,6 @@ export default function SystemSetting() {
       ...prevFiles,
       [type]: event.target.files[0],
     }));
-    console.log(files);
   };
 
   const handleRemoveFile = (type) => () => {
@@ -59,7 +58,7 @@ export default function SystemSetting() {
     if (categoriesRes?.isSuccess) {
       const categoryData = categoriesRes.data;
       setCategoryData(categoryData);
-      setCategoryKeyword(categoryData.map((item) => item.cat_name));
+      setCategoryKeyword(categoryData.filter((item) => item.status === 1).map((item) => item.cat_name));
     }
 
     if (adminRolesRes?.isSuccess) {
@@ -78,12 +77,15 @@ export default function SystemSetting() {
   };
 
   const handleRelationKeywordChange = async (tags) => {
+    // hide relation
     const removedElements = relationKeyword.filter((element) => !tags.includes(element));
     if (removedElements.length > 0) {
       const deletedDataId = relationData.filter((item) => item.type_name === removedElements[0]).map((item) => item.relationship_type_id);
       const deleteResponse = await deleteRelation({ relation_id: deletedDataId[0] });
       if (deleteResponse?.isSuccess) {
         getAllSettingSettingData();
+        toast.success(deleteResponse?.message);
+        return;
       }
     }
 
@@ -101,7 +103,6 @@ export default function SystemSetting() {
     try {
       const response = await createRelationApi(formData);
       if (response?.isSuccess) {
-        console.log(response);
         toast.success(response?.message);
         reset();
         getAllSettingSettingData();
@@ -112,6 +113,22 @@ export default function SystemSetting() {
   };
 
   const handleCategoryKeywordChange = async (tags) => {
+    // hide category
+    const removedElements = categoryKeyword.filter((element) => !tags.includes(element));
+
+    if (removedElements.length > 0) {
+      const deletedDataId = categoryData.filter((item) => item.cat_name === removedElements[0]).map((item) => item.cat_id);
+      let formData = new FormData();
+      formData.append("category_id", deletedDataId[0]);
+      const deleteResponse = await deleteCategory({ category_id: deletedDataId[0] });
+      if (deleteResponse?.isSuccess) {
+        getAllSettingSettingData();
+        toast.success(deleteResponse?.message);
+
+        return;
+      }
+    }
+
     setCategoryKeyword(tags);
 
     // create category api
@@ -123,15 +140,12 @@ export default function SystemSetting() {
       key = lastValue;
     }
 
-    console.log(key);
-
     const formData = new FormData();
     formData.append("cat_name", key);
 
     try {
       const response = await createCategoryApi(formData);
       if (response?.isSuccess) {
-        console.log(response);
         toast.success(response?.message);
         reset();
         getAllSettingSettingData();
@@ -158,7 +172,52 @@ export default function SystemSetting() {
     }
   };
 
-  const handleRemove = (selectedList) => setRelationList(selectedList);
+  const handleSelectCategory = async (categoryListNew) => {
+    setCategoryList(categoryListNew);
+
+    // update status of
+    let key = "";
+    if (categoryList.length == 0) {
+      key = categoryListNew[0].name;
+    } else {
+      const lastValue = categoryList.at(-1);
+      key = lastValue.name;
+    }
+  };
+
+  const handleRemove = (selectedList) => {
+    // relationData.filter((item)=>item.)
+    console.log(relationData);
+    console.log(relationList);
+
+    // setRelationList(selectedList)
+  };
+  const handleRemoveCategory = (selectedList) => {
+    console.log(`Removed categories: ${selectedList.map((item) => item.name).join(", ")}`);
+    // Update the categoryList state by removing the selected items
+    setCategoryList((prevCategoryList) => prevCategoryList.filter((item) => !selectedList.some((removedItem) => removedItem.id === item.id)));
+    // setCategoryList(selectedList)
+    //
+  };
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("admin_level1", data?.admin_level1);
+    formData.append("admin_level2", data?.admin_level2);
+    formData.append("student_name", data?.user_level1);
+    formData.append("parent_name", data?.user_level2);
+
+    try {
+      const responce = await updateRolesApi(formData);
+
+      if (responce?.isSuccess) {
+        toast.success(responce?.message);
+        getAllSettingSettingData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const renderTag = ({ tag, key, disabled, onRemove }) => (
   //   <li
@@ -202,6 +261,19 @@ export default function SystemSetting() {
                 onChange={handleCategoryKeywordChange}
                 className="settingGroup min-w-[100%]  sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] "
               />
+              <div className="w-full ">
+                <Multiselect
+                  options={categoryData?.map((role) => ({
+                    name: role.cat_name,
+                    id: role.cat_id,
+                  }))}
+                  selectedValues={setCategoryList}
+                  onSelect={handleSelectCategory}
+                  onRemove={handleRemoveCategory}
+                  displayValue="name"
+                  placeholder="Select Relation"
+                />
+              </div>
             </div>
 
             {/* relation */}
@@ -209,54 +281,69 @@ export default function SystemSetting() {
             <h1 className="my-3 mx-5 text-blue-300 sm:mx-2 lg:text-xl">Relation</h1>
             <div className="flex my-4 flex-wrap input gap-3 w-[95%] lg:py-1 py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[98%] sm:py-1 lg:w-[94%]">
               <TagsInput value={relationKeyword} onChange={handleRelationKeywordChange} className="editGroup w-[100%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " placeholder={null} />
-
-              <Multiselect
-                options={relationData?.map((role) => ({
-                  name: role.type_name,
-                  id: role.relationship_type_id,
-                }))}
-                selectedValues={setRelationList}
-                onSelect={handleSelect}
-                onRemove={handleRemove}
-                displayValue="name"
-                //  className="min-w-[990px]"
-                placeholder="Select Relation"
-              />
+              <div className="w-full ">
+                <Multiselect
+                  options={relationData?.map((role) => ({
+                    name: role.type_name,
+                    id: role.relationship_type_id,
+                  }))}
+                  selectedValues={setRelationList}
+                  onSelect={handleSelect}
+                  onRemove={handleRemove}
+                  displayValue="name"
+                  //  className="min-w-[990px]"
+                  placeholder="Select Relation"
+                />
+              </div>
             </div>
 
             {/* admin management */}
-            <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 sm:w-[100%]">
-              <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:py-1 lg:w-[100%] lg:py-0 lg:pt-3">Admin Management</span>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 sm:w-[100%]">
+                <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:py-1 lg:w-[100%] lg:py-0 lg:pt-3">Admin Management</span>
 
-              <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
-                <h1 className="sm:text-sm">Level 1</h1>
-                <input type="text" name="level1" className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]" {...register("admin_level1")} />
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
+                  <h1 className="sm:text-sm">
+                    Level 1 <span className="text-red-500 pl-1">*</span>
+                  </h1>
+                  <input type="text" name="level1" className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]" {...register("admin_level1")} />
+                  <p>{errors?.admin_level1?.message}</p>
+                </div>
+
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
+                  <h1 className="sm:text-sm">
+                    Level 2 <span className="text-red-500 pl-1">*</span>
+                  </h1>
+                  <input type="text" name="level1" className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]" {...register("admin_level2")} />
+                  <p>{errors?.admin_level2?.message}</p>
+                </div>
               </div>
 
-              <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
-                <h1 className="sm:text-sm">Level 2</h1>
-                <input type="text" name="level1" className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]" {...register("admin_level2")} />
+              {/* user management */}
+              <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 sm:w-[100%]">
+                <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:py-1 lg:w-[100%] lg:py-0 lg:pt-3">User Management</span>
+
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
+                  <h1 className="sm:text-sm">
+                    Level 1 <span className="text-red-500 pl-1">*</span>
+                  </h1>
+                  <input type="text" name="level1" className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]" {...register("user_level1")} />
+                  <p>{errors?.user_level1?.message}</p>
+                </div>
+
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
+                  <h1 className="sm:text-sm">
+                    Level 2 <span className="text-red-500 pl-1">*</span>
+                  </h1>
+                  <input type="text" name="level1" className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]" {...register("user_level2")} />
+                  <p>{errors?.user_level2?.message}</p>
+                </div>
               </div>
-            </div>
 
-            {/* user management */}
-            <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 sm:w-[100%]">
-              <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:py-1 lg:w-[100%] lg:py-0 lg:pt-3">User Management</span>
-
-              <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
-                <h1 className="sm:text-sm">Level 1</h1>
-                <input type="text" name="level1" className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]" {...register("user_level1")} />
+              <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5 lg:mr-0">
+                <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none ">Update</button>
               </div>
-
-              <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
-                <h1 className="sm:text-sm">Level 2</h1>
-                <input type="text" name="level1" className="input px-2 outline-none py-1 mt-2  font-normal text-black sm:w-[96%] lg:w-[100%]" {...register("user_level2")} />
-              </div>
-            </div>
-
-            <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5 lg:mr-0">
-              <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none w-[120px]">Update</button>
-            </div>
+            </form>
             {/* file management */}
 
             <div className="flex mb-10 pl-5 mt-4 sm:flex-col sm:pl-3 sm:gap-y-2 lg:flex-wrap lg:gap-2">
