@@ -54,3 +54,17 @@ export const deleteRelation = async (payload) => {
     console.log(error);
   }
 };
+
+
+
+
+
+
+export const createRelationApi = async (payload) => {
+  try {
+    const responce = await axiosInstance.post(`?page=createRelation`, payload);
+    return responce.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

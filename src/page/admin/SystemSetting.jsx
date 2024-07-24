@@ -1,13 +1,13 @@
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
 import { useEffect, useState } from "react";
-import settingUser from "../../assets/images/settingUser.png";
+import Multiselect from "multiselect-react-dropdown";
 import { useForm } from "react-hook-form";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { systemSetting } from "../../utils/validation/FormValidation";
-import { deleteRelation, getAdminRoles, getAllCategories, getAllRelation, getAllRoles } from "../../utils/service/SystemSettingService";
+import { createRelationApi, deleteRelation, getAdminRoles, getAllCategories, getAllRelation, getAllRoles } from "../../utils/service/SystemSettingService";
 
 export default function SystemSetting() {
   const {
@@ -22,6 +22,9 @@ export default function SystemSetting() {
   const [categoryKeyword, setCategoryKeyword] = useState([]);
   const [relationData, setRelationData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
+
+  const [relationList, setRelationList] = useState([]);
+
   const [files, setFiles] = useState({
     postCodeFile: null,
     aboutDocumentFileDocument: null,
@@ -43,39 +46,32 @@ export default function SystemSetting() {
     }));
   };
 
- 
-
   const handleCategoryKeywordChange = (tags) => {
     setCategoryKeyword(tags);
   };
 
   const getAllSettingSettingData = async () => {
-    const [relationRes, categoriesRes, adminRolesRes, allRolesRes] = await Promise.all([
-      getAllRelation(),
-      getAllCategories(),
-      getAdminRoles(),
-      getAllRoles(),
-    ]);
-  
+    const [relationRes, categoriesRes, adminRolesRes, allRolesRes] = await Promise.all([getAllRelation(), getAllCategories(), getAdminRoles(), getAllRoles()]);
+
     if (relationRes?.isSuccess) {
       const relationData = relationRes.data;
       setRelationData(relationData);
-      setRelationKeyword(relationData.map((item) => item.type_name));
+      setRelationKeyword(relationData.filter((item) => item.status === 1).map((item) => item.type_name));
     }
-  
+
     if (categoriesRes?.isSuccess) {
       const categoryData = categoriesRes.data;
       setCategoryData(categoryData);
       setCategoryKeyword(categoryData.map((item) => item.cat_name));
     }
-  
+
     if (adminRolesRes?.isSuccess) {
       const adminRoles = adminRolesRes.data.filter((role) => role.role_name !== "Super Admin");
       adminRoles.forEach((role, index) => {
         setValue(`admin_level${index + 1}`, role.role_name);
       });
     }
-  
+
     if (allRolesRes?.isSuccess) {
       const userRoles = allRolesRes.data.filter((role) => role.role_name !== "Teacher");
       userRoles.forEach((role, index) => {
@@ -84,23 +80,55 @@ export default function SystemSetting() {
     }
   };
 
-
   const handleRelationKeywordChange = async (tags) => {
     const removedElements = relationKeyword.filter((element) => !tags.includes(element));
     if (removedElements.length > 0) {
       const deletedDataId = relationData.filter((item) => item.type_name === removedElements[0]).map((item) => item.relationship_type_id);
       const deleteResponse = await deleteRelation({ relation_id: deletedDataId[0] });
       if (deleteResponse?.isSuccess) {
-
-        getAllSettingSettingData()
-        
+        getAllSettingSettingData();
       }
     }
+
+
+
+    // create relations
     setRelationKeyword(tags);
+    
+    let key = "";
+    if (relationKeyword.length == 0) {
+      key = tags[0];
+    } else {
+      const lastValue = tags.at(-1);
+     key=lastValue;
+    }
+    const response=createRelationApi({ type_name: key })
+    console.log(response)
   };
   useEffect(() => {
     getAllSettingSettingData();
   }, []);
+
+  const handleSelect = async (relationListNew) => {
+    setRelationList(relationListNew);
+
+
+
+
+
+    // update status of 
+    let key = "";
+    if (relationList.length == 0) {
+      key = relationListNew[0].name;
+     
+    } else {
+      const lastValue = relationList.at(-1);
+      key = lastValue.name;
+    }
+ 
+  };
+
+  const handleRemove = (selectedList) => setRelationList(selectedList);
 
   // const renderTag = ({ tag, key, disabled, onRemove }) => (
   //   <li
@@ -145,11 +173,24 @@ export default function SystemSetting() {
                 className="settingGroup min-w-[100%]  sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] "
               />
             </div>
+
             {/* relation */}
 
             <h1 className="my-3 mx-5 text-blue-300 sm:mx-2 lg:text-xl">Relation</h1>
             <div className="flex my-4 flex-wrap input gap-3 w-[95%] lg:py-1 py-2 px-2 list-none border-borderOutlineColor-900 mx-5 sm:mx-1 sm:w-[98%] sm:py-1 lg:w-[94%]">
-              <TagsInput value={relationKeyword} onChange={handleRelationKeywordChange} className="editGroup min-w-[100%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " />
+              <TagsInput value={relationKeyword} onChange={handleRelationKeywordChange} className="editGroup  sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " placeholder={null} />
+
+              <Multiselect
+                options={relationData?.map((role) => ({
+                  name: role.type_name,
+                  id: role.relationship_type_id,
+                }))}
+                selectedValues={setRelationList}
+                onSelect={handleSelect}
+                onRemove={handleRemove}
+                displayValue="name"
+                placeholder="Select Relation"
+              />
             </div>
 
             {/* admin management */}
