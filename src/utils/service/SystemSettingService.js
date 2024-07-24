@@ -68,14 +68,7 @@ export const deleteCategory = async (payload) => {
 };
 
 
-// export const deleteCategory = async (payload) => {
-//   try {
-//     const responce = await axiosInstance.delete(`?page=deleteCategory`, payload);
-//     return responce.data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+
 
 export const createRelationApi = async (payload) => {
   try {

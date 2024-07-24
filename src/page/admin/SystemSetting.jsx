@@ -20,7 +20,10 @@ export default function SystemSetting() {
   } = useForm({ resolver: yupResolver(systemSetting) });
 
   const [relationKeyword, setRelationKeyword] = useState([]);
+  const [relationKeywordMultiform, setRelationKeywordMultiForm] = useState([]);
   const [categoryKeyword, setCategoryKeyword] = useState([]);
+  const [categoryKeywordMultiform, setCategoryKeywordMultiForm] = useState([]);
+
   const [relationData, setRelationData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [relationList, setRelationList] = useState([]);
@@ -53,12 +56,14 @@ export default function SystemSetting() {
       const relationData = relationRes.data;
       setRelationData(relationData);
       setRelationKeyword(relationData.filter((item) => item.status === 1).map((item) => item.type_name));
+      setRelationKeywordMultiForm(relationData.filter((item) => item.status === 0));
     }
 
     if (categoriesRes?.isSuccess) {
       const categoryData = categoriesRes.data;
       setCategoryData(categoryData);
       setCategoryKeyword(categoryData.filter((item) => item.status === 1).map((item) => item.cat_name));
+      setCategoryKeywordMultiForm(categoryData.filter((item) => item.status === 0));
     }
 
     if (adminRolesRes?.isSuccess) {
@@ -77,82 +82,87 @@ export default function SystemSetting() {
   };
 
   const handleRelationKeywordChange = async (tags) => {
-    // hide relation
-    const removedElements = relationKeyword.filter((element) => !tags.includes(element));
-    if (removedElements.length > 0) {
-      const deletedDataId = relationData.filter((item) => item.type_name === removedElements[0]).map((item) => item.relationship_type_id);
-      const deleteResponse = await deleteRelation({ relation_id: deletedDataId[0] });
-      if (deleteResponse?.isSuccess) {
-        getAllSettingSettingData();
-        toast.success(deleteResponse?.message);
-        return;
+    // add new relation
+    if (relationKeyword.length < tags.length) {
+      let key = "";
+      if (relationKeyword.length == 0) {
+        key = tags[0];
+      } else {
+        const lastValue = tags.at(-1);
+        key = lastValue;
+      }
+      const formData = new FormData();
+      formData.append("type_name", key);
+      try {
+        const response = await createRelationApi(formData);
+        if (response?.isSuccess) {
+          toast.success(response?.message);
+          reset();
+          getAllSettingSettingData();
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
 
-    // create relations api
-    setRelationKeyword(tags);
-    let key = "";
-    if (relationKeyword.length == 0) {
-      key = tags[0];
-    } else {
-      const lastValue = tags.at(-1);
-      key = lastValue;
-    }
-    const formData = new FormData();
-    formData.append("type_name", key);
-    try {
-      const response = await createRelationApi(formData);
-      if (response?.isSuccess) {
-        toast.success(response?.message);
-        reset();
-        getAllSettingSettingData();
+    // hide relation
+    else {
+      const removedElements = relationKeyword.filter((element) => !tags.includes(element));
+      if (removedElements.length > 0) {
+        const deletedDataId = relationData.filter((item) => item.type_name === removedElements[0]).map((item) => item.relationship_type_id);
+        const deleteResponse = await deleteRelation({ relation_id: deletedDataId[0] });
+        if (deleteResponse?.isSuccess) {
+          getAllSettingSettingData();
+          toast.success(deleteResponse?.message);
+          return;
+        }
       }
-    } catch (error) {
-      console.log(error);
     }
+
+    setRelationKeyword(tags);
   };
 
   const handleCategoryKeywordChange = async (tags) => {
+    // add new category
+    if (categoryKeyword.length < tags.length) {
+      // create category api
+      let key = "";
+      if (categoryKeyword.length == 0) {
+        key = tags[0];
+      } else {
+        const lastValue = tags.at(-1);
+        key = lastValue;
+      }
+
+      const formData = new FormData();
+      formData.append("cat_name", key);
+
+      try {
+        const response = await createCategoryApi(formData);
+        if (response?.isSuccess) {
+          toast.success(response?.message);
+          reset();
+          getAllSettingSettingData();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     // hide category
-    const removedElements = categoryKeyword.filter((element) => !tags.includes(element));
+    else {
+      const removedElements = categoryKeyword.filter((element) => !tags.includes(element));
 
-    if (removedElements.length > 0) {
-      const deletedDataId = categoryData.filter((item) => item.cat_name === removedElements[0]).map((item) => item.cat_id);
-      let formData = new FormData();
-      formData.append("category_id", deletedDataId[0]);
-      const deleteResponse = await deleteCategory({ category_id: deletedDataId[0] });
-      if (deleteResponse?.isSuccess) {
-        getAllSettingSettingData();
-        toast.success(deleteResponse?.message);
-
-        return;
+      if (removedElements.length > 0) {
+        const deletedDataId = categoryData.filter((item) => item.cat_name === removedElements[0]).map((item) => item.cat_id);
+        const deleteResponse = await deleteCategory({ category_id: deletedDataId[0] });
+        if (deleteResponse?.isSuccess) {
+          getAllSettingSettingData();
+          toast.success(deleteResponse?.message);
+        }
       }
     }
 
     setCategoryKeyword(tags);
-
-    // create category api
-    let key = "";
-    if (categoryKeyword.length == 0) {
-      key = tags[0];
-    } else {
-      const lastValue = tags.at(-1);
-      key = lastValue;
-    }
-
-    const formData = new FormData();
-    formData.append("cat_name", key);
-
-    try {
-      const response = await createCategoryApi(formData);
-      if (response?.isSuccess) {
-        toast.success(response?.message);
-        reset();
-        getAllSettingSettingData();
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   useEffect(() => {
@@ -170,6 +180,23 @@ export default function SystemSetting() {
       const lastValue = relationList.at(-1);
       key = lastValue.name;
     }
+
+    const removedElements = relationData.filter((element) => element.type_name === key);
+
+    try {
+      if (removedElements.length > 0) {
+        let id = removedElements[0]?.relationship_type_id;
+
+        const deleteResponse = await deleteRelation({ relation_id: id });
+
+        if (deleteResponse?.isSuccess) {
+          getAllSettingSettingData();
+          toast.success(deleteResponse?.message);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSelectCategory = async (categoryListNew) => {
@@ -183,22 +210,37 @@ export default function SystemSetting() {
       const lastValue = categoryList.at(-1);
       key = lastValue.name;
     }
+
+    const removedElements = categoryData.filter((element) => element.cat_name === key);
+
+    try {
+      if (removedElements.length > 0) {
+        let id = removedElements[0]?.cat_id;
+        const deleteResponse = await deleteCategory({ category_id: id });
+        if (deleteResponse?.isSuccess) {
+          getAllSettingSettingData();
+          toast.success(deleteResponse?.message);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleRemove = (selectedList) => {
-    // relationData.filter((item)=>item.)
-    console.log(relationData);
-    console.log(relationList);
+  // const handleRemove = (selectedList) => {
+  //   // relationData.filter((item)=>item.)
+  //   console.log(relationData);
+  //   console.log(relationList);
 
-    // setRelationList(selectedList)
-  };
-  const handleRemoveCategory = (selectedList) => {
-    console.log(`Removed categories: ${selectedList.map((item) => item.name).join(", ")}`);
-    // Update the categoryList state by removing the selected items
-    setCategoryList((prevCategoryList) => prevCategoryList.filter((item) => !selectedList.some((removedItem) => removedItem.id === item.id)));
-    // setCategoryList(selectedList)
-    //
-  };
+  //   // setRelationList(selectedList)
+  // };
+  // const handleRemoveCategory = (selectedList) => {
+  //   console.log(`Removed categories: ${selectedList.map((item) => item.name).join(", ")}`);
+  //   // Update the categoryList state by removing the selected items
+  //   setCategoryList((prevCategoryList) => prevCategoryList.filter((item) => !selectedList.some((removedItem) => removedItem.id === item.id)));
+  //   // setCategoryList(selectedList)
+  //   //
+  // };
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -263,15 +305,15 @@ export default function SystemSetting() {
               />
               <div className="w-full ">
                 <Multiselect
-                  options={categoryData?.map((role) => ({
+                  options={categoryKeywordMultiform?.map((role) => ({
                     name: role.cat_name,
                     id: role.cat_id,
                   }))}
                   selectedValues={setCategoryList}
                   onSelect={handleSelectCategory}
-                  onRemove={handleRemoveCategory}
+                  // onRemove={handleRemoveCategory}
                   displayValue="name"
-                  placeholder="Select Relation"
+                  placeholder="Select Category"
                 />
               </div>
             </div>
@@ -283,13 +325,13 @@ export default function SystemSetting() {
               <TagsInput value={relationKeyword} onChange={handleRelationKeywordChange} className="editGroup w-[100%] sm:w-[100%] md:w-[100%] lg:w-[100%] 2xl:w-[73%] " placeholder={null} />
               <div className="w-full ">
                 <Multiselect
-                  options={relationData?.map((role) => ({
+                  options={relationKeywordMultiform?.map((role) => ({
                     name: role.type_name,
                     id: role.relationship_type_id,
                   }))}
                   selectedValues={setRelationList}
                   onSelect={handleSelect}
-                  onRemove={handleRemove}
+                  // onRemove={handleRemove}
                   displayValue="name"
                   //  className="min-w-[990px]"
                   placeholder="Select Relation"
