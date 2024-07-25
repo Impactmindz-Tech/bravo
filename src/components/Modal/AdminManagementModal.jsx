@@ -108,7 +108,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     formData.append("phone", data?.phone);
     formData.append("address", data?.address);
     formData.append("postal_code", data?.postal_code);
-    formData.append("authrization_code", data?.authrization_code);
+    // formData.append("authrization_code", data?.authrization_code);
     formData.append("role_id", data?.role_id);
     formData.append("suburb", city?.name);
     formData.append("state", stateid?.name);
@@ -131,12 +131,19 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     } else {
       try {
         const response = await createAdminApi(formData);
-        if (response?.isSuccess) {
-          toast.success(response?.message);
+        if (response.isSuccess) {
+          console.log('ss')
+          toast.success(response?.data?.message);
           getAllAdmins();
           reset();
           setSelectedFile(null);
           setAddAdminModalOpen(false);
+        }else{
+          console.log('ff')
+          toast.error(response?.data?.message);
+
+
+
         }
       } catch (error) {
         console.log(error);
@@ -258,6 +265,8 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     </label>
                     <select name="gender" id="gender" className="input w-full" {...register("gender")}>
                       <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
                     </select>
                     <p>{errors?.gender?.message}</p>
                   </div>
@@ -277,7 +286,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="postal_code">
-                      Postal Code
+                     Postal Code <span className="text-red-500 pl-1">*</span>
                     </label>
                     <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
                     <p>{errors?.postal_code?.message}</p>

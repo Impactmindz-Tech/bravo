@@ -287,3 +287,10 @@ input[type=number] {
 label{
   text-transform: capitalize;
 }
+
+
+
+.chip {
+  background: #2a2f3e !important;
+
+}

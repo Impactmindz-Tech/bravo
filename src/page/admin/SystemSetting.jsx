@@ -234,13 +234,38 @@ export default function SystemSetting() {
 
   //   // setRelationList(selectedList)
   // };
-  // const handleRemoveCategory = (selectedList) => {
-  //   console.log(`Removed categories: ${selectedList.map((item) => item.name).join(", ")}`);
-  //   // Update the categoryList state by removing the selected items
-  //   setCategoryList((prevCategoryList) => prevCategoryList.filter((item) => !selectedList.some((removedItem) => removedItem.id === item.id)));
-  //   // setCategoryList(selectedList)
-  //   //
-  // };
+
+  const handleRemoveCategory = async (selectedList) => {
+    let categoryDataStatus = categoryData.filter((item) => item.status === 0);
+console.log(categoryDataStatus)
+
+    
+      const notInObj1 = categoryDataStatus.filter((obj) => !selectedList.some((o) => o.id === obj.cat_id));
+
+      // update status of
+      // let id = notInObj1[0].id;
+      console.log(notInObj1)
+// console.log(notInObj1[0])
+
+      // try {
+      //   const deleteResponse = await deleteCategory({ category_id: id });
+      //   if (deleteResponse?.isSuccess) {
+      //     getAllSettingSettingData();
+      //     toast.success(deleteResponse?.message);
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
+
+      // console.log(selectedList)
+      // console.log(categoryDataStatus)
+    
+    // console.log(`Removed categories: ${selectedList.map((item) => item.name).join(", ")}`);
+    // // Update the categoryList state by removing the selected items
+    // setCategoryList((prevCategoryList) => prevCategoryList.filter((item) => !selectedList.some((removedItem) => removedItem.id === item.id)));
+    // // setCategoryList(selectedList)
+    // //
+  };
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -311,7 +336,7 @@ export default function SystemSetting() {
                   }))}
                   selectedValues={setCategoryList}
                   onSelect={handleSelectCategory}
-                  // onRemove={handleRemoveCategory}
+                  onRemove={handleRemoveCategory}
                   displayValue="name"
                   placeholder="Select Category"
                 />

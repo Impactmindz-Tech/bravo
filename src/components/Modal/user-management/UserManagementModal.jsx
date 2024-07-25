@@ -301,7 +301,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="postal_code">
-                        Postal Code<span className="text-red-500 pl-1">*</span>
+                        Postal Code <span className="text-red-500 pl-1">*</span>
                       </label>
                       <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
                       <p>{errors?.postal_code?.message}</p>
