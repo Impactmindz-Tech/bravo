@@ -23,11 +23,13 @@ export default function SystemSetting() {
   const [relationKeywordMultiform, setRelationKeywordMultiForm] = useState([]);
   const [categoryKeyword, setCategoryKeyword] = useState([]);
   const [categoryKeywordMultiform, setCategoryKeywordMultiForm] = useState([]);
-
   const [relationData, setRelationData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [relationList, setRelationList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
+
+  const [previousCategory, setPreviousCategory] = useState([]);
+  const [previousRelation, setPreviousRelation] = useState([]);
 
   const [files, setFiles] = useState({
     postCodeFile: null,
@@ -175,8 +177,11 @@ export default function SystemSetting() {
     getAllSettingSettingData();
   }, []);
 
+  // multi
   const handleSelect = async (relationListNew) => {
     setRelationList(relationListNew);
+
+    setPreviousRelation((previousRelation) => [...previousRelation.filter((category) => !relationListNew.some((newCategory) => newCategory.id === category.id)), ...relationListNew]);
 
     // update status of
     let key = "";
@@ -198,8 +203,7 @@ export default function SystemSetting() {
         if (deleteResponse?.isSuccess) {
           getAllSettingSettingData();
           toast.success(deleteResponse?.message);
-        }
-        else {
+        } else {
           toast.error(deleteResponse?.message);
           return;
         }
@@ -209,10 +213,11 @@ export default function SystemSetting() {
     }
   };
 
+  // multi select
   const handleSelectCategory = async (categoryListNew) => {
     setCategoryList(categoryListNew);
+    setPreviousCategory((prevCategories) => [...prevCategories.filter((category) => !categoryListNew.some((newCategory) => newCategory.id === category.id)), ...categoryListNew]);
 
-    // update status of
     let key = "";
     if (categoryList.length == 0) {
       key = categoryListNew[0].name;
@@ -239,43 +244,46 @@ export default function SystemSetting() {
     }
   };
 
-  // const handleRemove = (selectedList) => {
-  //   // relationData.filter((item)=>item.)
-  //   console.log(relationData);
-  //   console.log(relationList);
+  const handleRemove = async (selectedList) => {
+    const uniqueElement = previousRelation.find((element) => !selectedList.some((selected) => selected.id === element.id));
+    let id = uniqueElement.id;
 
-  //   // setRelationList(selectedList)
-  // };
+    try {
+      const deleteResponse = await deleteRelation({ relation_id: id });
+
+      if (deleteResponse?.isSuccess) {
+        getAllSettingSettingData();
+        toast.success(deleteResponse?.message);
+      } else {
+        toast.error(deleteResponse?.message);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    let newPreviousArray = previousRelation.filter((element) => element.id !== uniqueElement.id);
+    setPreviousRelation(newPreviousArray);
+  };
 
   const handleRemoveCategory = async (selectedList) => {
-    let categoryDataStatus = categoryData.filter((item) => item.status === 0);
-    console.log(categoryDataStatus);
+    // setPreviousCategory(selectedList);
+    const uniqueElement = previousCategory.find((element) => !selectedList.some((selected) => selected.id === element.id));
+    let id = uniqueElement.id;
+    // Output: { "name": "Fitness", "id": 5 }
+    try {
+      const deleteResponse = await deleteCategory({ category_id: id });
+      if (deleteResponse?.isSuccess) {
+        getAllSettingSettingData();
+        toast.success(deleteResponse?.message);
+      } else {
+        toast.error(deleteResponse?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
-    const notInObj1 = categoryDataStatus.filter((obj) => !selectedList.some((o) => o.id === obj.cat_id));
-
-    // update status of
-    // let id = notInObj1[0].id;
-    console.log(notInObj1);
-    // console.log(notInObj1[0])
-
-    // try {
-    //   const deleteResponse = await deleteCategory({ category_id: id });
-    //   if (deleteResponse?.isSuccess) {
-    //     getAllSettingSettingData();
-    //     toast.success(deleteResponse?.message);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
-    // console.log(selectedList)
-    // console.log(categoryDataStatus)
-
-    // console.log(`Removed categories: ${selectedList.map((item) => item.name).join(", ")}`);
-    // // Update the categoryList state by removing the selected items
-    // setCategoryList((prevCategoryList) => prevCategoryList.filter((item) => !selectedList.some((removedItem) => removedItem.id === item.id)));
-    // // setCategoryList(selectedList)
-    // //
+    let newPreviousArray = previousCategory.filter((element) => element.id !== uniqueElement.id);
+    setPreviousCategory(newPreviousArray);
   };
 
   const onSubmit = async (data) => {
@@ -297,24 +305,6 @@ export default function SystemSetting() {
     }
   };
 
-  // const renderTag = ({ tag, key, disabled, onRemove }) => (
-  //   <li
-  //     key={key}
-  //     className="bg-blue-900 text-white rounded-full text-sm flex justify-start mb-1 gap-2 pr-2 "
-  //   >
-  //     <div className="rounded-full">
-  //       <img
-  //         src={settingUser}
-  //         alt="user image"
-  //         className="object-contain h-8"
-  //       />
-  //     </div>
-  //     <span className="pt-1.5 sm:text-sm md:text-sm ">{tag}</span>
-  //     <i className="text-lg text-white pt-1.5" onClick={() => onRemove(key)}>
-  //       <IoIosCloseCircleOutline className="cursor-pointer" />
-  //     </i>
-  //   </li>
-  // );
   return (
     <>
       <div className="sm:max-h-[90vh] h-full sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 md:max-h-[90vh]  md:overflow-hidden md:overflow-y-auto ">
@@ -367,7 +357,7 @@ export default function SystemSetting() {
                   }))}
                   selectedValues={setRelationList}
                   onSelect={handleSelect}
-                  // onRemove={handleRemove}
+                  onRemove={handleRemove}
                   displayValue="name"
                   //  className="min-w-[990px]"
                   placeholder="Select Relation"
