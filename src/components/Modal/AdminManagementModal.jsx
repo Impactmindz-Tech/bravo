@@ -131,20 +131,17 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     } else {
       try {
         const response = await createAdminApi(formData);
-        if (response.isSuccess) {
+        if (response?.isSuccess) {
           console.log('ss')
-          toast.success(response?.data?.message);
+          toast.success(response?.message);
           getAllAdmins();
           reset();
           setSelectedFile(null);
           setAddAdminModalOpen(false);
-        }else{
-          console.log('ff')
-          toast.error(response?.data?.message);
-
-
-
         }
+        
+        
+       
       } catch (error) {
         console.log(error);
       }
@@ -163,10 +160,10 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   return (
     <Modal open={addAdminModalOpen} onClose={handleCloseModal} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
-      <div className="h-[600px] overflow-y-auto mt-6 sm:h-[80vh] md:h-auto mainFormSection">
-        <div className="relative w-full max-w-4xl mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[92vw]">
-          <div className="relative bg-white  rounded-lg shadow-md pb-2">
-            <div className="flex justify-between items-center  bg-blue-900 py-2">
+      <div className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
+          <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
+            <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
+              <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
               <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{adminItem ? "Edit Admin" : "Add Admin"}</h2>
               <button onClick={handleCloseModal} className="text-red text-white  hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg">
                 <IoMdClose />
@@ -174,10 +171,10 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-              <div className="p-8 flex flex-col gap-y-4">
+            <div className="p-8 flex flex-col gap-y-4 w-full">
                 <div className="flex flex-col space-y-2">
                   <h1 className="text-gray-500">
-                    Choose Group <span className="text-red-500">*</span>
+                    Choose Groups <span className="text-red-500">*</span>
                   </h1>
                   <div className="">
                     <select name="groupSection" className="input w-full" {...register("group_id")}>
@@ -203,16 +200,16 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   })}
                 </div>
 
-                <div className="flex gap-2">
-                  <h4 className="text-blue-300 pt-2 sm:text-sm">Profile Picture</h4>
-                  <div className="flex w-[75%] items-center border rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
+                <div className="flex gap-3 flex-wrap">
+                  <h4 className="text-blue-300 pt-2 sm:text-sm ">Profile Picture</h4>
+                  <div className="flex w-[90%] 3xl:w-full  items-center border rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
                     <label htmlFor="file-upload" className="flex items-center bg-blue-900 text-white  px-4 py-1 rounded-lg cursor-pointer font-semibold sm:w-[100%]">
                       <FiUpload className="font-semibold mr-1" />
                       Upload
                     </label>
                     <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
                     {selectedFile && (
-                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
+                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0 w-full">
                         <span className="text-sm pl-2">{selectedFile.name}</span>
                         <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                           <IoIosCloseCircleOutline className="text-lg bg-none" />
@@ -228,35 +225,35 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     <label className="text-blue-300 text-sm" htmlFor="username">
                       User Name <span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="username" placeholder="username" id="username" className="input" {...register("username")} />
+                    <input type="text" name="username" placeholder="username" id="username" className="input w-full" {...register("username")} />
                     <p>{errors?.username?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="password">
                       Password <span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="password" placeholder="password" id="password" className="input" {...register("password")} />
+                    <input type="text" name="password" placeholder="password" id="password " className="input w-full" {...register("password")} />
                     <p>{errors?.password?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="first_name">
                       First Name<span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="first_name" id="first_name" className="input" {...register("first_name")} />
+                    <input type="text" name="first_name" id="first_name" className="input w-full" {...register("first_name")} />
                     <p>{errors?.first_name?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="last_name">
                       Last Name<span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="last_name" id="last_name" className="input" {...register("last_name")} />
+                    <input type="text" name="last_name" id="last_name" className="input w-full" {...register("last_name")} />
                     <p>{errors?.last_name?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%] ">
                     <label className="text-blue-300 text-sm" htmlFor="email">
                       Email Id<span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="email" className="input" {...register("email")} />
+                    <input type="text" name="email" className="input w-full" {...register("email")} />
                     <p>{errors?.email?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
@@ -274,21 +271,21 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     <label className="text-blue-300 text-sm" htmlFor="phone">
                       Contact No<span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="phone" id="phone" className="input" {...register("phone")} />
+                    <input type="text" name="phone" id="phone" className="input w-full" {...register("phone")} />
                     <p>{errors?.phone?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="address">
                       Address<span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="address" id="address" className="input" {...register("address")} />
+                    <input type="text" name="address" id="address" className="input w-full" {...register("address")} />
                     <p>{errors?.address?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="postal_code">
                      Postal Code <span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
+                    <input type="text" name="postal_code" id="postal_code" className="input w-full" {...register("postal_code")} />
                     <p>{errors?.postal_code?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
