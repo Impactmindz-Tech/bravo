@@ -30,6 +30,8 @@ export default function AdminManagement() {
       if (response?.isSuccess) {
         toast.success(response?.message);
         getAllAdmins();
+      }else {
+        toast.error(response?.message);
       }
     } catch (error) {
       console.log(error);
@@ -98,7 +100,6 @@ export default function AdminManagement() {
               <th className="text-left">User Name</th>
               <th className="text-left">Email id</th>
               <th className="text-left">Contact No</th>
-              <th className="text-left">Authentication Code</th>
               <th className="text-left">Role</th>
               <th className="text-left">Action</th>
             </tr>
@@ -117,7 +118,7 @@ export default function AdminManagement() {
 
                 <td className="text-left">{item.email}</td>
                 <td className="text-left">{item.phone}</td>
-                <td className="text-left">{item.authrization_code}</td>
+           
 
                 <td className="text-left">{item.role_name}</td>
                 <td className="text-left">

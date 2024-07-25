@@ -59,12 +59,9 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
     }
   }, [groupItem, setValue, reset]);
 
- 
-
   const handleSelect = (selectedList) => setGroupMemberList(selectedList);
 
   const handleRemove = (selectedList) => setGroupMemberList(selectedList);
- 
 
   const onSubmit = async (payload) => {
     if (groupMemberList.length === 0) {
@@ -94,29 +91,26 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
       if (response?.isSuccess) {
         toast.success(response?.message);
         setCreateGroupModalOpen(false);
-        reset()
+        reset();
         setGroupMemberList([]);
         setSelectedFile(null);
         fetchGroup();
-      } else {
-        toast.error(response?.message);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleModalClose = ()=>{
-    if(!groupItem){
+  const handleModalClose = () => {
+    if (!groupItem) {
       reset();
       setGroupMemberList([]);
       setSelectedFile(null);
       setCreateGroupModalOpen(false);
-    }else{
+    } else {
       setCreateGroupModalOpen(false);
     }
-  }
-  
+  };
 
   return (
     <Modal open={createGroupModalOpen} onClose={handleModalClose} className="fixed modalContainer inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">

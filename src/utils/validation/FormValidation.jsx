@@ -39,7 +39,7 @@ export const createUser = yup.object({
 
 export const createAdmin = yup.object({
   username: yup.string().required("user name Code is required"),
-  password: yup.string().required("password Code is required"),
+  // password: yup.string().required("password Code is required"),
   email: yup
     .string()
     .email("Invalid email format")

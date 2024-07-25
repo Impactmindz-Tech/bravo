@@ -1,4 +1,5 @@
 import axiosInstance from "../axiosInstance/axiosInstance"
+import toast from "react-hot-toast";
 
 export const DashboardApi = async (payload) => {
     const { items_per_page, page } = payload;
@@ -7,6 +8,7 @@ export const DashboardApi = async (payload) => {
         return response.data;
     } catch (error) {
         console.log(error);
+        toast.error(error.response.data.message);
         throw new Error("Failed to load dashboard data");
     }
 }
@@ -17,6 +19,7 @@ export const CreateUser = async (payload) => {
         return responce.data
     } catch (error) {
         console.log(error)
+        toast.error(error.response.data.message);
     }
 }
 export const EditUser = async (payload) => {
@@ -25,6 +28,7 @@ export const EditUser = async (payload) => {
         return responce.data
     } catch (error) {
         console.log(error)
+        toast.error(error.response.data.message);
     }
 }
 
@@ -44,6 +48,7 @@ export const userStateUpdate = async (payload) => {
         return responce.data
     } catch (error) {
         console.log(error)
+        toast.error(error.response.data.message);
     }
 }
 

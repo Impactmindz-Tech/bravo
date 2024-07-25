@@ -1,4 +1,5 @@
 import axiosInstance from "../axiosInstance/axiosInstance";
+import toast from "react-hot-toast";
 
 export const getAllRelation = async (payload) => {
   try {
@@ -46,6 +47,8 @@ export const deleteRelation = async (payload) => {
     return responce.data;
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
+
   }
 };
 
@@ -64,6 +67,8 @@ export const deleteCategory = async (payload) => {
     return responce.data;
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
+
   }
 };
 
@@ -76,6 +81,8 @@ export const createRelationApi = async (payload) => {
     return responce.data;
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
+
   }
 };
 
@@ -85,6 +92,8 @@ export const createCategoryApi = async (payload) => {
     return responce.data;
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
+
   }
 };
 export const updateRolesApi = async (payload) => {
@@ -93,5 +102,7 @@ export const updateRolesApi = async (payload) => {
     return responce.data;
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
+
   }
 };

@@ -1,4 +1,5 @@
 import axiosInstance from "../axiosInstance/axiosInstance";
+import toast from "react-hot-toast";
 
 export const createEventApi = async (payload) => {
   try {
@@ -15,6 +16,8 @@ export const updateEventApi = async (payload) => {
     return responce.data;
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
+
   }
 };
 
@@ -30,6 +33,8 @@ export const deleteEventApi = async (payload) => {
     return responce.data;
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
+
   }
 };
 

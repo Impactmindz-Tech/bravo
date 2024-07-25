@@ -35,10 +35,14 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       setValue("email", adminItem?.email);
       setValue("gender", adminItem?.gender);
       setValue("phone", adminItem?.phone);
+      setValue("username", adminItem?.username);
+
+      // setValue("password", adminItem?.password);
       setValue("address", adminItem?.address);
       setValue("postal_code", adminItem?.postal_code);
       setValue("authrization_code", adminItem?.authrization_code);
       setValue("role_id", adminItem?.role_id);
+
       setValue("profile_pic", adminItem?.role_id);
       setCountryid({ id: adminItem.country, name: adminItem.country });
       setstateid({ id: adminItem.state, name: adminItem.state });
@@ -74,6 +78,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
   const fetchAllGroup = async () => {
     try {
       const response = await getAllGroup();
+
       if (response?.isSuccess) {
         setGroupData(response?.data);
       }
@@ -85,6 +90,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
   const getAdminRoles = async () => {
     try {
       const response = await getAdminRolesApi();
+
       if (response?.isSuccess) {
         setAdminRole(response);
       }
@@ -108,18 +114,31 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     formData.append("phone", data?.phone);
     formData.append("address", data?.address);
     formData.append("postal_code", data?.postal_code);
-    // formData.append("authrization_code", data?.authrization_code);
     formData.append("role_id", data?.role_id);
     formData.append("suburb", city?.name);
     formData.append("state", stateid?.name);
+    formData.append("username", data?.username);
     formData.append("country", countryid?.name);
     formData.append("password", data?.password);
     formData.append("profile_pic", selectedFile);
+    if (countryid.name === "") {
+      toast.error("Select Country Name");
+      return;
+    }
+
+    if (stateid.name === "") {
+      toast.error("Select State Name");
+      return;
+    }
+    if (city.name === "") {
+      toast.error("Select Suburb Name");
+      return;
+    }
 
     if (adminItem) {
       formData.append("user_id", adminItem?.user_id);
       try {
-        const response = getEditAdminApi(formData);
+        const response = await getEditAdminApi(formData);
         if (response?.isSuccess) {
           setAddAdminModalOpen(false);
           toast.success(response?.message);
@@ -131,10 +150,13 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
         console.log(error);
       }
     } else {
+      if (data.password == "") {
+        toast.error("Password is required");
+        return;
+      }
       try {
         const response = await createAdminApi(formData);
         if (response?.isSuccess) {
-          console.log("ss");
           toast.success(response?.message);
           getAllAdmins();
           reset();
@@ -199,6 +221,8 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   })}
                 </div>
 
+                <p className="text-[red]">{errors?.role_id?.message}</p>
+
                 <div className="flex gap-3 flex-wrap">
                   <h4 className="text-blue-300 pt-2 sm:text-sm ">Profile Picture</h4>
                   <div className="flex w-[90%] 3xl:w-full  items-center border rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
@@ -217,7 +241,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     )}
                   </div>
                 </div>
-
                 {/* form section */}
                 <div className="flex flex-wrap list-none mt-6 gap-6">
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
@@ -227,13 +250,17 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     <input type="text" name="username" placeholder="username" id="username" className="input w-full" {...register("username")} />
                     <p>{errors?.username?.message}</p>
                   </div>
-                  <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <label className="text-blue-300 text-sm" htmlFor="password">
-                      Password <span className="text-red-500 pl-1">*</span>
-                    </label>
-                    <input type="text" name="password" placeholder="password" id="password " className="input w-full" {...register("password")} />
-                    <p>{errors?.password?.message}</p>
-                  </div>
+
+                  {adminItem == null && (
+                    <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                      <label className="text-blue-300 text-sm" htmlFor="password">
+                        Password <span className="text-red-500 pl-1">*</span>
+                      </label>
+                      <input type="text" name="password" placeholder="password" id="password " className="input w-full" {...register("password")} />
+                      <p>{errors?.password?.message}</p>
+                    </div>
+                  )}
+
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="first_name">
                       First Name<span className="text-red-500 pl-1">*</span>
@@ -284,19 +311,25 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     <label className="text-blue-300 text-sm" htmlFor="postal_code">
                       Postal Code <span className="text-red-500 pl-1">*</span>
                     </label>
-                    <input type="text" name="postal_code" id="postal_code" className="input w-full" {...register("postal_code")} />
+                    <input type="number" name="postal_code" id="postal_code" className="input w-full" {...register("postal_code")} />
                     <p>{errors?.postal_code?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <h6 className="text-blue-300 text-sm">Country</h6>
+                    <h6 className="text-blue-300 text-sm">
+                      Country <span className="text-red-500 pl-1">*</span>
+                    </h6>
                     <CountrySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" showFlag={true} defaultValue={countryid} onChange={handleCountry} placeHolder="Select Country" />
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <h6 className="text-blue-300 text-sm">State</h6>
+                    <h6 className="text-blue-300 text-sm">
+                      State <span className="text-red-500 pl-1">*</span>
+                    </h6>
                     <StateSelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={stateid} onChange={handleState} placeHolder="Select State" />
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <label className="text-blue-300 text-sm">Suburb</label>
+                    <label className="text-blue-300 text-sm">
+                      Suburb <span className="text-red-500 pl-1">*</span>
+                    </label>
                     <CitySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={city} stateid={stateid.id} onChange={handleCity} placeHolder="Select City" />
                   </div>
                 </div>

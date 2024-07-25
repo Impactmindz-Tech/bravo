@@ -1,11 +1,12 @@
 import axiosInstance from "../axiosInstance/axiosInstance";
+import toast from "react-hot-toast";
 
 export const createAdminApi = async (payload) => {
   try {
     const responce = await axiosInstance.post(`?page=createAdmin`, payload);
     return responce.data;
   } catch (error) {
-    console.log(error);
+    toast.error(error.response.data.message);
   }
 };
 
@@ -24,6 +25,6 @@ export const getEditAdminApi = async (payload) => {
     const responce = await axiosInstance.post(`?page=editAdmin` ,payload);
     return responce.data;
   } catch (error) {
-    console.log(error);
+    toast.error(error.response.data.message);
   }
 };
