@@ -29,6 +29,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   useEffect(() => {
     if (adminItem) {
+      console.log(adminItem);
       setValue("group_id", adminItem?.group_id);
       setValue("first_name", adminItem?.first_name);
       setValue("last_name", adminItem?.last_name);
@@ -162,6 +163,9 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
           reset();
           setSelectedFile(null);
           setAddAdminModalOpen(false);
+          setCountryid([]);
+          setAdminRole([]);
+          setstateid(0);
         }
       } catch (error) {
         console.log(error);

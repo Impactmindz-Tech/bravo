@@ -5,10 +5,7 @@ import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useEffect, useState } from "react";
 import CreateEventModal from "../../components/Modal/CreateEventModal";
-import {
-  deleteEventApi,
-  getAllEventsApi,
-} from "../../utils/service/EventService";
+import { deleteEventApi, getAllEventsApi } from "../../utils/service/EventService";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
@@ -55,12 +52,10 @@ function Calendar() {
     });
   };
 
-
   const editEvent = (event) => {
     setCalenderModal(true);
     setData(filterData(event.id));
   };
-
 
   const deleteEvent = async (event) => {
     const responce = await deleteEventApi({ event_id: event.id });
@@ -80,9 +75,7 @@ function Calendar() {
   return (
     <>
       <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
-        <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl sm:w-full">
-          EVENTS MANAGEMENT
-        </h1>
+        <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl sm:w-full">EVENTS MANAGEMENT</h1>
         <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3 ">
           <Link to="/admin/event_participants">
             {" "}
@@ -94,14 +87,9 @@ function Calendar() {
         </div>
       </div>
 
-      <div className="flex justify-center sm:w-[100%] sm:m-0 h-[90vh] mx-auto sm:h-[75vh] my-4 sm:mt-4">
+      <div className="flex justify-center sm:w-[100%] sm:m-0  mx-auto sm:h-[75vh] my-4 sm:mt-4" style={{ height: "calc(100vh - 205px)" }}>
         <FullCalendar
-          plugins={[
-            dayGridPlugin,
-            timeGridPlugin,
-            listPlugin,
-            interactionPlugin,
-          ]}
+          plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           headerToolbar={{
             left: "prev,next today",
@@ -118,30 +106,17 @@ function Calendar() {
               </div>
               <div className="flex">
                 <i>
-                  <TbEdit
-                    className="cursor-pointer  text-lg hover:text-blue-900"
-                    title="Edit"
-                    onClick={() => editEvent(eventInfo.event)}
-                  />
+                  <TbEdit className="cursor-pointer  text-lg hover:text-blue-900" title="Edit" onClick={() => editEvent(eventInfo.event)} />
                 </i>
                 <i>
-                  <MdDelete
-                    className="cursor-pointer  text-lg hover:text-blue-900"
-                    title="Delete"
-                    onClick={() => deleteEvent(eventInfo.event)}
-                  />
+                  <MdDelete className="cursor-pointer  text-lg hover:text-blue-900" title="Delete" onClick={() => deleteEvent(eventInfo.event)} />
                 </i>
               </div>
             </div>
           )}
         />
       </div>
-      <CreateEventModal
-        calenderModal={calenderModal}
-        setCalenderModal={setCalenderModal}
-        currentEventDate={currentEventDate}
-        eventDataToUpdate={data}
-      />
+      <CreateEventModal calenderModal={calenderModal} setCalenderModal={setCalenderModal} currentEventDate={currentEventDate} eventDataToUpdate={data} />
     </>
   );
 }

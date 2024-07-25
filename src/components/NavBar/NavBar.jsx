@@ -25,22 +25,16 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className="flex justify-center ">
+    <nav className="flex justify-center bg-red-900">
       <ul className="mt-8 w-full">
         {navLinks?.map((item, index) => {
           return (
-            <li key={index} className="cursor-pointer hover:text-black">
+            <li key={index} className="cursor-pointer hover:text-black w-full">
               <NavLink
                 to={item.to}
                 className={({ isActive }) => {
-                  const active =
-                    (item.to === "/admin/calendar" &&
-                      (location.pathname === "/admin/calendar" ||
-                        location.pathname === "/admin/event_participants")) ||
-                    isActive;
-                  return `w-full py-3 hover:bg-white hover:text-blue-900 mb-2 flex flex-col items-center text-xl ${
-                    active ? "bg-white text-blue-900" : "text-white"
-                  }`;
+                  const active = (item.to === "/admin/calendar" && (location.pathname === "/admin/calendar" || location.pathname === "/admin/event_participants")) || isActive;
+                  return `py-3 hover:bg-white hover:text-blue-900 mb-2 flex flex-col items-center text-xl ${active ? "bg-white text-blue-900" : "text-white"}`;
                 }}
               >
                 {item.icon}

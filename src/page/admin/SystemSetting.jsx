@@ -115,6 +115,9 @@ export default function SystemSetting() {
           getAllSettingSettingData();
           toast.success(deleteResponse?.message);
           return;
+        } else {
+          toast.error(deleteResponse?.message);
+          return;
         }
       }
     }
@@ -158,6 +161,9 @@ export default function SystemSetting() {
         if (deleteResponse?.isSuccess) {
           getAllSettingSettingData();
           toast.success(deleteResponse?.message);
+        } else {
+          toast.error(deleteResponse?.message);
+          return;
         }
       }
     }
@@ -193,6 +199,10 @@ export default function SystemSetting() {
           getAllSettingSettingData();
           toast.success(deleteResponse?.message);
         }
+        else {
+          toast.error(deleteResponse?.message);
+          return;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -220,6 +230,8 @@ export default function SystemSetting() {
         if (deleteResponse?.isSuccess) {
           getAllSettingSettingData();
           toast.success(deleteResponse?.message);
+        } else {
+          toast.error(deleteResponse?.message);
         }
       }
     } catch (error) {
@@ -237,29 +249,28 @@ export default function SystemSetting() {
 
   const handleRemoveCategory = async (selectedList) => {
     let categoryDataStatus = categoryData.filter((item) => item.status === 0);
-console.log(categoryDataStatus)
+    console.log(categoryDataStatus);
 
-    
-      const notInObj1 = categoryDataStatus.filter((obj) => !selectedList.some((o) => o.id === obj.cat_id));
+    const notInObj1 = categoryDataStatus.filter((obj) => !selectedList.some((o) => o.id === obj.cat_id));
 
-      // update status of
-      // let id = notInObj1[0].id;
-      console.log(notInObj1)
-// console.log(notInObj1[0])
+    // update status of
+    // let id = notInObj1[0].id;
+    console.log(notInObj1);
+    // console.log(notInObj1[0])
 
-      // try {
-      //   const deleteResponse = await deleteCategory({ category_id: id });
-      //   if (deleteResponse?.isSuccess) {
-      //     getAllSettingSettingData();
-      //     toast.success(deleteResponse?.message);
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      // }
+    // try {
+    //   const deleteResponse = await deleteCategory({ category_id: id });
+    //   if (deleteResponse?.isSuccess) {
+    //     getAllSettingSettingData();
+    //     toast.success(deleteResponse?.message);
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
 
-      // console.log(selectedList)
-      // console.log(categoryDataStatus)
-    
+    // console.log(selectedList)
+    // console.log(categoryDataStatus)
+
     // console.log(`Removed categories: ${selectedList.map((item) => item.name).join(", ")}`);
     // // Update the categoryList state by removing the selected items
     // setCategoryList((prevCategoryList) => prevCategoryList.filter((item) => !selectedList.some((removedItem) => removedItem.id === item.id)));
@@ -407,8 +418,8 @@ console.log(categoryDataStatus)
                 </div>
               </div>
 
-              <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5 lg:mr-0">
-                <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none ">Update</button>
+              <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5 lg:mr-0 lg:my-4">
+                <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none lg:w-full">Update</button>
               </div>
             </form>
             {/* file management */}

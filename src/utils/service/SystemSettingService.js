@@ -48,12 +48,8 @@ export const deleteRelation = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
-
-
-
 
 export const deleteCategory = async (payload) => {
   let id = parseInt(payload.category_id);
@@ -68,12 +64,8 @@ export const deleteCategory = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
-
-
-
 
 export const createRelationApi = async (payload) => {
   try {
@@ -82,7 +74,6 @@ export const createRelationApi = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
 
@@ -93,7 +84,6 @@ export const createCategoryApi = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
 export const updateRolesApi = async (payload) => {
@@ -103,6 +93,5 @@ export const updateRolesApi = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
