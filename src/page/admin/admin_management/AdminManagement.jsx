@@ -82,7 +82,6 @@ export default function AdminManagement() {
             </i>
           </div>
 
-          <button className="bg-blue-300 flex justify-center gap-8 text-sm text-white hover:border-[#ccc] sm:gap-2 md:gap-2 sm:text-sm md:text-xl lg:gap-3 lg:text-2xl px-8">Filter</button>
           <button onClick={handleAddUser} className="bg-blue-900 text-white flex justify-center  hover:border-[#ccc] sm:text-sm md:text-xl">
             <i className="my-0.4 pr-2 text-2xl sm:text-sm sm:my-1  md:text-md md:my-0 lg:my-2">
               <IoMdAddCircleOutline />{" "}
