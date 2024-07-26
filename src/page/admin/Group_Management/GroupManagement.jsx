@@ -127,12 +127,19 @@ export default function GroupManagement() {
                 {groupData?.data?.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td className="text-left">
-                        <div className="flex gap-2 ">
-                          <div className="flex justify-center">{item.group_picture ? <img src={`${item.group_picture}`} alt="group_img" className="rounded-full w-[40px] h-[40px]" /> : <img src={groupIcon} alt="groupIcon" className="rounded-full w-[40px] h-[40px]" />}</div>
-                          <span className="md:text-xl lg:text-2xl">{item.name}</span>
+
+
+
+                    <td className="text-left">
+                      <div className="flex gap-2 items-center">
+                        <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">
+                        {item.group_picture?    <img src={item.group_picture} alt="user " className="rounded-full w-[40px] h-[40px]" />:    <img src={groupIcon} alt="adminUserProfile " className="rounded-full w-[40px] h-[40px]" />}
+                      
                         </div>
-                      </td>
+                        <span>{item.name}</span>
+                      </div>
+                    </td>
+
 
                       <td className="text-left">{item?.members?.length}</td>
                       <td className="text-left">
@@ -143,7 +150,7 @@ export default function GroupManagement() {
                         </div>
                       </td>
                       <td className="text-left">
-                        <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
+                        <div className="flex gap-2 sm:gap-1 items-center sm:flex-col sm:gap-y-3  sm:items-center md:gap-1 md:flex-col md:gap-y-3  md:items-center lg:flex-col lg:items-center xl:gap-1">
                           <img onClick={() => handleGroupEdit(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0" />
                           <img src={deleteIcon} onClick={() => groupStatusUpdate(item.group_id)} alt="edit icon" className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0" />
                         </div>

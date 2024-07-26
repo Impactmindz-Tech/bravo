@@ -74,7 +74,11 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
   useEffect(() => {
     if (items) {
-          setValue("authrization_code", items?.authrization_code || "");
+      if (items.profile_picture) {
+        const filename = items.profile_picture.split("/").pop();
+        setSelectedFile({ name: filename });
+      }
+      setValue("authrization_code", items?.authrization_code || "");
       setValue("first_name", items?.first_name || "");
       setValue("last_name", items?.last_name);
       setValue("username", items?.username);
@@ -95,6 +99,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setstateid({ id: "", name: "" });
       setCity({ id: "", name: "" });
       reset();
+      setSelectedFile(null);
     }
   }, [items, reset, setValue]);
 
@@ -110,14 +115,20 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     formData.append("address", data?.address);
     formData.append("postal_code", data?.postal_code);
     formData.append("role_id", data?.role_id);
-    formData.append("password", data?.password);
     formData.append("suburb", city?.name);
     formData.append("state", stateid?.name);
     formData.append("country", countryid?.name);
     formData.append("group_id", data.group_id);
     formData.append("email", data?.email);
-    formData.append("profile_pic", selectedFile);
 
+    if (items.profile_picture) {
+      const filename = items.profile_picture.split("/").pop();
+      const result = selectedFile.name === filename;
+
+      if (result == false) {
+        formData.append("profile_pic", selectedFile);
+      }
+    }
 
     if (countryid.name === "") {
       toast.error("Select Country Name");
@@ -144,6 +155,11 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       }
     } else {
       try {
+        if (data.password == "") {
+          toast.error("Password is required");
+          return;
+        }
+        formData.append("password", data?.password);
         // profile_picture
         const response = await CreateUser(formData);
         if (response?.isSuccess) {
@@ -178,7 +194,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
           <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
             <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
               <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
-                <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">Add User</h2>
+                <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{items == null ? " Add User" : " Edit User"}</h2>
                 <button onClick={handlemodalClose} className="text-red text-white hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg">
                   <IoMdClose />
                 </button>
@@ -199,21 +215,22 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         ))}
                       </select>
                     </div>
+
+                    <p className="text-danger">{errors?.group_id?.message}</p>
                   </div>
 
                   <div className="flex gap-3">
                     {role?.data?.map((item, index) => {
                       return (
                         <div className="flex items-center" key={index}>
-                          <input type="radio" value={item.role_id} name="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={items ? item.role_id == items?.role_id : false} />
+                       
+                          <input type="radio" value={item.role_id} name="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={item.role_name==items?.role_name} />
                           <span className="ml-2 text-gray-700">{item.role_name}</span>
                         </div>
                       );
                     })}
-
-
                   </div>
-                    <p className="text-danger">{errors?.role_id?.message}</p>
+                  <p className="text-danger">{errors?.role_id?.message}</p>
 
                   {/* file upload section */}
                   <div className="flex gap-2">
@@ -244,13 +261,16 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <input type="text" name="authrization_code" id="authrization_code" placeholder="385555" className="input" {...register("authrization_code")} />
                       <p>{errors?.authrization_code?.message}</p>
                     </div>
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm" htmlFor="password">
-                        password <span className="text-red-500 pl-1">*</span>
-                      </label>
-                      <input type="text" name="password" id="password" placeholder="385555" className="input" {...register("password")} />
-                      <p>{errors?.password?.message}</p>
-                    </div>
+
+                    {items == null && (
+                      <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                        <label className="text-blue-300 text-sm" htmlFor="password">
+                          password <span className="text-red-500 pl-1">*</span>
+                        </label>
+                        <input type="text" name="password" id="password" placeholder="385555" className="input" {...register("password")} />
+                        <p>{errors?.password?.message}</p>
+                      </div>
+                    )}
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="first_name">
                         First Name<span className="text-red-500 pl-1"> *</span>{" "}
@@ -325,17 +345,19 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
                       <p>{errors?.postal_code?.message}</p>
                     </div>
-                   
+
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">Country <span className="text-red-500 pl-1">*</span></label>
+                      <label className="text-blue-300 text-sm">
+                        Country <span className="text-red-500 pl-1">*</span>
+                      </label>
                       <CountrySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" showFlag={true} defaultValue={countryid} onChange={handleCountry} placeHolder="Select Country" />
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">State <span className="text-red-500 pl-1">*</span></label>
+                      <label className="text-blue-300 text-sm">
+                        State <span className="text-red-500 pl-1">*</span>
+                      </label>
                       <StateSelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={stateid} onChange={handleState} placeHolder="Select State" />
                     </div>
-
-                   
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm">

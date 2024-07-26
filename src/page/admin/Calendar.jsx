@@ -29,10 +29,11 @@ function Calendar() {
 
   const fetchAllEventsData = async () => {
     const data = await getAllEventsApi();
+   
     let newData = [];
     if (data) {
-      if (data.data.length != 0) {
-        data.data.map((item) => {
+      if (data?.data?.length != 0) {
+        data?.data?.map((item) => {
           newData.push({
             title: item.title,
             start: item.start_time,

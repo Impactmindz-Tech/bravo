@@ -120,9 +120,9 @@ const Dashboard = () => {
                 {dataDetails?.data?.map((item, index) => (
                   <tr key={index}>
                     <td className="text-left">
-                      <div className="flex gap-2">
-                        <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">{item.profile_picture ? <img src={item.profile_picture} alt={item.profile_picture} className="rounded-full" /> : <img src={adminUserProfile} alt="user" className="rounded-full" />}</div>
-                        <span className="md:text-xl lg:text-2xl">{item.first_name}</span>
+                      <div className="flex gap-2 items-center">
+                        <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">{item.profile_picture ? <img src={item.profile_picture} alt="user " className="rounded-full w-[40px] h-[40px]" /> : <img src={adminUserProfile} alt="adminUserProfile " className="rounded-full w-[40px] h-[40px]" />}</div>
+                        <span>{item.first_name}</span>
                       </div>
                     </td>
 
@@ -131,10 +131,10 @@ const Dashboard = () => {
                     <td className="text-left">{item.authrization_code}</td>
 
                     <td className="text-left cursor-pointer">
-                      <div onClick={() => handleClose(item?.user_id)}>{item.is_active === 1 ? "Active" : "Inactive"}</div>
+                      <div onClick={() => handleClose(item?.user_id)}>{item.is_active === 1 ? <div className="border text-center rounded-full bg-success text-white p-1  text-sm w-[80px] ">Active</div> : <div className="border p-1 text-sm w-[80px]   text-center rounded-full bg-danger text-white">Inactive</div>}</div>
                     </td>
                     <td className="text-left">
-                      <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3 sm:items-center md:gap-1 md:flex-col md:gap-y-3 md:items-center lg:flex-col lg:items-center xl:gap-1">
+                      <div className="flex gap-2 sm:gap-1 items-center sm:flex-col sm:gap-y-3 sm:items-center md:gap-1 md:flex-col md:gap-y-3 md:items-center lg:flex-col lg:items-center xl:gap-1">
                         <img onClick={() => handleEditUser(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0" />
                         <Link to={`/admin/user/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer">
                           <FaEye />

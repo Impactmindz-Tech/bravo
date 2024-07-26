@@ -376,7 +376,7 @@ const CreateEventModal = ({
                 Group id<span className="text-red-500 pl-1">*</span>
               </label>
               <Multiselect
-                options={group.data?.map((group) => ({
+                options={group?.data?.map((group) => ({
                   name: group.name,
                   id: group.group_id,
                 }))}
@@ -398,7 +398,7 @@ const CreateEventModal = ({
                 User id<span className="text-red-500 pl-1">*</span>
               </label>
               <Multiselect
-                options={user.data?.map((user) => ({
+                options={user?.data?.map((user) => ({
                   name: user.first_name ? user.first_name.toLowerCase() : "", // Check if first_name exists before calling toLowerCase()
                   id: user.user_id,
                 }))}
@@ -415,7 +415,7 @@ const CreateEventModal = ({
             </div>
           </div>
           <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
-            {eventDataToUpdate.length !== 0 ? (
+            {eventDataToUpdate?.length !== 0 ? (
               <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">
                 {"Update"}
               </button>
