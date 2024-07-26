@@ -37,7 +37,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       setValue("gender", adminItem?.gender);
       setValue("phone", adminItem?.phone);
       setValue("username", adminItem?.username);
-
       // setValue("password", adminItem?.password);
       setValue("address", adminItem?.address);
       setValue("postal_code", adminItem?.postal_code);

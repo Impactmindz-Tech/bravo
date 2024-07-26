@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosSearch } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 import editIcon from "../../../assets/images/editIcon.svg";
 import adminUserProfile from "../../../assets/images/adminUserProfile.svg";
-import { DashboardApi, userStateUpdate } from "../../../utils/service/DashboardService";
+import { DashboardApi, searchUserApi, userStateUpdate } from "../../../utils/service/DashboardService";
 import { setUser } from "../../../store/Slice/UserSlice";
 import toast from "react-hot-toast";
 import Pagination from "../../../components/Pagination";
@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const dataDetails = useSelector((state) => state.user.user);
-
+  const [search, setSearch] = useState("");
   const handleClose = async (user_id) => {
     const formData = new FormData();
     formData.append("user_id", user_id);
@@ -70,6 +70,16 @@ const Dashboard = () => {
     setAddAdminModalOpen(false);
   };
 
+  const handleSearch = async (e) => {
+    setSearch(e.target.value);
+
+    if (e.target.value == "") {
+      fetchDashboardData();
+      return;
+    }
+    const response = await searchUserApi({ search: e.target.value });
+    dispatch(setUser(response));
+  };
   return (
     <>
       {loading && <Loading />}
@@ -77,7 +87,7 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">User Management</h1>
         <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3">
           <div className="flex justify-center items-center border border-[#ccc] rounded-md bg-white text-[#3c3c3c] lg:w-[68%] md:w-[100%] sm:w-[100%]">
-            <input type="text" name="search" placeholder="Search" className="px-3 py-2 rounded-lg outline-none focus:outline-none text-md w-[270px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm md:w-[100%] md:px-2 md:py-3 md:text-2xl lg:text-2xl lg:w-[100%] lg:py-0 lg:px-3" />
+            <input type="text" name="search" autoComplete="off" placeholder="Search" value={search} onChange={(e) => handleSearch(e)} className="px-3 py-2 rounded-lg outline-none focus:outline-none text-md w-[270px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm md:w-[100%] md:px-2 md:py-3 md:text-2xl lg:text-2xl lg:w-[100%] lg:py-0 lg:px-3" />
             <i className="pr-3 flex items-center text-[#5a5a5a] text-lg sm:pr-1 sm:text-sm md:pr-1 md:text-md md:text-2xl lg:text-2xl">
               <IoIosSearch />
             </i>
@@ -105,34 +115,42 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {dataDetails?.data?.map((item, index) => (
-              <tr key={index}>
-                <td className="text-left">
-                  <div className="flex gap-2">
-                    <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">
-                      <img src={adminUserProfile} alt="user" className="rounded-full" />
-                    </div>
-                    <span className="md:text-xl lg:text-2xl">{item.first_name}</span>
-                  </div>
-                </td>
+            {dataDetails?.data?.length > 0 ? (
+              <>
+                {dataDetails?.data?.map((item, index) => (
+                  <tr key={index}>
+                    <td className="text-left">
+                      <div className="flex gap-2">
+                        <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">{item.profile_picture ? <img src={item.profile_picture} alt={item.profile_picture} className="rounded-full" /> : <img src={adminUserProfile} alt="user" className="rounded-full" />}</div>
+                        <span className="md:text-xl lg:text-2xl">{item.first_name}</span>
+                      </div>
+                    </td>
 
-                <td className="text-left">{item.email}</td>
-                <td className="text-left">{item.phone}</td>
-                <td className="text-left">{item.authrization_code}</td>
+                    <td className="text-left">{item.email}</td>
+                    <td className="text-left">{item.phone}</td>
+                    <td className="text-left">{item.authrization_code}</td>
 
-                <td className="text-left cursor-pointer">
-                  <div onClick={() => handleClose(item?.user_id)}>{item.is_active === 1 ? "Active" : "Inactive"}</div>
-                </td>
-                <td className="text-left">
-                  <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3 sm:items-center md:gap-1 md:flex-col md:gap-y-3 md:items-center lg:flex-col lg:items-center xl:gap-1">
-                    <img onClick={() => handleEditUser(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0" />
-                    <Link to={`/admin/user/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer">
-                      <FaEye />
-                    </Link>
-                  </div>
+                    <td className="text-left cursor-pointer">
+                      <div onClick={() => handleClose(item?.user_id)}>{item.is_active === 1 ? "Active" : "Inactive"}</div>
+                    </td>
+                    <td className="text-left">
+                      <div className="flex gap-2 sm:gap-1 sm:flex-col sm:gap-y-3 sm:items-center md:gap-1 md:flex-col md:gap-y-3 md:items-center lg:flex-col lg:items-center xl:gap-1">
+                        <img onClick={() => handleEditUser(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:w-[20px] sm:ml-0 sm:mr-0 md:w-[20px] md:ml-0 md:mr-0 lg:w-[30px] xl:mr-0" />
+                        <Link to={`/admin/user/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer">
+                          <FaEye />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </>
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  <p>No data found</p>
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

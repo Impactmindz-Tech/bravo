@@ -1,6 +1,18 @@
 import axiosInstance from "../axiosInstance/axiosInstance"
 import toast from "react-hot-toast";
 
+
+export const searchUserApi = async (payload) => {
+    const { search } = payload;
+    try {
+        const response = await axiosInstance.get(`?page=searchUser&searchTerm=${search}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+        throw new Error("Failed to load dashboard data");
+    }
+}
 export const DashboardApi = async (payload) => {
     const { items_per_page, page } = payload;
     try {

@@ -1,6 +1,24 @@
 import axiosInstance from "../axiosInstance/axiosInstance";
 import toast from "react-hot-toast";
 
+
+export const searchGroupApi = async (payload) => {
+    const { search } = payload;
+    try {
+        const response = await axiosInstance.get(`?page=searchGroup&searchTerm=${search}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+        throw new Error("Failed to load dashboard data");
+    }
+}
+
+
+
+
+
+
 export const CreateGroup = async (payload) => {
   try {
     const responce = await axiosInstance.post(`?page=createGroup`, payload);

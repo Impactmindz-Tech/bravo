@@ -74,7 +74,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
   useEffect(() => {
     if (items) {
-      setValue("authrization_code", items?.authrization_code || "");
+          setValue("authrization_code", items?.authrization_code || "");
       setValue("first_name", items?.first_name || "");
       setValue("last_name", items?.last_name);
       setValue("username", items?.username);
@@ -116,9 +116,24 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     formData.append("country", countryid?.name);
     formData.append("group_id", data.group_id);
     formData.append("email", data?.email);
+    formData.append("profile_pic", selectedFile);
+
+
+    if (countryid.name === "") {
+      toast.error("Select Country Name");
+      return;
+    }
+
+    if (stateid.name === "") {
+      toast.error("Select State Name");
+      return;
+    }
+    if (city.name === "") {
+      toast.error("Select Suburb Name");
+      return;
+    }
     if (items?.user_id) {
       formData.append("user_id", items?.user_id);
-      formData.append("profile_pic", items?.selectedFile);
       try {
         const responce = await EditUser(formData);
         if (responce?.isSuccess) {
@@ -129,6 +144,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       }
     } else {
       try {
+        // profile_picture
         const response = await CreateUser(formData);
         if (response?.isSuccess) {
           toast.success(response?.message);
@@ -194,7 +210,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         </div>
                       );
                     })}
+
+
                   </div>
+                    <p className="text-danger">{errors?.role_id?.message}</p>
 
                   {/* file upload section */}
                   <div className="flex gap-2">
@@ -254,6 +273,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <select name="Gender" className="input" id="Gender" {...register("Gender")}>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
+                        <option value="other">Other</option>
                       </select>
                       <p>{errors?.Gender?.message}</p>
                     </div>
@@ -305,6 +325,18 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
                       <p>{errors?.postal_code?.message}</p>
                     </div>
+                   
+                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                      <label className="text-blue-300 text-sm">Country <span className="text-red-500 pl-1">*</span></label>
+                      <CountrySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" showFlag={true} defaultValue={countryid} onChange={handleCountry} placeHolder="Select Country" />
+                    </div>
+                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                      <label className="text-blue-300 text-sm">State <span className="text-red-500 pl-1">*</span></label>
+                      <StateSelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={stateid} onChange={handleState} placeHolder="Select State" />
+                    </div>
+
+                   
+
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm">
                         Suburb <span className="text-red-500 pl-1">*</span>
@@ -312,15 +344,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <CitySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={city} stateid={stateid.id} onChange={handleCity} placeHolder="Select City" />
                     </div>
 
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">State</label>
-                      <StateSelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={stateid} onChange={handleState} placeHolder="Select State" />
-                    </div>
-
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">Country</label>
-                      <CountrySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" showFlag={true} defaultValue={countryid} onChange={handleCountry} placeHolder="Select Country" />
-                    </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="Action">
                         Action
