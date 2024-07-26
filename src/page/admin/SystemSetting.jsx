@@ -37,6 +37,33 @@ export default function SystemSetting() {
     privacyDocumentFileDocument: null,
   });
 
+  const disableCategoryToggle = async (id) => {
+    try {
+      const deleteResponse = await deleteCategory({ category_id: id });
+      if (deleteResponse?.isSuccess) {
+        getAllSettingSettingData();
+        toast.success(deleteResponse?.message);
+      } else {
+        toast.error(deleteResponse?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const disableRelationToggle = async (id) => {
+    try {
+      const deleteResponse = await deleteRelation({ relation_id: id });
+      if (deleteResponse?.isSuccess) {
+        getAllSettingSettingData();
+        toast.success(deleteResponse?.message);
+      } else {
+        toast.error(deleteResponse?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleFileChange = (type) => (event) => {
     setFiles((prevFiles) => ({
       ...prevFiles,
@@ -112,15 +139,8 @@ export default function SystemSetting() {
       const removedElements = relationKeyword.filter((element) => !tags.includes(element));
       if (removedElements.length > 0) {
         const deletedDataId = relationData.filter((item) => item.type_name === removedElements[0]).map((item) => item.relationship_type_id);
-        const deleteResponse = await deleteRelation({ relation_id: deletedDataId[0] });
-        if (deleteResponse?.isSuccess) {
-          getAllSettingSettingData();
-          toast.success(deleteResponse?.message);
-          return;
-        } else {
-          toast.error(deleteResponse?.message);
-          return;
-        }
+
+        disableRelationToggle(deletedDataId[0]);
       }
     }
 
@@ -159,14 +179,8 @@ export default function SystemSetting() {
 
       if (removedElements.length > 0) {
         const deletedDataId = categoryData.filter((item) => item.cat_name === removedElements[0]).map((item) => item.cat_id);
-        const deleteResponse = await deleteCategory({ category_id: deletedDataId[0] });
-        if (deleteResponse?.isSuccess) {
-          getAllSettingSettingData();
-          toast.success(deleteResponse?.message);
-        } else {
-          toast.error(deleteResponse?.message);
-          return;
-        }
+
+        disableCategoryToggle(deletedDataId[0]);
       }
     }
 
@@ -194,22 +208,9 @@ export default function SystemSetting() {
 
     const removedElements = relationData.filter((element) => element.type_name === key);
 
-    try {
-      if (removedElements.length > 0) {
-        let id = removedElements[0]?.relationship_type_id;
-
-        const deleteResponse = await deleteRelation({ relation_id: id });
-
-        if (deleteResponse?.isSuccess) {
-          getAllSettingSettingData();
-          toast.success(deleteResponse?.message);
-        } else {
-          toast.error(deleteResponse?.message);
-          return;
-        }
-      }
-    } catch (error) {
-      console.log(error);
+    if (removedElements.length > 0) {
+      let id = removedElements[0]?.relationship_type_id;
+      disableRelationToggle(id);
     }
   };
 
@@ -228,60 +229,35 @@ export default function SystemSetting() {
 
     const removedElements = categoryData.filter((element) => element.cat_name === key);
 
-    try {
-      if (removedElements.length > 0) {
-        let id = removedElements[0]?.cat_id;
-        const deleteResponse = await deleteCategory({ category_id: id });
-        if (deleteResponse?.isSuccess) {
-          getAllSettingSettingData();
-          toast.success(deleteResponse?.message);
-        } else {
-          toast.error(deleteResponse?.message);
-        }
-      }
-    } catch (error) {
-      console.log(error);
+    if (removedElements.length > 0) {
+      let id = removedElements[0]?.cat_id;
+      disableCategoryToggle(id);
     }
   };
 
   const handleRemove = async (selectedList) => {
     const uniqueElement = previousRelation.find((element) => !selectedList.some((selected) => selected.id === element.id));
     let id = uniqueElement.id;
-
-    try {
-      const deleteResponse = await deleteRelation({ relation_id: id });
-
-      if (deleteResponse?.isSuccess) {
-        getAllSettingSettingData();
-        toast.success(deleteResponse?.message);
-      } else {
-        toast.error(deleteResponse?.message);
-        return;
-      }
-    } catch (error) {
-      console.log(error);
+    // find weather category deleted from input but present in multiselect
+    let found = relationKeyword.includes(uniqueElement.name);
+    if (found) {
+      disableRelationToggle(id);
     }
     let newPreviousArray = previousRelation.filter((element) => element.id !== uniqueElement.id);
     setPreviousRelation(newPreviousArray);
   };
 
+  // multi form remove category
   const handleRemoveCategory = async (selectedList) => {
     // setPreviousCategory(selectedList);
     const uniqueElement = previousCategory.find((element) => !selectedList.some((selected) => selected.id === element.id));
     let id = uniqueElement.id;
-    // Output: { "name": "Fitness", "id": 5 }
-    try {
-      const deleteResponse = await deleteCategory({ category_id: id });
-      if (deleteResponse?.isSuccess) {
-        getAllSettingSettingData();
-        toast.success(deleteResponse?.message);
-      } else {
-        toast.error(deleteResponse?.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
 
+    // find weather category deleted from input but present in multiselect
+    let found = categoryKeyword.includes(uniqueElement.name);
+    if (found) {
+      disableCategoryToggle(id);
+    }
     let newPreviousArray = previousCategory.filter((element) => element.id !== uniqueElement.id);
     setPreviousCategory(newPreviousArray);
   };
