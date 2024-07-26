@@ -395,7 +395,7 @@ export default function SystemSetting() {
             </form>
             {/* file management */}
 
-            <div className="flex mb-10 pl-5 mt-4 sm:flex-col sm:pl-3 sm:gap-y-2 lg:flex-wrap lg:gap-2">
+            {/* <div className="flex mb-10 pl-5 mt-4 sm:flex-col sm:pl-3 sm:gap-y-2 lg:flex-wrap lg:gap-2">
               <h4 className="text-blue-300 w-[25%] font-medium sm:w-[100%] lg:w-[100%]">Import Post Code Table</h4>
 
               <div className="flex w-[72%] items-center  py-1 px-2 input  sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] ">
@@ -413,7 +413,7 @@ export default function SystemSetting() {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* right section */}
@@ -469,13 +469,17 @@ export default function SystemSetting() {
 
             <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3">Text</h2>
             <textarea name="text" rows={3} className="border mx-5 my-2 w-[94%] resize-none input outline-none px-2 sm:mx-3 sm:w-[92%]  lg:w-[90%] lg:max-h-[100px]  md:w-[92%]"></textarea>
-          </div>
-        </div>
-        {/* bottom btn section */}
+
+
+                {/* bottom btn section */}
         <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5 lg:mr-0">
           <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none w-[120px]">Save</button>
           <button className="border border-black bg-white  text-black font-semibold rounded-lg focus:outline-none hover:border-black">cancel</button>
         </div>
+          </div>
+       
+        </div>
+    
       </div>
     </>
   );
