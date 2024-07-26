@@ -155,6 +155,9 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
         const responce = await EditUser(formData);
         if (responce?.isSuccess) {
           toast.success(responce?.message);
+          setAddAdminModalOpen(false)
+          reset()
+          setSelectedFile(null)
         }
       } catch (error) {
         console.log(error);

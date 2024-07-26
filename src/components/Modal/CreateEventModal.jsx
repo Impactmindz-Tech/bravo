@@ -216,7 +216,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       <Modal open={calenderModal} onClose={() => setCalenderModal(false)} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
         <div className="h-auto overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] ">
           <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
-            <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
+            <div className="relative w-full bg-white rounded-lg shadow-md pb-2 ">
               <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
                 <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{eventDataToUpdate[0] == null ? " Add Event" : " Edit Event"}</h2>
                 <button onClick={() => setCalenderModal(false)} className="text-red text-white hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg">
@@ -294,7 +294,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                     </div>
 
                     {/* group id */}
-                    <div className="flex flex-col w-[30%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%] z-50">
+                    <div className="flex flex-col w-[30%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%] h-[135px] lg:h-[90px]">
                       <label className="text-blue-300 text-sm" htmlFor="groupId">
                         Group id<span className="text-red-500 pl-1">*</span>
                       </label>
@@ -308,6 +308,9 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                         onRemove={handleGroupRemove}
                         displayValue="name"
                         placeholder="Group Name"
+                        listProps={{
+                          maxHeight: 200, // adjust this value as needed
+                        }}
                         style={{
                           multiselectContainer: { width: "100%" },
                           searchBox: { width: "100%" },
@@ -316,7 +319,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                     </div>
 
                     {/* user id */}
-                    <div className="flex flex-col w-[30%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="flex flex-col w-[30%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%] h-[135px] lg:h-[90px]">
                       <label className="text-blue-300 text-sm" htmlFor="userIdId">
                         User id<span className="text-red-500 pl-1">*</span>
                       </label>
