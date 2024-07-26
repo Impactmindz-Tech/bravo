@@ -180,6 +180,11 @@ export default function SystemSetting() {
       if (removedElements.length > 0) {
         const deletedDataId = categoryData.filter((item) => item.cat_name === removedElements[0]).map((item) => item.cat_id);
 
+        const updatedCategoryList = categoryList.filter((category) => !deletedDataId.includes(category.id));
+        setCategoryList(categoryList.filter((category) => category.id !== deletedDataId[0]));
+        if (updatedCategoryList.length != 0) {
+          //  handleRemoveCategory(updatedCategoryList);
+        }
         disableCategoryToggle(deletedDataId[0]);
       }
     }

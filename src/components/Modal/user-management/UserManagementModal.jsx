@@ -21,7 +21,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   const [group, setGroup] = useState("");
   const [role, setRole] = useState("");
   const [city, setCity] = useState(0);
-  
+
   const {
     handleSubmit,
     register,
@@ -123,7 +123,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
         const responce = await EditUser(formData);
         if (responce?.isSuccess) {
           toast.success(responce?.message);
-         
         }
       } catch (error) {
         console.log(error);
@@ -135,7 +134,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
           toast.success(response?.message);
           onUserCreated();
           reset();
-          setSelectedFile([])
+          setSelectedFile([]);
           setAddAdminModalOpen(false);
         }
       } catch (error) {
@@ -176,7 +175,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                     </h1>
                     <div>
                       <select name="groupSection" placeholder="select group" className="input w-full" {...register("group_id")}>
-                      <option value="">Select group</option>
+                        <option value="">Select group</option>
                         {group?.data?.map((item, index) => (
                           <option key={index} value={item.group_id}>
                             {item.name}
@@ -307,7 +306,9 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <p>{errors?.postal_code?.message}</p>
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">Suburb <span className="text-red-500 pl-1">*</span></label>
+                      <label className="text-blue-300 text-sm">
+                        Suburb <span className="text-red-500 pl-1">*</span>
+                      </label>
                       <CitySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={city} stateid={stateid.id} onChange={handleCity} placeHolder="Select City" />
                     </div>
 
