@@ -77,6 +77,9 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       if (items.profile_picture) {
         const filename = items.profile_picture.split("/").pop();
         setSelectedFile({ name: filename });
+      }else{
+      setSelectedFile(null);
+
       }
       setValue("authrization_code", items?.authrization_code || "");
       setValue("first_name", items?.first_name || "");
@@ -84,7 +87,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setValue("username", items?.username);
       setValue("phone", items?.phone);
       setValue("dob", items?.date_of_birth);
-      setValue("Age", items?.Age);
+      setValue("age", items?.age);
       setValue("address", items?.address);
       setValue("postal_code", items?.postal_code);
       setValue("role_id", items?.role_name);
@@ -104,6 +107,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   }, [items, reset, setValue]);
 
   const onSubmit = async (data) => {
+  
     const formData = new FormData();
     formData.append("authrization_code", data?.authrization_code);
     formData.append("first_name", data?.first_name);
@@ -111,7 +115,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     formData.append("username", data?.email);
     formData.append("phone", data?.phone);
     formData.append("dob", data?.dob);
-    formData.append("Age", data?.Age);
+    formData.append("age", data?.age);
     formData.append("address", data?.address);
     formData.append("postal_code", data?.postal_code);
     formData.append("role_id", data?.role_id);
@@ -120,8 +124,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     formData.append("country", countryid?.name);
     formData.append("group_id", data.group_id);
     formData.append("email", data?.email);
+    formData.append("notes", data?.notes);
+    formData.append("gender", data?.Gender);
 
-    if (items.profile_picture) {
+    if (items?.profile_picture) {
       const filename = items.profile_picture.split("/").pop();
       const result = selectedFile.name === filename;
 
@@ -326,7 +332,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <label className="text-blue-300 text-sm" htmlFor="Age">
                         Age<span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="text" name="Age" id="Age" className="input" {...register("Age")} />
+                      <input type="text" name="Age" id="Age" className="input" {...register("age")} />
                       <p>{errors?.Age?.message}</p>
                     </div>
 
@@ -381,7 +387,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                   <div className="flex w-full flex-col space-y-2">
                     <h1 className="text-gray-500">Notes</h1>
-                    <input type="text" name="Authentication_Code" className="input" placeholder="Add Text Here" />
+                    <input type="text" name="Authentication_Code" className="input" placeholder="Add Text Here" {...register("notes")} />
                   </div>
 
                   {/* <div className="flex text gap-3 mt-3 sm:flex-col">
