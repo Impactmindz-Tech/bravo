@@ -98,6 +98,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setValue("password", items?.password);
       setValue("group_id", items?.group_id);
       setValue("email", items?.email);
+      setValue("notes", items?.notes);
       setCountryid({ id: items.country, name: items.country });
       setstateid({ id: items.state, name: items.state });
       setCity({ id: items.suburb, name: items.suburb });
