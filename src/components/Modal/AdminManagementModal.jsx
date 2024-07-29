@@ -163,7 +163,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
           setSelectedFile(null);
           setAddAdminModalOpen(false);
           setCountryid([]);
-          setAdminRole([]);
           setstateid(0);
         }
       } catch (error) {

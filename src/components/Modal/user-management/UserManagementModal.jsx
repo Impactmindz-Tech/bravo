@@ -1,11 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { FiUpload } from "react-icons/fi";
+import { useDispatch } from "react-redux";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import AddRelativeModal from "../AddRelativeModal";
 import { Modal } from "@mui/material";
+import { DashboardApi } from "../../../utils/service/DashboardService";
+import { setUser } from "../../../store/Slice/UserSlice";
+
 import { CitySelect, CountrySelect, StateSelect, LanguageSelect } from "react-country-state-city";
 import { CreateUser, EditUser, getAllRoles } from "../../../utils/service/DashboardService";
 import { createUser } from "../../../utils/validation/FormValidation";
@@ -21,6 +25,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   const [group, setGroup] = useState("");
   const [role, setRole] = useState("");
   const [city, setCity] = useState(0);
+  const dispatch = useDispatch();
 
   const {
     handleSubmit,
@@ -77,9 +82,8 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       if (items.profile_picture) {
         const filename = items.profile_picture.split("/").pop();
         setSelectedFile({ name: filename });
-      }else{
-      setSelectedFile(null);
-
+      } else {
+        setSelectedFile(null);
       }
       setValue("authrization_code", items?.authrization_code || "");
       setValue("first_name", items?.first_name || "");
@@ -107,7 +111,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   }, [items, reset, setValue]);
 
   const onSubmit = async (data) => {
-  
     const formData = new FormData();
     formData.append("authrization_code", data?.authrization_code);
     formData.append("first_name", data?.first_name);
@@ -134,6 +137,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       if (result == false) {
         formData.append("profile_pic", selectedFile);
       }
+    } else {
+      if (selectedFile !== null) {
+        formData.append("profile_pic", selectedFile);
+      }
     }
 
     if (countryid.name === "") {
@@ -155,9 +162,14 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
         const responce = await EditUser(formData);
         if (responce?.isSuccess) {
           toast.success(responce?.message);
-          setAddAdminModalOpen(false)
-          reset()
-          setSelectedFile(null)
+
+          reset();
+          setSelectedFile(null);
+          const response = await DashboardApi({ page: 1, items_per_page: 10 });
+          if (response?.isSuccess) {
+            dispatch(setUser(response));
+            setAddAdminModalOpen(false);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -232,8 +244,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                     {role?.data?.map((item, index) => {
                       return (
                         <div className="flex items-center" key={index}>
-                       
-                          <input type="radio" value={item.role_id} name="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={item.role_name==items?.role_name} />
+                          <input type="radio" value={item.role_id} name="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={item.role_name == items?.role_name} />
                           <span className="ml-2 text-gray-700">{item.role_name}</span>
                         </div>
                       );
