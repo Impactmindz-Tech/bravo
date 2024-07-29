@@ -122,10 +122,14 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
       let countryName = Country.getAllCountries().filter((item) => item.name === items.country);
       setSelectedCountry(countryName[0]);
-      let statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((item) => item.name === items.state);
-      setSelectedState(statesSet[0]);
-      let citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((item) => item.name === items.suburb);
-      setSelectedCity(citiesSet[0]);
+      if (items.state!==null) {
+        let statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((item) => item.name === items.state);
+        setSelectedState(statesSet[0]);
+        if (items.suburb!==null) {
+          let citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((item) => item.name === items.suburb);
+          setSelectedCity(citiesSet[0]);
+        }
+      }
     } else {
       reset();
       setSelectedFile(null);
@@ -156,17 +160,17 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       toast.error("Select Country Name");
       return;
     }
-    if (selectedState.length == 0) {
-      toast.error("Select State Name");
-      return;
+    if (selectedCity == "" || selectedCity.length == 0) {
+      formData.append("suburb", null);
+    } else {
+      formData.append("suburb", selectedCity.name);
     }
-    if (selectedCity.length == 0) {
-      toast.error("Select Suburb Name");
-      return;
+    if (selectedState == "" || selectedState.length == 0) {
+      formData.append("state", null);
+    } else {
+      formData.append("state", selectedState.name);
     }
     formData.append("country", selectedCountry.name);
-    formData.append("state", selectedState.name);
-    formData.append("suburb", selectedCity.name);
 
     if (items?.profile_picture) {
       const filename = items.profile_picture.split("/").pop();
@@ -381,14 +385,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm" htmlFor="postal_code">
-                        Postal Code <span className="text-red-500 pl-1">*</span>
-                      </label>
-                      <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
-                      <p>{errors?.postal_code?.message}</p>
-                    </div>
-
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label htmlFor="country" className="text-blue-300 text-sm">
                         Country <span className="text-red-500 pl-1">*</span>
                       </label>
@@ -409,9 +405,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         ))}
                       </select>
                     </div>
+                    
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="state">
-                        State <span className="text-red-500 pl-1">*</span>
+                        State
                       </label>
                       <select
                         id="state"
@@ -423,7 +420,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         disabled={!selectedCountry}
                         className="input"
                       >
-                        {selectedState !== "" ? <option value={selectedState.name}>{selectedState.name}</option> : <option value="">Select State</option>}
+                        {selectedState !== "" ? <option value={selectedState?.name}>{selectedState?.name}</option> : <option value="">Select State</option>}
                         {states.map((state) => (
                           <option key={state.isoCode} value={state.name}>
                             {state.name}
@@ -434,7 +431,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="city">
-                        Suburb <span className="text-red-500 pl-1">*</span>
+                        Suburb
                       </label>
                       <select
                         id="city"
@@ -446,7 +443,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         }}
                         disabled={!selectedState}
                       >
-                        {selectedCity !== "" ? <option value={selectedCity.name}>{selectedCity.name}</option> : <option value="">Select suburb</option>}
+                        {selectedCity !== "" ? <option value={selectedCity?.name}>{selectedCity?.name}</option> : <option value="">Select suburb</option>}
 
                         {cities.map((city) => (
                           <option key={city.name} value={city.name}>
@@ -466,6 +463,14 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         <option value="">Old</option>
                       </select>
                       {/* <p>{errors?.Action?.message}</p> */}
+                    </div>
+
+                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                      <label className="text-blue-300 text-sm" htmlFor="postal_code">
+                        Postal Code <span className="text-red-500 pl-1">*</span>
+                      </label>
+                      <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
+                      <p>{errors?.postal_code?.message}</p>
                     </div>
                   </div>
 

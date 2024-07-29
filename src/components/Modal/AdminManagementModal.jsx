@@ -73,12 +73,29 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       setValue("authrization_code", adminItem?.authrization_code);
       setValue("role_id", adminItem?.role_id);
       setValue("profile_pic", adminItem?.role_id);
+      console.log(adminItem);
       let countryName = Country.getAllCountries().filter((item) => item.name === adminItem.country);
       setSelectedCountry(countryName[0]);
-      let statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((item) => item.name === adminItem.state);
-      setSelectedState(statesSet[0]);
-      let citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((item) => item.name === adminItem.suburb);
-      setSelectedCity(citiesSet[0]);
+
+      if (countryName.length > 0) {
+        setSelectedCountry(countryName[0]);
+
+        if (adminItem.state && adminItem.state !== "null" && adminItem.state.trim() !== "") {
+          const statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((state) => state.name === adminItem.state);
+
+          if (statesSet.length > 0) {
+            setSelectedState(statesSet[0]);
+
+            if (adminItem.suburb && adminItem.suburb !== "null" && adminItem.suburb.trim() !== "") {
+              const citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((city) => city.name === adminItem.suburb);
+
+              if (citiesSet.length > 0) {
+                setSelectedCity(citiesSet[0]);
+              }
+            }
+          }
+        }
+      }
     } else {
       reset();
 
@@ -144,17 +161,23 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       toast.error("Select Country Name");
       return;
     }
-    if (selectedState.length == 0) {
-      toast.error("Select State Name");
+
+    if (selectedCountry.length == 0) {
+      toast.error("Select Country Name");
       return;
     }
-    if (selectedCity.length == 0) {
-      toast.error("Select Suburb Name");
-      return;
+    if (selectedCity == "" || selectedCity.length == 0) {
+      formData.append("suburb", null);
+    } else {
+      formData.append("suburb", selectedCity.name);
     }
+    if (selectedState == "" || selectedState.length == 0) {
+      formData.append("state", null);
+    } else {
+      formData.append("state", selectedState.name);
+    }
+
     formData.append("country", selectedCountry.name);
-    formData.append("state", selectedState.name);
-    formData.append("suburb", selectedCity.name);
 
     if (adminItem) {
       formData.append("user_id", adminItem?.user_id);
@@ -329,13 +352,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     <p>{errors?.address?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <label className="text-blue-300 text-sm" htmlFor="postal_code">
-                      Postal Code <span className="text-red-500 pl-1">*</span>
-                    </label>
-                    <input type="number" name="postal_code" id="postal_code" className="input w-full" {...register("postal_code")} />
-                    <p>{errors?.postal_code?.message}</p>
-                  </div>
-                  <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label htmlFor="country" className="text-blue-300 text-sm">
                       Country <span className="text-red-500 pl-1">*</span>
                     </label>
@@ -358,7 +374,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label htmlFor="state" className="text-blue-300 text-sm">
-                      State <span className="text-red-500 pl-1">*</span>
+                      State
                     </label>
                     <select
                       id="state"
@@ -380,7 +396,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                     <label className="text-blue-300 text-sm" htmlFor="city">
-                      Suburb <span className="text-red-500 pl-1">*</span>
+                      Suburb
                     </label>
                     <select
                       id="city"
@@ -400,6 +416,14 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                         </option>
                       ))}
                     </select>{" "}
+                  </div>
+
+                  <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <label className="text-blue-300 text-sm" htmlFor="postal_code">
+                      Postal Code <span className="text-red-500 pl-1">*</span>
+                    </label>
+                    <input type="number" name="postal_code" id="postal_code" className="input w-full" {...register("postal_code")} />
+                    <p>{errors?.postal_code?.message}</p>
                   </div>
                 </div>
                 {/* <div className="flex flex-col space-y-2 sm:w-[100%]">
