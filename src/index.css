@@ -294,3 +294,8 @@ label{
   background: #2a2f3e !important;
 
 }
+
+
+.settingGroup span {
+  gap: 5px;
+}

@@ -5,19 +5,50 @@ import { IoMdClose } from "react-icons/io";
 import { createAdminApi, getEditAdminApi } from "../../utils/service/AdminService";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { Country, State, City } from "country-state-city";
 import { createAdmin } from "../../utils/validation/FormValidation";
 import { getAdminRolesApi, getAllGroup } from "../../utils/service/CommonService";
 import { Modal } from "@mui/material";
-import { CitySelect, CountrySelect, StateSelect, LanguageSelect } from "react-country-state-city";
 import toast from "react-hot-toast";
 // eslint-disable-next-line react/prop-types
 const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAddAdminModalOpen, adminItem }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [groupData, setGroupData] = useState([]);
-  const [countryid, setCountryid] = useState(0);
   const [adminRole, setAdminRole] = useState([]);
-  const [stateid, setstateid] = useState(0);
-  const [city, setCity] = useState(0);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  // fetching data for country,state city
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
+  // country select
+  useEffect(() => {
+    if (selectedCountry) {
+      setStates(State.getStatesOfCountry(selectedCountry.isoCode));
+    } else {
+      setStates([]);
+    }
+
+    if (!adminItem) {
+      setSelectedState("");
+      setSelectedCity("");
+    }
+  }, [selectedCountry]);
+  // state select
+  useEffect(() => {
+    if (selectedState) {
+      setCities(City.getCitiesOfState(selectedCountry.isoCode, selectedState.isoCode));
+    } else {
+      if (!adminItem) setCities([]);
+    }
+    if (!adminItem) {
+      setSelectedCity("");
+    }
+  }, [selectedState]);
 
   const {
     handleSubmit,
@@ -29,7 +60,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   useEffect(() => {
     if (adminItem) {
-      console.log(adminItem);
       setValue("group_id", adminItem?.group_id);
       setValue("first_name", adminItem?.first_name);
       setValue("last_name", adminItem?.last_name);
@@ -42,33 +72,25 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       setValue("postal_code", adminItem?.postal_code);
       setValue("authrization_code", adminItem?.authrization_code);
       setValue("role_id", adminItem?.role_id);
-
       setValue("profile_pic", adminItem?.role_id);
-      setCountryid({ id: adminItem.country, name: adminItem.country });
-      setstateid({ id: adminItem.state, name: adminItem.state });
-      setCity({ id: adminItem.suburb, name: adminItem.suburb });
+      let countryName = Country.getAllCountries().filter((item) => item.name === adminItem.country);
+      setSelectedCountry(countryName[0]);
+      let statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((item) => item.name === adminItem.state);
+      setSelectedState(statesSet[0]);
+      let citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((item) => item.name === adminItem.suburb);
+      setSelectedCity(citiesSet[0]);
     } else {
-      setCountryid({ id: "", name: "" });
-      setstateid({ id: "", name: "" });
-      setCity({ id: "", name: "" });
       reset();
+
+      setSelectedFile(null);
+      setSelectedCountry("");
+      setSelectedState("");
+      setSelectedCity("");
     }
   }, [setValue, reset, adminItem]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
-  };
-
-  const handleCountry = (country) => {
-    setCountryid(country);
-  };
-
-  const handleState = (state) => {
-    setstateid(state);
-  };
-
-  const handleCity = (city) => {
-    setCity(city);
   };
 
   const handleRemoveFile = () => {
@@ -115,25 +137,24 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     formData.append("address", data?.address);
     formData.append("postal_code", data?.postal_code);
     formData.append("role_id", data?.role_id);
-    formData.append("suburb", city?.name);
-    formData.append("state", stateid?.name);
     formData.append("username", data?.username);
-    formData.append("country", countryid?.name);
     formData.append("password", data?.password);
     formData.append("profile_pic", selectedFile);
-    if (countryid.name === "") {
+    if (selectedCountry.length == 0) {
       toast.error("Select Country Name");
       return;
     }
-
-    if (stateid.name === "") {
+    if (selectedState.length == 0) {
       toast.error("Select State Name");
       return;
     }
-    if (city.name === "") {
+    if (selectedCity.length == 0) {
       toast.error("Select Suburb Name");
       return;
     }
+    formData.append("country", selectedCountry.name);
+    formData.append("state", selectedState.name);
+    formData.append("suburb", selectedCity.name);
 
     if (adminItem) {
       formData.append("user_id", adminItem?.user_id);
@@ -162,8 +183,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
           reset();
           setSelectedFile(null);
           setAddAdminModalOpen(false);
-          setCountryid([]);
-          setstateid(0);
         }
       } catch (error) {
         console.log(error);
@@ -317,27 +336,75 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     <p>{errors?.postal_code?.message}</p>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <h6 className="text-blue-300 text-sm">
+                    <label htmlFor="country" className="text-blue-300 text-sm">
                       Country <span className="text-red-500 pl-1">*</span>
-                    </h6>
-                    <CountrySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" showFlag={true} defaultValue={countryid} onChange={handleCountry} placeHolder="Select Country" />
+                    </label>
+                    <select
+                      id="country"
+                      value={selectedCountry.name || ""}
+                      onChange={(e) => {
+                        const country = countries.find((country) => country.name === e.target.value);
+                        setSelectedCountry(country);
+                      }}
+                      className="input w-full"
+                    >
+                      {selectedState !== "" ? <option value={selectedCountry.name}>{selectedCountry.name}</option> : <option value="">Select Country</option>}
+                      {countries.map((country) => (
+                        <option key={country.isoCode} value={country.name}>
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>{" "}
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <h6 className="text-blue-300 text-sm">
+                    <label htmlFor="state" className="text-blue-300 text-sm">
                       State <span className="text-red-500 pl-1">*</span>
-                    </h6>
-                    <StateSelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={stateid} onChange={handleState} placeHolder="Select State" />
+                    </label>
+                    <select
+                      id="state"
+                      value={selectedState.name || ""}
+                      onChange={(e) => {
+                        const state = states.find((state) => state.name === e.target.value);
+                        setSelectedState(state);
+                      }}
+                      disabled={!selectedCountry}
+                      className="input w-full"
+                    >
+                      {selectedState !== "" ? <option value={selectedState.name}>{selectedState.name}</option> : <option value="">Select State</option>}
+                      {states.map((state) => (
+                        <option key={state.isoCode} value={state.name}>
+                          {state.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                    <label className="text-blue-300 text-sm">
+                    <label className="text-blue-300 text-sm" htmlFor="city">
                       Suburb <span className="text-red-500 pl-1">*</span>
                     </label>
-                    <CitySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={city} stateid={stateid.id} onChange={handleCity} placeHolder="Select City" />
+                    <select
+                      id="city"
+                      className="input w-full"
+                      value={selectedCity.name || ""}
+                      onChange={(e) => {
+                        const city = cities.find((city) => city.name === e.target.value);
+                        setSelectedCity(city);
+                      }}
+                      disabled={!selectedState}
+                    >
+                      {selectedCity !== "" ? <option value={selectedCity.name}>{selectedCity.name}</option> : <option value="">Select suburb</option>}
+
+                      {cities.map((city) => (
+                        <option key={city.name} value={city.name}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </select>{" "}
                   </div>
                 </div>
                 {/* <div className="flex flex-col space-y-2 sm:w-[100%]">
                   <h1 className="text-gray-500">Notes</h1>
-                  <input type="text" name="" className="input" placeholder="Add Text Here" />
+                  <input type="text" name="" className="input w-full" placeholder="Add Text Here" />
                 </div> */}
               </div>
 

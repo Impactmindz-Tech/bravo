@@ -88,19 +88,22 @@ export default function AdminManagement() {
       {loading && <Loading />}
       <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
         <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">Admin Management</h1>
-        <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3">
-          <div className="flex justify-center items-center border border-[#ccc] rounded-md bg-white text-[#3c3c3c] lg:w-[68%] md:w-[100%] sm:w-[100%]">
-            <input type="text" name="search" value={search} onChange={(e) => handleSearch(e)} placeholder="Search" className="px-3 py-2 rounded-lg outline-none focus:outline-none text-md w-[270px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm md:w-[100%] md:px-2 md:py-3 md:text-2xl lg:text-2xl lg:w-[100%] lg:py-0 lg:px-3" />
+
+        <div className="flex justify-between gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3">
+          <div className="flex justify-center flex-1 items-center  border border-borderOutlineColor-900 rounded-md bg-white text-[#3c3c3c] lg:w-[68%] md:w-[100%] sm:w-[100%]">
+            <input type="text" name="search" placeholder="Search" value={search} onChange={(e) => handleSearch(e)} className="px-3 py-2 rounded-lg outline-none focus:outline-none text-sm w-[250px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm md:w-[100%] md:px-2 md:py-3 md:text-2xl lg:text-2xl lg:w-[100%] lg:py-0 lg:px-3" />
             <i className="pr-3 flex items-center text-[#5a5a5a] text-lg sm:pr-1 sm:text-sm md:pr-1 md:text-md md:text-2xl lg:text-2xl">
               <IoIosSearch />
             </i>
           </div>
-
-          <button onClick={handleAddUser} className="bg-blue-900 text-white flex justify-center  hover:border-[#ccc] sm:text-sm md:text-xl">
-            <i className="my-0.4 pr-2 text-2xl sm:text-sm sm:my-1  md:text-md md:my-0 lg:my-2">
-              <IoMdAddCircleOutline />{" "}
-            </i>{" "}
-            Add Admin
+          {/* create group btn */}
+          <button onClick={() => handleAddUser(true)} className="bg-blue-900 flex justify-center items-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3">
+            <i className="my-0.4 pr-2 text-2xl lg:my-1 md:text-md md:my-1 lg:text-sm">
+              <IoMdAddCircleOutline />
+            </i>
+            <span className="lg:text-sm" onClick={handleAddUser}>
+              Add Admin
+            </span>
           </button>
         </div>
       </div>
@@ -123,10 +126,7 @@ export default function AdminManagement() {
                   <tr key={index}>
                     <td className="text-left">
                       <div className="flex gap-2 items-center">
-                        <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">
-                        {item.profile_picture?    <img src={item.profile_picture} alt="user " className="rounded-full w-[40px] h-[40px]" />:    <img src={adminUserProfile} alt="adminUserProfile " className="rounded-full w-[40px] h-[40px]" />}
-                      
-                        </div>
+                        <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">{item.profile_picture ? <img src={item.profile_picture} alt="user " className="rounded-full w-[40px] h-[40px]" /> : <img src={adminUserProfile} alt="adminUserProfile " className="rounded-full w-[40px] h-[40px]" />}</div>
                         <span>{item.first_name}</span>
                       </div>
                     </td>

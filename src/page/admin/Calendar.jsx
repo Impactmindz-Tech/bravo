@@ -100,17 +100,17 @@ function Calendar() {
           events={eventData}
           dateClick={handleDateClick}
           eventContent={(eventInfo) => (
-            <div className="p-1 px-2 rounded-md text-sm flex gap-2 items-center justify-between">
+            <div className="p-1 px-2 rounded-md text-sm flex gap-2 items-center justify-between sm:text-sm">
               <div>
                 <b>{eventInfo.timeText}</b>
                 <i>{eventInfo.event.title}</i>
               </div>
-              <div className="flex">
+              <div className="flex pr-2">
                 <i>
-                  <TbEdit className="cursor-pointer  text-lg hover:text-blue-900" title="Edit" onClick={() => editEvent(eventInfo.event)} />
+                  <TbEdit className="cursor-pointer  text-lg hover:text-blue-900 sm:text-[10px]" title="Edit" onClick={() => editEvent(eventInfo.event)} />
                 </i>
                 <i>
-                  <MdDelete className="cursor-pointer  text-lg hover:text-blue-900" title="Delete" onClick={() => deleteEvent(eventInfo.event)} />
+                  <MdDelete className="cursor-pointer  text-lg hover:text-blue-900 sm:text-[10px]" title="Delete" onClick={() => deleteEvent(eventInfo.event)} />
                 </i>
               </div>
             </div>

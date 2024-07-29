@@ -9,8 +9,7 @@ import AddRelativeModal from "../AddRelativeModal";
 import { Modal } from "@mui/material";
 import { DashboardApi } from "../../../utils/service/DashboardService";
 import { setUser } from "../../../store/Slice/UserSlice";
-
-import { CitySelect, CountrySelect, StateSelect, LanguageSelect } from "react-country-state-city";
+import { Country, State, City } from "country-state-city";
 import { CreateUser, EditUser, getAllRoles } from "../../../utils/service/DashboardService";
 import { createUser } from "../../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
@@ -20,12 +19,44 @@ import { getAllGroup } from "../../../utils/service/CommonService";
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
-  const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
   const [group, setGroup] = useState("");
   const [role, setRole] = useState("");
-  const [city, setCity] = useState(0);
   const dispatch = useDispatch();
+
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  // fetching data for country,state city
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
+  // country select
+  useEffect(() => {
+    if (selectedCountry) {
+      setStates(State.getStatesOfCountry(selectedCountry.isoCode));
+    } else {
+      setStates([]);
+    }
+
+    if (!items) {
+      setSelectedState("");
+      setSelectedCity("");
+    }
+  }, [selectedCountry]);
+  // state select
+  useEffect(() => {
+    if (selectedState) {
+      setCities(City.getCitiesOfState(selectedCountry.isoCode, selectedState.isoCode));
+    } else {
+      if (!items) setCities([]);
+    }
+    if (!items) {
+      setSelectedCity("");
+    }
+  }, [selectedState]);
 
   const {
     handleSubmit,
@@ -41,17 +72,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
-  };
-  const handleCountry = (country) => {
-    setCountryid(country);
-  };
-
-  const handleState = (state) => {
-    setstateid(state);
-  };
-
-  const handleCity = (city) => {
-    setCity(city);
   };
 
   const getAllGroups = async () => {
@@ -99,15 +119,19 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setValue("group_id", items?.group_id);
       setValue("email", items?.email);
       setValue("notes", items?.notes);
-      setCountryid({ id: items.country, name: items.country });
-      setstateid({ id: items.state, name: items.state });
-      setCity({ id: items.suburb, name: items.suburb });
+
+      let countryName = Country.getAllCountries().filter((item) => item.name === items.country);
+      setSelectedCountry(countryName[0]);
+      let statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((item) => item.name === items.state);
+      setSelectedState(statesSet[0]);
+      let citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((item) => item.name === items.suburb);
+      setSelectedCity(citiesSet[0]);
     } else {
-      setCountryid({ id: "", name: "" });
-      setstateid({ id: "", name: "" });
-      setCity({ id: "", name: "" });
       reset();
       setSelectedFile(null);
+      setSelectedCountry("");
+      setSelectedState("");
+      setSelectedCity("");
     }
   }, [items, reset, setValue]);
 
@@ -123,13 +147,26 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     formData.append("address", data?.address);
     formData.append("postal_code", data?.postal_code);
     formData.append("role_id", data?.role_id);
-    formData.append("suburb", city?.name);
-    formData.append("state", stateid?.name);
-    formData.append("country", countryid?.name);
     formData.append("group_id", data.group_id);
     formData.append("email", data?.email);
     formData.append("notes", data?.notes);
     formData.append("gender", data?.Gender);
+
+    if (selectedCountry.length == 0) {
+      toast.error("Select Country Name");
+      return;
+    }
+    if (selectedState.length == 0) {
+      toast.error("Select State Name");
+      return;
+    }
+    if (selectedCity.length == 0) {
+      toast.error("Select Suburb Name");
+      return;
+    }
+    formData.append("country", selectedCountry.name);
+    formData.append("state", selectedState.name);
+    formData.append("suburb", selectedCity.name);
 
     if (items?.profile_picture) {
       const filename = items.profile_picture.split("/").pop();
@@ -144,19 +181,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       }
     }
 
-    if (countryid.name === "") {
-      toast.error("Select Country Name");
-      return;
-    }
-
-    if (stateid.name === "") {
-      toast.error("Select State Name");
-      return;
-    }
-    if (city.name === "") {
-      toast.error("Select Suburb Name");
-      return;
-    }
     if (items?.user_id) {
       formData.append("user_id", items?.user_id);
       try {
@@ -199,9 +223,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
   const handlemodalClose = () => {
     if (!items) {
-      setCountryid({ id: "", name: "" });
-      setstateid({ id: "", name: "" });
-      setCity({ id: "", name: "" });
       reset();
       setAddAdminModalOpen(false);
     } else {
@@ -368,23 +389,71 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">
+                      <label htmlFor="country" className="text-blue-300 text-sm">
                         Country <span className="text-red-500 pl-1">*</span>
                       </label>
-                      <CountrySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" showFlag={true} defaultValue={countryid} onChange={handleCountry} placeHolder="Select Country" />
+                      <select
+                        id="country"
+                        value={selectedCountry.name || ""}
+                        onChange={(e) => {
+                          const country = countries.find((country) => country.name === e.target.value);
+                          setSelectedCountry(country);
+                        }}
+                        className="input"
+                      >
+                        {selectedState !== "" ? <option value={selectedCountry.name}>{selectedCountry.name}</option> : <option value="">Select Country</option>}
+                        {countries.map((country) => (
+                          <option key={country.isoCode} value={country.name}>
+                            {country.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">
+                      <label className="text-blue-300 text-sm" htmlFor="state">
                         State <span className="text-red-500 pl-1">*</span>
                       </label>
-                      <StateSelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={stateid} onChange={handleState} placeHolder="Select State" />
+                      <select
+                        id="state"
+                        value={selectedState.name || ""}
+                        onChange={(e) => {
+                          const state = states.find((state) => state.name === e.target.value);
+                          setSelectedState(state);
+                        }}
+                        disabled={!selectedCountry}
+                        className="input"
+                      >
+                        {selectedState !== "" ? <option value={selectedState.name}>{selectedState.name}</option> : <option value="">Select State</option>}
+                        {states.map((state) => (
+                          <option key={state.isoCode} value={state.name}>
+                            {state.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm">
+                      <label className="text-blue-300 text-sm" htmlFor="city">
                         Suburb <span className="text-red-500 pl-1">*</span>
                       </label>
-                      <CitySelect containerClassName="p-0" inputClassName="w-full outline-none border-set" countryid={countryid.id} defaultValue={city} stateid={stateid.id} onChange={handleCity} placeHolder="Select City" />
+                      <select
+                        id="city"
+                        className="input"
+                        value={selectedCity.name || ""}
+                        onChange={(e) => {
+                          const city = cities.find((city) => city.name === e.target.value);
+                          setSelectedCity(city);
+                        }}
+                        disabled={!selectedState}
+                      >
+                        {selectedCity !== "" ? <option value={selectedCity.name}>{selectedCity.name}</option> : <option value="">Select suburb</option>}
+
+                        {cities.map((city) => (
+                          <option key={city.name} value={city.name}>
+                            {city.name}
+                          </option>
+                        ))}
+                      </select>{" "}
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">

@@ -87,22 +87,22 @@ export default function GroupManagement() {
   return (
     <>
       {loading && <Loading />}
-      <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5">
+      <div className="flex justify-between sm:flex-col sm:gap-y-2 md:flex-col md:gap-y-2 lg:flex-col lg:gap-y-5 w-[100%]">
         <h1 className="text-3xl font-bold sm:text-sm md:text-md lg:text-3xl">Group Management</h1>
         {/* search bar */}
-        <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3">
-          <div className="flex justify-center items-center  border border-borderOutlineColor-900 rounded-md bg-white text-[#3c3c3c] lg:w-[68%] md:w-[100%] sm:w-[100%]">
+        <div className="flex justify-between gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3">
+          <div className="flex justify-center flex-1 items-center  border border-borderOutlineColor-900 rounded-md bg-white text-[#3c3c3c] lg:w-[68%] md:w-[100%] sm:w-[100%]">
             <input type="text" name="search" placeholder="Search" value={search} onChange={(e) => handleSearch(e)} className="px-3 py-2 rounded-lg outline-none focus:outline-none text-sm w-[250px] sm:w-[100%] sm:px-2 sm:py-2 sm:text-sm md:w-[100%] md:px-2 md:py-3 md:text-2xl lg:text-2xl lg:w-[100%] lg:py-0 lg:px-3" />
             <i className="pr-3 flex items-center text-[#5a5a5a] text-lg sm:pr-1 sm:text-sm md:pr-1 md:text-md md:text-2xl lg:text-2xl">
               <IoIosSearch />
             </i>
           </div>
           {/* create group btn */}
-          <button onClick={() => setCreateGroupModalOpen(true)} className="bg-blue-900 flex justify-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3 lg:text-2xl">
-            <i className="my-0.4 pr-2 text-2xl sm:my-1 md:text-md md:my-1 sm:text-sm">
+          <button onClick={() => setCreateGroupModalOpen(true)} className="bg-blue-900 flex justify-center items-center text-white hover:-[#ccc]sm:text-sm md:text-xl lg:gap-3">
+            <i className="my-0.4 pr-2 text-2xl lg:my-1 md:text-md md:my-1 lg:text-sm">
               <IoMdAddCircleOutline />
             </i>
-            <span className="sm:text-sm" onClick={handleAddGroup}>
+            <span className="lg:text-sm" onClick={handleAddGroup}>
               Create Group
             </span>
           </button>
@@ -111,7 +111,7 @@ export default function GroupManagement() {
 
       {/* table section */}
 
-      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] boxShadow rounded-lg sm:mx-1 md:mx-1 lg:mx-1" style={{ height: "calc(100vh - 257px)" }}>
+      <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] lg:max-h-[60vh] boxShadow rounded-lg  sm:mx-1 md:mx-1 lg:mx-1" style={{ height: "calc(100vh - 257px)" }}>
         <table className="min-w-full">
           <thead>
             <tr>
@@ -136,7 +136,7 @@ export default function GroupManagement() {
 
                       <td className="text-left">{item?.members?.length}</td>
                       <td className="text-left">
-                        <div className="flex gap-3 flex-wrap">
+                        <div className="flex gap-3 flex-wrap lg:flex-nowrap">
                           {item?.members?.map((member, index) => {
                             return <p key={index}>{member.first_name}</p>;
                           })}
