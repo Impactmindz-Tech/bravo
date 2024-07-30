@@ -291,10 +291,10 @@ export default function SystemSetting() {
       <div className="sm:max-h-[90vh] h-full sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 md:max-h-[90vh]  md:overflow-hidden md:overflow-y-auto ">
         {/* top title */}
         <div className="flex justify-between px-1 ">
-          <h1 className="text-3xl font-bold sm:text-sm sm:pl-3 md:text-2xl md:pl-3 lg:text-3xl">System Setting</h1>
+          <h1 className="text-3xl font-bold sm:text-sm sm:pl-3 md:text-2xl md:pl-3 lg:text-xl">System Setting</h1>
         </div>
 
-        <div className="flex my-6 justify-between sm:flex-col sm:mx-2 md:flex-col md:mx-2 md:gap-y-4 sm:gap-1">
+        <div className="flex my-6 justify-between sm:flex-col sm:mx-2 md:flex-col md:mx-2  lg:my-2 md:gap-y-4 sm:gap-1">
           {/* left section */}
           <div className="w-[60%] md:w-[100%] boxShadow rounded-2xl sm:w-[100%] sm:px-2  ">
             {/* category */}

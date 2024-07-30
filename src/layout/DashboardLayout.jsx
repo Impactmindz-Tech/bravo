@@ -42,7 +42,7 @@ const DashboardLayout = ({ children }) => {
         <div className={` bg-blue-900 z-10 w-[80px] sm:w-[55%]  md:h-[100vh] md:w-[10%] sm:h-[100vh]  ${menuToggleState ? "sm:block sm:fixed " : "sm:hidden"}`} ref={headerRef}>
           <NavBar />
         </div>
-        <div className="w-[100%] lg:w-[90%]  p-8 sm:px-2 md:px-2  lg:px-2 mt-0 sm:w-full">{children}</div>
+        <div className="w-[100%] lg:w-[90%]  p-8 sm:px-2 md:px-2  lg:p-3 lg:px-5 mt-0 sm:w-full">{children}</div>
       </div>
     </div>
   );
