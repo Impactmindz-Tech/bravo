@@ -14,7 +14,6 @@ import { CreateUser, EditUser, getAllRoles } from "../../../utils/service/Dashbo
 import { createUser } from "../../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
 import { getAllGroup } from "../../../utils/service/CommonService";
-import { geocode, RequestType } from "react-geocode";
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
   const [selectedFile, setSelectedFile] = useState(null);
