@@ -168,7 +168,8 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       return;
     }
 
-    const memberIds = JSON.stringify(memberList.map((member) => member.id));
+  
+    const memberIds= JSON.stringify(memberList.map((member) => member.id));
     formData.append("group_id", memberIds);
 
     if (selectedCountry.length == 0) {
