@@ -37,7 +37,12 @@ const NavBar = () => {
                   return `py-3 hover:bg-white hover:text-blue-900 mb-2 flex flex-col items-center text-xl ${active ? "bg-white text-blue-900" : "text-white"}`;
                 }}
               >
-                {item.icon}
+                <div className="w-full ">
+                  <div className="flex items-center sm:gap-3 w-full  justify-between">
+                    <div className="sm:ml-[3vw] flex justify-center  sm:w-auto w-full text-center">{item.icon}</div>
+                    <div className="sm:block sm:flex-1 hidden sm:text-sm">{item.label} </div>
+                  </div>
+                </div>
               </NavLink>
             </li>
           );

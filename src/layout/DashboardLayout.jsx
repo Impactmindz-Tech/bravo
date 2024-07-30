@@ -20,11 +20,14 @@ const DashboardLayout = ({ children }) => {
   useEffect(() => {
     if (menuToggleState) {
       document.addEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = "hidden"; // Hide scrollbar
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = ""; // Restore scrollbar
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = ""; // Ensure scrollbar is restored on cleanup
     };
   }, [menuToggleState]);
 
@@ -36,7 +39,7 @@ const DashboardLayout = ({ children }) => {
     <div>
       <Header />
       <div className="flex justify-start" style={{ height: "calc(100vh - 69px)" }}>
-        <div className={` bg-blue-900 z-10 w-[80px] sm:w-[10%]  md:h-[100vh] md:w-[10%] sm:h-[100vh]  ${menuToggleState ? "sm:block sm:fixed " : "sm:hidden"}`} ref={headerRef}>
+        <div className={` bg-blue-900 z-10 w-[80px] sm:w-[55%]  md:h-[100vh] md:w-[10%] sm:h-[100vh]  ${menuToggleState ? "sm:block sm:fixed " : "sm:hidden"}`} ref={headerRef}>
           <NavBar />
         </div>
         <div className="w-[100%] lg:w-[90%]  p-8 sm:px-2 md:px-2  lg:px-2 mt-0 sm:w-full">{children}</div>
