@@ -14,7 +14,7 @@ import { CreateUser, EditUser, getAllRoles } from "../../../utils/service/Dashbo
 import { createUser } from "../../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
 import { getAllGroup } from "../../../utils/service/CommonService";
-
+import { geocode, RequestType } from "react-geocode";
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -122,10 +122,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
       let countryName = Country.getAllCountries().filter((item) => item.name === items.country);
       setSelectedCountry(countryName[0]);
-      if (items.state!==null) {
+      if (items.state !== null) {
         let statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((item) => item.name === items.state);
         setSelectedState(statesSet[0]);
-        if (items.suburb!==null) {
+        if (items.suburb !== null) {
           let citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((item) => item.name === items.suburb);
           setSelectedCity(citiesSet[0]);
         }
@@ -405,7 +405,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         ))}
                       </select>
                     </div>
-                    
+
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="state">
                         State

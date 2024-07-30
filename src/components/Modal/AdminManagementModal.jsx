@@ -73,6 +73,8 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       setValue("authrization_code", adminItem?.authrization_code);
       setValue("role_id", adminItem?.role_id);
       setValue("profile_pic", adminItem?.role_id);
+      setValue("notes", adminItem?.notes);
+
       console.log(adminItem);
       let countryName = Country.getAllCountries().filter((item) => item.name === adminItem.country);
       setSelectedCountry(countryName[0]);
@@ -157,6 +159,8 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     formData.append("username", data?.username);
     formData.append("password", data?.password);
     formData.append("profile_pic", selectedFile);
+    formData.append("notes", data?.notes);
+
     if (selectedCountry.length == 0) {
       toast.error("Select Country Name");
       return;
@@ -424,6 +428,11 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     </label>
                     <input type="number" name="postal_code" id="postal_code" className="input w-full" {...register("postal_code")} />
                     <p>{errors?.postal_code?.message}</p>
+                  </div>
+
+                  <div className="flex w-full flex-col space-y-2">
+                    <h1 className="text-gray-500">Notes</h1>
+                    <input type="text" name="Authentication_Code" className="input" placeholder="Add Text Here" {...register("notes")} />
                   </div>
                 </div>
                 {/* <div className="flex flex-col space-y-2 sm:w-[100%]">

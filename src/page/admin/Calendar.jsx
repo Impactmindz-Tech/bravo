@@ -29,7 +29,7 @@ function Calendar() {
 
   const fetchAllEventsData = async () => {
     const data = await getAllEventsApi();
-   
+
     let newData = [];
     if (data) {
       if (data?.data?.length != 0) {
