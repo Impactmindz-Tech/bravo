@@ -205,8 +205,8 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
     formData.append("country", selectedCountry.name);
 
-    if (adminItem?.profile_pic) {
-      const filename = adminItem.profile_pic.split("/").pop();
+    if (adminItem?.profile_picture) {
+      const filename = adminItem.profile_picture.split("/").pop();
       const result = selectedFile.name === filename;
 
       if (result == false) {
