@@ -14,6 +14,8 @@ import { CreateUser, EditUser, getAllRoles } from "../../../utils/service/Dashbo
 import { createUser } from "../../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
 import { getAllGroup } from "../../../utils/service/CommonService";
+import Multiselect from "multiselect-react-dropdown";
+
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,7 +23,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   const [group, setGroup] = useState("");
   const [role, setRole] = useState("");
   const dispatch = useDispatch();
-
+  const [memberList, setMemberList] = useState([]);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -119,6 +121,13 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setValue("email", items?.email);
       setValue("notes", items?.notes);
 
+      // formatted users
+      //   const formattedMembers =
+      //   items?.members?.map((member) => ({
+      //     name: member.first_name,
+      //     id: member.user_id,
+      //   })) || [];
+      // setMembers(formattedMembers);
       let countryName = Country.getAllCountries().filter((item) => item.name === items.country);
       setSelectedCountry(countryName[0]);
       if (items.state !== null) {
@@ -150,10 +159,17 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     formData.append("address", data?.address);
     formData.append("postal_code", data?.postal_code);
     formData.append("role_id", data?.role_id);
-    formData.append("group_id", data.group_id);
+    // formData.append("group_id", data.group_id);
     formData.append("email", data?.email);
     formData.append("notes", data?.notes);
     formData.append("gender", data?.Gender);
+    if (memberList.length === 0) {
+      toast.error("Please select at least one member name");
+      return;
+    }
+
+    const memberIds = JSON.stringify(memberList.map((member) => member.id));
+    formData.append("group_id", memberIds);
 
     if (selectedCountry.length == 0) {
       toast.error("Select Country Name");
@@ -197,6 +213,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
           if (response?.isSuccess) {
             dispatch(setUser(response));
             setAddAdminModalOpen(false);
+            setMemberList([])
           }
         }
       } catch (error) {
@@ -216,6 +233,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
           onUserCreated();
           reset();
           setSelectedFile([]);
+          setMemberList([])
           setAddAdminModalOpen(false);
         }
       } catch (error) {
@@ -232,6 +250,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setAddAdminModalOpen(false);
     }
   };
+
+  const handleSelect = (selectedList) => setMemberList(selectedList);
+
+  const handleRemove = (selectedList) => setMemberList(selectedList);
 
   return (
     <>
@@ -251,7 +273,23 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                     <h1 className="text-gray-500">
                       Choose Group <span className="text-red-500">*</span>
                     </h1>
-                    <div>
+
+                    <div className="w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%]  list-none">
+                      <Multiselect
+                        options={group?.data?.map((user) => ({ name: user.name, id: user.group_id }))}
+                        selectedValues={memberList}
+                        onSelect={handleSelect}
+                        onRemove={handleRemove}
+                        displayValue="name"
+                        placeholder="Members Name"
+                        style={{
+                          multiselectContainer: { width: "100%" },
+                          searchBox: { width: "100%" },
+                        }}
+                      />
+                    </div>
+
+                    {/* <div>
                       <select name="groupSection" placeholder="select group" className="input w-full" {...register("group_id")}>
                         <option value="">Select group</option>
                         {group?.data?.map((item, index) => (
@@ -260,9 +298,9 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                           </option>
                         ))}
                       </select>
-                    </div>
+                    </div> */}
 
-                    <p className="text-danger">{errors?.group_id?.message}</p>
+                    {/* <p className="text-danger">{errors?.group_id?.message}</p> */}
                   </div>
 
                   <div className="flex gap-3">
@@ -303,7 +341,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         {" "}
                         Authentication Code <span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="text" name="authrization_code" id="authrization_code" placeholder="385555" className="input" {...register("authrization_code")} />
+                      <input type="number" name="authrization_code" id="authrization_code" placeholder="385555" className="input" {...register("authrization_code")} />
                       <p>{errors?.authrization_code?.message}</p>
                     </div>
 
@@ -355,7 +393,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <label className="text-blue-300 text-sm" htmlFor="phone">
                         Contact No<span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="text" name="phone" id="phone" className="input" {...register("phone")} />
+                      <input type="number" name="phone" id="phone" className="input" {...register("phone")} />
                       <p>{errors?.phone?.message}</p>
                     </div>
 
@@ -371,7 +409,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <label className="text-blue-300 text-sm" htmlFor="Age">
                         Age<span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="text" name="Age" id="Age" className="input" {...register("age")} />
+                      <input type="number" name="Age" id="Age" className="input" {...register("age")} />
                       <p>{errors?.Age?.message}</p>
                     </div>
 
@@ -468,7 +506,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <label className="text-blue-300 text-sm" htmlFor="postal_code">
                         Postal Code <span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="text" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
+                      <input type="number" name="postal_code" id="postal_code" className="input" {...register("postal_code")} />
                       <p>{errors?.postal_code?.message}</p>
                     </div>
                   </div>

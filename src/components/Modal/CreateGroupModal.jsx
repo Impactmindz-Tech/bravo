@@ -43,6 +43,12 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
 
   useEffect(() => {
     if (groupItem) {
+      if (groupItem.group_picture) {
+        const filename = groupItem.group_picture.split("/").pop();
+        setSelectedFile({ name: filename });
+      } else {
+        setSelectedFile(null);
+      }
       setValue("group_name", groupItem?.name || "");
       setValue("group_desc", groupItem?.description || "");
       const formattedMembers =
@@ -51,8 +57,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
           id: member.user_id,
         })) || [];
       setGroupMemberList(formattedMembers);
-      console.log(groupItem)
-      setSelectedFile(groupItem?.group_picture);
+     
     } else {
       reset(); // Reset form fields if not in edit mode
       setGroupMemberList([]);
@@ -119,7 +124,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
         <div className="relative w-full mx-auto rounded-lg overflow-hidden">
           <div className="relative bg-white rounded-lg shadow-md pb-4">
             <div className="flex justify-between items-center mb-4 bg-blue-900 py-2">
-              <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{(groupItem)?"Edit Group":"Create Group"}</h2>
+              <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{groupItem ? "Edit Group" : "Create Group"}</h2>
               <button onClick={handleModalClose} className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none">
                 <IoClose />
               </button>

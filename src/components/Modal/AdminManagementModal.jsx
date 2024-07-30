@@ -10,6 +10,8 @@ import { createAdmin } from "../../utils/validation/FormValidation";
 import { getAdminRolesApi, getAllGroup } from "../../utils/service/CommonService";
 import { Modal } from "@mui/material";
 import toast from "react-hot-toast";
+import Multiselect from "multiselect-react-dropdown";
+
 // eslint-disable-next-line react/prop-types
 const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAddAdminModalOpen, adminItem }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,6 +23,8 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [memberList, setMemberList] = useState([]);
+
   // fetching data for country,state city
   useEffect(() => {
     setCountries(Country.getAllCountries());
@@ -60,6 +64,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   useEffect(() => {
     if (adminItem) {
+      
       setValue("group_id", adminItem?.group_id);
       setValue("first_name", adminItem?.first_name);
       setValue("last_name", adminItem?.last_name);
@@ -74,8 +79,13 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       setValue("role_id", adminItem?.role_id);
       setValue("profile_pic", adminItem?.role_id);
       setValue("notes", adminItem?.notes);
-
-      console.log(adminItem);
+      // formatted users
+      //   const formattedMembers =
+      //   items?.members?.map((member) => ({
+      //     name: member.first_name,
+      //     id: member.user_id,
+      //   })) || [];
+      // setMembers(formattedMembers);
       let countryName = Country.getAllCountries().filter((item) => item.name === adminItem.country);
       setSelectedCountry(countryName[0]);
 
@@ -121,7 +131,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       const response = await getAllGroup();
 
       if (response?.isSuccess) {
-        setGroupData(response?.data);
+        setGroupData(response);
       }
     } catch (error) {
       console.log(error);
@@ -147,7 +157,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append("group_id", data?.group_id);
+    // formData.append("group_id", data?.group_id);
     formData.append("first_name", data?.first_name);
     formData.append("last_name", data?.last_name);
     formData.append("email", data?.email);
@@ -160,6 +170,13 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     formData.append("password", data?.password);
     formData.append("profile_pic", selectedFile);
     formData.append("notes", data?.notes);
+    if (memberList.length === 0) {
+      toast.error("Please select at least one member name");
+      return;
+    }
+
+    const memberIds = JSON.stringify(memberList.map((member) => member.id));
+    formData.append("group_id", memberIds);
 
     if (selectedCountry.length == 0) {
       toast.error("Select Country Name");
@@ -227,6 +244,10 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     }
   };
 
+  const handleSelect = (selectedList) => setMemberList(selectedList);
+
+  const handleRemove = (selectedList) => setMemberList(selectedList);
+
   return (
     <Modal open={addAdminModalOpen} onClose={handleCloseModal} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
       <div className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
@@ -245,7 +266,21 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   <h1 className="text-gray-500">
                     Choose Groups <span className="text-red-500">*</span>
                   </h1>
-                  <div className="">
+                  <div className="w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%]  list-none">
+                    <Multiselect
+                      options={groupData?.data?.map((user) => ({ name: user.name, id: user.group_id }))}
+                      selectedValues={memberList}
+                      onSelect={handleSelect}
+                      onRemove={handleRemove}
+                      displayValue="name"
+                      placeholder="Members Name"
+                      style={{
+                        multiselectContainer: { width: "100%" },
+                        searchBox: { width: "100%" },
+                      }}
+                    />
+                  </div>
+                  {/* <div className="">
                     <select name="groupSection" className="input w-full" {...register("group_id")}>
                       {groupData.map((item, index) => (
                         <option key={index} value={item.group_id}>
@@ -253,9 +288,9 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div> */}
                 </div>
-                <p className="text-[red]">{errors?.group_id?.message}</p>
+                {/* <p className="text-[red]">{errors?.group_id?.message}</p> */}
                 <div className="flex gap-4 items-center sm:flex-col">
                   {adminRole?.data?.map((item, index) => {
                     return (

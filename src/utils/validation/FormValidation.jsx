@@ -34,7 +34,7 @@ export const createUser = yup.object({
   address: yup.string().required("Address is required"),
   postal_code: yup.string().required("Postal Code is required"),
   role_id: yup.string().required("Role is required"),
-  group_id: yup.string().required("Group is required"),
+  // group_id: yup.string().required("Group is required"),
 });
 
 export const createAdmin = yup.object({
@@ -51,7 +51,7 @@ export const createAdmin = yup.object({
   // suburb: yup.string().required("Suburb is required"),
   // state: yup.string().required("State is required"),
   // country: yup.string().required("Country is required"),
-  group_id: yup.string().required("Group is required"),
+  // group_id: yup.string().required("Group is required"),
 });
 
 export const createGroup = yup.object({
