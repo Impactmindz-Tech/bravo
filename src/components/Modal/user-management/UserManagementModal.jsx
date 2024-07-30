@@ -213,7 +213,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
           if (response?.isSuccess) {
             dispatch(setUser(response));
             setAddAdminModalOpen(false);
-            setMemberList([])
+            setMemberList([]);
           }
         }
       } catch (error) {
@@ -233,7 +233,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
           onUserCreated();
           reset();
           setSelectedFile([]);
-          setMemberList([])
+          setMemberList([]);
           setAddAdminModalOpen(false);
         }
       } catch (error) {

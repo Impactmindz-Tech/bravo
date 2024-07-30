@@ -64,7 +64,12 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   useEffect(() => {
     if (adminItem) {
-      
+      if (adminItem.profile_picture) {
+        const filename = adminItem.profile_picture.split("/").pop();
+        setSelectedFile({ name: filename });
+      } else {
+        setSelectedFile(null);
+      }
       setValue("group_id", adminItem?.group_id);
       setValue("first_name", adminItem?.first_name);
       setValue("last_name", adminItem?.last_name);
@@ -77,7 +82,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       setValue("postal_code", adminItem?.postal_code);
       setValue("authrization_code", adminItem?.authrization_code);
       setValue("role_id", adminItem?.role_id);
-      setValue("profile_pic", adminItem?.role_id);
+      // setValue("profile_pic", adminItem?.role_id);
       setValue("notes", adminItem?.notes);
       // formatted users
       //   const formattedMembers =
@@ -168,7 +173,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     formData.append("role_id", data?.role_id);
     formData.append("username", data?.username);
     formData.append("password", data?.password);
-    formData.append("profile_pic", selectedFile);
+    // formData.append("profile_pic", selectedFile);
     formData.append("notes", data?.notes);
     if (memberList.length === 0) {
       toast.error("Please select at least one member name");
@@ -199,6 +204,19 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     }
 
     formData.append("country", selectedCountry.name);
+
+    if (adminItem?.profile_pic) {
+      const filename = adminItem.profile_pic.split("/").pop();
+      const result = selectedFile.name === filename;
+
+      if (result == false) {
+        formData.append("profile_pic", selectedFile);
+      }
+    } else {
+      if (selectedFile !== null) {
+        formData.append("profile_pic", selectedFile);
+      }
+    }
 
     if (adminItem) {
       formData.append("user_id", adminItem?.user_id);
@@ -295,7 +313,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   {adminRole?.data?.map((item, index) => {
                     return (
                       <div key={index} className="flex gap-2">
-                        <input type="radio" value={item?.role_id} name="role_id" id="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} />
+                        <input type="radio" value={item?.role_id} name="role_id" id="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={item.role_name == adminItem?.role_name} />
                         <label className="flex items-center" htmlFor={item?.role_id} key={index}>
                           {item.role_name}
                         </label>

@@ -57,7 +57,6 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
           id: member.user_id,
         })) || [];
       setGroupMemberList(formattedMembers);
-     
     } else {
       reset(); // Reset form fields if not in edit mode
       setGroupMemberList([]);
@@ -83,8 +82,19 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
     formData.append("group_desc", payload.group_desc);
     const memberIds = JSON.stringify(groupMemberList.map((member) => member.id));
     formData.append("members", memberIds);
-    formData.append("group_picture", selectedFile);
+    // formData.append("group_picture", selectedFile);
+    if (groupItem?.group_picture) {
+      const filename = groupItem.group_picture.split("/").pop();
+      const result = selectedFile.name === filename;
 
+      if (result == false) {
+        formData.append("group_picture", selectedFile);
+      }
+    } else {
+      if (selectedFile !== null) {
+        formData.append("group_picture", selectedFile);
+      }
+    }
     try {
       let response;
       if (groupItem) {
@@ -158,7 +168,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
                   <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
                     Members Name <span className="text-red-500 font-extrabold">*</span>
                   </h4>
-                  <div className="w-[80%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] py-2 px-2 list-none">
+                  <div className="w-[85%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] py-2 px-2 list-none ">
                     <Multiselect
                       options={user?.data?.map((user) => ({ name: user.first_name, id: user.user_id }))}
                       selectedValues={groupMemberList}
