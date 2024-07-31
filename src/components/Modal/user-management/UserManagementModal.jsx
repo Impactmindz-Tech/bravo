@@ -120,14 +120,13 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setValue("group_id", items?.group_id);
       setValue("email", items?.email);
       setValue("notes", items?.notes);
-
       // formatted users
-      //   const formattedMembers =
-      //   items?.members?.map((member) => ({
-      //     name: member.first_name,
-      //     id: member.user_id,
-      //   })) || [];
-      // setMembers(formattedMembers);
+        const formattedMembers =
+        items?.groups?.map((member) => ({
+          name: member.name,
+          id: member.group_id,
+        })) || [];
+      setMemberList(formattedMembers);
       let countryName = Country.getAllCountries().filter((item) => item.name === items.country);
       setSelectedCountry(countryName[0]);
       if (items.state !== null) {
