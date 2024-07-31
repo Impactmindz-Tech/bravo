@@ -337,7 +337,10 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
                     {selectedFile && (
                       <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0 w-full">
-                        <span className="text-sm pl-2">{selectedFile.name}</span>
+                        <span className="text-sm pl-2">
+                        {(selectedFile.name.length<=22)?<>{selectedFile.name}</>:<>{selectedFile.name.substring(0, 22)+"."+ selectedFile.name.split('.').pop()}</>}
+                            
+                        </span>
                         <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                           <IoIosCloseCircleOutline className="text-lg bg-none" />
                         </button>

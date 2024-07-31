@@ -19,6 +19,7 @@ import Multiselect from "multiselect-react-dropdown";
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const currentDate = new Date().toISOString().split('T')[0];
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [group, setGroup] = useState("");
   const [role, setRole] = useState("");
@@ -234,7 +235,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
           toast.success(response?.message);
           onUserCreated();
           reset();
-          setSelectedFile([]);
+          setSelectedFile(null);
           setMemberList([]);
           setAddAdminModalOpen(false);
         }
@@ -256,7 +257,15 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   const handleSelect = (selectedList) => setMemberList(selectedList);
 
   const handleRemove = (selectedList) => setMemberList(selectedList);
+  const calculateAge = (dob) => {
+    const currentDate = new Date();
+    const dobDate = new Date(dob);
+    const diffInMilliseconds = currentDate - dobDate;
+    const diffInYears = diffInMilliseconds / (1000 * 60 * 60 * 24 * 365.25); // use 365.25 to account for leap years
+    const age = Math.floor(diffInYears);
+    setValue("age", age);
 
+  };
   return (
     <>
       <Modal open={addAdminModalOpen} onClose={handlemodalClose} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
@@ -276,7 +285,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       Choose Group <span className="text-red-500">*</span>
                     </h1>
 
-                    <div className="w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%]  list-none">
+                    <div className="w-[100%] list-none">
                       <Multiselect
                         options={group?.data?.map((user) => ({ name: user.name, id: user.group_id }))}
                         selectedValues={memberList}
@@ -329,13 +338,9 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       {selectedFile && (
                         <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
                           <span className="text-sm pl-2">
-                            {selectedFile.name.length <= 22 ? (
-                              <>selectedFile.name</>
-                            ) : (
-                              <>
-                                {selectedFile?.name.substring(0, 22)}.{selectedFile?.name.split(".").pop()}
-                              </>
-                            )}
+                          {(selectedFile.name.length<=22)?<>{selectedFile.name}</>:<>{selectedFile.name.substring(0, 22)+"."+ selectedFile.name.split('.').pop()}</>}
+                            
+                             
                           </span>
                           <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                             <IoIosCloseCircleOutline className="text-lg bg-none" />
@@ -411,7 +416,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <label className="text-blue-300 text-sm" htmlFor="dob">
                         DOB<span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="date" name="dob" id="dob" className="input" {...register("dob")} />
+                      <input type="date" name="dob" id="dob"  max={currentDate} className="input" {...register("dob")}  onChange={(e) => calculateAge(e.target.value)}/>
                       <p>{errors?.dob?.message}</p>
                     </div>
 
@@ -419,7 +424,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <label className="text-blue-300 text-sm" htmlFor="Age">
                         Age<span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="number" name="Age" id="Age" className="input" {...register("age")} />
+                      <input type="number" name="Age" id="Age" className="input" {...register("age")} readOnly />
                       <p>{errors?.Age?.message}</p>
                     </div>
 
