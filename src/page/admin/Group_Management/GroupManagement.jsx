@@ -137,7 +137,7 @@ export default function GroupManagement() {
                       <td className="text-left">
                         <div className="flex gap-3 flex-wrap lg:flex-nowrap">
                           {item?.members?.map((member, index) => {
-                            return <p key={index}>{member.first_name}</p>;
+                            return <p key={index}>{member.username}</p>;
                           })}
                         </div>
                       </td>
