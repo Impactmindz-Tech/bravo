@@ -340,4 +340,26 @@ label{
 }
 
 
-/* scrollbar */
+/* Keyframes for 3D scale and translate animation */
+@keyframes scaleTranslateIn {
+  from {
+    transform: perspective(1000px) scale(0.8) translateZ(-300px);
+    opacity: 0;
+  }
+  to {
+    transform: perspective(1000px) scale(1) translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleTranslateOut {
+  from {
+    transform: perspective(1000px) scale(1) translateZ(0);
+    opacity: 1;
+  }
+  to {
+    transform: perspective(1000px) scale(0.8) translateZ(-300px);
+    opacity: 0;
+  }
+}
+
