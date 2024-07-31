@@ -1,6 +1,6 @@
 import { FiUpload } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { createAdminApi, getEditAdminApi } from "../../utils/service/AdminService";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,6 +20,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+  const fileInputRef = useRef(null);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -130,6 +131,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
+    fileInputRef.current.value = null;
   };
 
   const fetchAllGroup = async () => {
@@ -287,7 +289,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   <h1 className="text-gray-500">
                     Choose Groups <span className="text-red-500">*</span>
                   </h1>
-                  <div className="w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%]  list-none">
+                  <div className="w-[100%]   list-none">
                     <Multiselect
                       options={groupData?.data?.map((user) => ({ name: user.name, id: user.group_id }))}
                       selectedValues={memberList}
@@ -334,13 +336,10 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                       <FiUpload className="font-semibold mr-1" />
                       Upload
                     </label>
-                    <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
+                    <input id="file-upload" type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
                     {selectedFile && (
-                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0 w-full">
-                        <span className="text-sm pl-2">
-                        {(selectedFile.name.length<=22)?<>{selectedFile.name}</>:<>{selectedFile.name.substring(0, 22)+"."+ selectedFile.name.split('.').pop()}</>}
-                            
-                        </span>
+                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0 ">
+                        <span className="text-sm pl-2">{selectedFile.name.length <= 22 ? <>{selectedFile.name}</> : <>{selectedFile.name.substring(0, 22) + "." + selectedFile.name.split(".").pop()}</>}</span>
                         <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                           <IoIosCloseCircleOutline className="text-lg bg-none" />
                         </button>

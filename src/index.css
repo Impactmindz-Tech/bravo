@@ -103,6 +103,7 @@ button.fc-listWeek-button.fc-button.fc-button-primary {
   background-color: rgb(255, 255, 255);
   color: black !important;
   border-top-right-radius: 60px;
+  text-transform: capitalize;
   border: 1px solid rgb(240, 240, 240);
   box-shadow: 3px 0px 11px 4px rgb(241, 241, 241);
   border-bottom-right-radius: 60px;
@@ -115,6 +116,7 @@ button.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
   box-shadow: -3px 0px 11px 4px rgb(241, 241, 241);
   border-top-left-radius: 60px;
   border-bottom-left-radius: 60px;
+  text-transform: capitalize;
   border: 1px solid rgb(240, 240, 240);
 }
 
@@ -126,15 +128,20 @@ button.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
 button.fc-timeGridWeek-button.fc-button.fc-button-primary,
 button.fc-timeGridDay-button.fc-button.fc-button-primary {
   background-color: rgb(255, 255, 255);
+  text-transform: capitalize;
   color: black !important;
   box-shadow: -3px 0px 11px 4px rgb(241, 241, 241);
 
   border: 1px solid rgb(240, 240, 240);
 }
+button.fc-today-button.fc-button.fc-button-primary{
+  text-transform: capitalize;
 
+}
 button.fc-timeGridDay-button.fc-button.fc-button-primary.fc-button-active,
 button.fc-listWeek-button.fc-button.fc-button-primary.fc-button-active,
 button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
+  text-transform: capitalize;
   color: white !important;
 }
 

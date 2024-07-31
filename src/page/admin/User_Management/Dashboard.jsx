@@ -139,9 +139,9 @@ const Dashboard = () => {
                     <td className="text-left">
                       <div className="flex gap-3 sm:gap-1 items-center  sm:gap-y-3 sm:items-center md:gap-1 md:gap-y-3 md:items-center  xl:gap-1">
                         <img onClick={() => handleEditUser(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer  sm:ml-0 sm:mr-0 md:w-[18px] md:ml-0 md:mr-0  lg:w-[18px] xl:mr-0" />
-                        <Link to={`/admin/user/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer lg:w-[15px] ">
+                        {/* <Link to={`/admin/user/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer lg:w-[15px] ">
                           <FaEye />
-                        </Link>
+                        </Link> */}
                       </div>
                     </td>
                   </tr>

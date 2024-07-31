@@ -36,7 +36,7 @@ const ViewGroupModal = ({ viewModalState, setViewModalState, viewModalData }) =>
       <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="relative w-[65vw] sm:w-[90vw] md:w-[90vw] mainFormSection lg:w-[80vw] xl:w-[60vw] h-[60vh] sm:h-[70vh] md:h-[70vh] lg:h-[65vh] xl:h-[60vh] mx-auto rounded-lg overflow-hidden">
         <div className="relative bg-white rounded-lg shadow-md h-full overflow-hidden ">
           <div className="flex justify-between items-center mb-4 bg-blue-900 py-2">
-            <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{viewModalData?.name}</h2>
+            <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white uppercase">{viewModalData?.name}</h2>
             <button onClick={handleClose} className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none">
               <IoMdClose />
             </button>
@@ -61,11 +61,11 @@ const ViewGroupModal = ({ viewModalState, setViewModalState, viewModalData }) =>
                     {/* data rows */}
                     {viewModalData?.data?.length > 0 &&
                       viewModalData.data.map((item) => (
-                        <tr className="text-center" key={item.user_id}>
-                          <td className="px-4 py-2 sm:max-w-[200px]">{item.first_name}</td>
-                          <td className="px-4 py-2">{item.last_name}</td>
-                          <td className="px-4 py-2">{item.username}</td>
-                          <td className="px-4 py-2 capitalize">{item.email}</td>
+                        <tr className="text-center lowercase" key={item.user_id}>
+                          <td className="px-4 py-2 sm:max-w-[200px] lowercase">{item.first_name}</td>
+                          <td className="px-4 py-2 lowercase">{item.last_name}</td>
+                          <td className="px-4 py-2 lowercase">{item.username}</td>
+                          <td className="px-4 py-2 lowercase">{item.email}</td>
                         </tr>
                       ))}
                   </tbody>

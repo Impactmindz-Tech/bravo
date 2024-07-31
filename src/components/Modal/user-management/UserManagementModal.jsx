@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { FiUpload } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import AddRelativeModal from "../AddRelativeModal";
 import { Modal } from "@mui/material";
@@ -19,12 +19,13 @@ import Multiselect from "multiselect-react-dropdown";
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const currentDate = new Date().toISOString().split('T')[0];
+  const currentDate = new Date().toISOString().split("T")[0];
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
   const [group, setGroup] = useState("");
   const [role, setRole] = useState("");
   const dispatch = useDispatch();
   const [memberList, setMemberList] = useState([]);
+  const fileInputRef = useRef(null);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -74,6 +75,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
+    fileInputRef.current.value = null;
   };
 
   const getAllGroups = async () => {
@@ -264,7 +266,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     const diffInYears = diffInMilliseconds / (1000 * 60 * 60 * 24 * 365.25); // use 365.25 to account for leap years
     const age = Math.floor(diffInYears);
     setValue("age", age);
-
   };
   return (
     <>
@@ -334,14 +335,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         <FiUpload className="font-semibold mr-1" />
                         Upload
                       </label>
-                      <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
+                      <input id="file-upload" ref={fileInputRef} type="file" className="hidden" onChange={handleFileChange} />
                       {selectedFile && (
                         <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
-                          <span className="text-sm pl-2">
-                          {(selectedFile.name.length<=22)?<>{selectedFile.name}</>:<>{selectedFile.name.substring(0, 22)+"."+ selectedFile.name.split('.').pop()}</>}
-                            
-                             
-                          </span>
+                          <span className="text-sm pl-2">{selectedFile.name.length <= 22 ? <>{selectedFile.name}</> : <>{selectedFile.name.substring(0, 22) + "." + selectedFile.name.split(".").pop()}</>}</span>
                           <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                             <IoIosCloseCircleOutline className="text-lg bg-none" />
                           </button>
@@ -416,7 +413,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <label className="text-blue-300 text-sm" htmlFor="dob">
                         DOB<span className="text-red-500 pl-1">*</span>
                       </label>
-                      <input type="date" name="dob" id="dob"  max={currentDate} className="input" {...register("dob")}  onChange={(e) => calculateAge(e.target.value)}/>
+                      <input type="date" name="dob" id="dob" max={currentDate} className="input" {...register("dob")} onChange={(e) => calculateAge(e.target.value)} />
                       <p>{errors?.dob?.message}</p>
                     </div>
 
