@@ -25,7 +25,7 @@ const ViewGroupModal = ({ viewModalState, setViewModalState, viewModalData }) =>
     setShow(false);
     setTimeout(() => {
       setViewModalState(false);
-    }, 500); // Duration should match the animation time
+    }, 200); // Duration should match the animation time
   };
 
   return (
@@ -48,10 +48,10 @@ const ViewGroupModal = ({ viewModalState, setViewModalState, viewModalData }) =>
           </div>
 
           <div className="overflow-y-hidden sm:overflow-y-auto sm:max-h-[76vh]">
-            <div className="py-2 flex flex-col gap-y-4 sm:w-[800px]">
+            <div className="flex flex-col gap-y-4 sm:w-[800px]">
               {/* table */}
               <div className="flex justify-between border-gray-100 px-1">
-                <table className="w-full boxShadow rounded-lg">
+                <table className="w-full ">
                   {/* table heading */}
                   <thead>
                     <tr>
