@@ -120,20 +120,22 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setValue("group_id", items?.group_id);
       setValue("email", items?.email);
       setValue("notes", items?.notes);
-      // formatted users
-        const formattedMembers =
+
+      const formattedMembers =
         items?.groups?.map((member) => ({
           name: member.name,
           id: member.group_id,
         })) || [];
+
       setMemberList(formattedMembers);
-      let countryName = Country.getAllCountries().filter((item) => item.name === items.country);
+      let countryName = Country.getAllCountries().filter((item) => item.name.toLowerCase() === items.country.toLowerCase());
       setSelectedCountry(countryName[0]);
-      if (items.state !== null) {
-        let statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((item) => item.name === items.state);
+
+      if (items.state !== null && items.state !== "") {
+        let statesSet = State.getStatesOfCountry(countryName[0].isoCode).filter((item) => item.name.toLowerCase() === items.state.toLowerCase());
         setSelectedState(statesSet[0]);
-        if (items.suburb !== null) {
-          let citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((item) => item.name === items.suburb);
+        if (items.suburb !== null && items.suburb !== "") {
+          let citiesSet = City.getCitiesOfState(countryName[0].isoCode, statesSet[0].isoCode).filter((item) => item.name.toLowerCase() === items.suburb.toLowerCase());
           setSelectedCity(citiesSet[0]);
         }
       }
@@ -142,6 +144,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setSelectedFile(null);
       setSelectedCountry("");
       setSelectedState("");
+      setMemberList([]);
       setSelectedCity("");
     }
   }, [items, reset, setValue]);
@@ -167,8 +170,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       return;
     }
 
-  
-    const memberIds= JSON.stringify(memberList.map((member) => member.id));
+    const memberIds = JSON.stringify(memberList.map((member) => member.id));
     formData.append("group_id", memberIds);
 
     if (selectedCountry.length == 0) {
@@ -208,12 +210,12 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
           toast.success(responce?.message);
 
           reset();
+          setMemberList([]);
           setSelectedFile(null);
           const response = await DashboardApi({ page: 1, items_per_page: 10 });
           if (response?.isSuccess) {
             dispatch(setUser(response));
             setAddAdminModalOpen(false);
-            setMemberList([]);
           }
         }
       } catch (error) {
@@ -326,7 +328,15 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
                       {selectedFile && (
                         <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
-                          <span className="text-sm pl-2">{selectedFile.name}</span>
+                          <span className="text-sm pl-2">
+                            {selectedFile.name.length <= 22 ? (
+                              <>selectedFile.name</>
+                            ) : (
+                              <>
+                                {selectedFile?.name.substring(0, 22)}.{selectedFile?.name.split(".").pop()}
+                              </>
+                            )}
+                          </span>
                           <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                             <IoIosCloseCircleOutline className="text-lg bg-none" />
                           </button>
@@ -436,7 +446,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       >
                         {selectedState !== "" ? <option value={selectedCountry.name}>{selectedCountry.name}</option> : <option value="">Select Country</option>}
                         {countries.map((country) => (
-                          <option key={country.isoCode} value={country.name}>
+                          <option key={country?.isoCode} value={country.name}>
                             {country.name}
                           </option>
                         ))}
@@ -459,7 +469,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       >
                         {selectedState !== "" ? <option value={selectedState?.name}>{selectedState?.name}</option> : <option value="">Select State</option>}
                         {states.map((state) => (
-                          <option key={state.isoCode} value={state.name}>
+                          <option key={state?.isoCode} value={state.name}>
                             {state.name}
                           </option>
                         ))}

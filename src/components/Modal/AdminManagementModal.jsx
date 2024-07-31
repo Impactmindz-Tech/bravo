@@ -84,13 +84,14 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       setValue("role_id", adminItem?.role_id);
       // setValue("profile_pic", adminItem?.role_id);
       setValue("notes", adminItem?.notes);
-      // formatted users
-      //   const formattedMembers =
-      //   items?.members?.map((member) => ({
-      //     name: member.first_name,
-      //     id: member.user_id,
-      //   })) || [];
-      // setMembers(formattedMembers);
+
+      const formattedMembers =
+        adminItem?.groups?.map((member) => ({
+          name: member.name,
+          id: member.group_id,
+        })) || [];
+
+      setMemberList(formattedMembers);
       let countryName = Country.getAllCountries().filter((item) => item.name === adminItem.country);
       setSelectedCountry(countryName[0]);
 
@@ -115,7 +116,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
       }
     } else {
       reset();
-
+      setMemberList([]);
       setSelectedFile(null);
       setSelectedCountry("");
       setSelectedState("");
@@ -227,6 +228,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
           toast.success(response?.message);
           getAllAdmins();
           reset();
+          setMemberList([]);
           setSelectedFile(null);
         }
       } catch (error) {
@@ -244,6 +246,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
           getAllAdmins();
           reset();
           setSelectedFile(null);
+          setMemberList([]);
           setAddAdminModalOpen(false);
         }
       } catch (error) {
@@ -423,7 +426,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     >
                       {selectedState !== "" ? <option value={selectedCountry.name}>{selectedCountry.name}</option> : <option value="">Select Country</option>}
                       {countries.map((country) => (
-                        <option key={country.isoCode} value={country.name}>
+                        <option key={country?.isoCode} value={country.name}>
                           {country.name}
                         </option>
                       ))}
@@ -445,7 +448,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     >
                       {selectedState !== "" ? <option value={selectedState.name}>{selectedState.name}</option> : <option value="">Select State</option>}
                       {states.map((state) => (
-                        <option key={state.isoCode} value={state.name}>
+                        <option key={state?.isoCode} value={state.name}>
                           {state.name}
                         </option>
                       ))}

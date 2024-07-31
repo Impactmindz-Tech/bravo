@@ -62,7 +62,7 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
       setGroupMemberList([]);
       setSelectedFile(null);
     }
-  }, [groupItem, setValue, reset]);
+  }, [groupItem, setValue, reset,createGroupModalOpen]);
 
   const handleSelect = (selectedList) => setGroupMemberList(selectedList);
 
@@ -195,7 +195,16 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
                     <input id="file-upload" type="file" className="hidden" onChange={(event) => setSelectedFile(event.target.files[0])} />
                     {selectedFile && (
                       <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
-                        <span className="text-sm pl-2">{selectedFile.name}</span>
+                        <span className="text-sm pl-2">
+                          {selectedFile.name.length <= 22 ? (
+                            <>selectedFile.name</>
+                          ) : (
+                            <>
+                              {selectedFile?.name.substring(0, 22)}.{selectedFile?.name.split(".").pop()}
+                            </>
+                          )}
+                        </span>
+                        {/* <span className="text-sm pl-2"></span> */}
                         <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                           <IoIosCloseCircleOutline className="text-lg bg-none" />
                         </button>
