@@ -11,6 +11,7 @@ import { setGroup } from "../../../store/Slice/GroupSlice";
 import { getAllGroups, searchGroupApi, statusUpdae } from "../../../utils/service/GroupService";
 import Pagination from "../../../components/Pagination";
 import toast from "react-hot-toast";
+import ViewGroupModal from "../../../components/Modal/ViewGroupModal";
 
 export default function GroupManagement() {
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
@@ -21,8 +22,9 @@ export default function GroupManagement() {
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
+  const[viewModalData,setViewModalData]=useState([])
   const groupData = useSelector((state) => state.group.group);
-
+const [viewModalState,setViewModalState]=useState(false)
   const groupStatusUpdate = async (id) => {
     const formData = new FormData();
     formData.append("group_id", id);
@@ -84,6 +86,12 @@ export default function GroupManagement() {
     const response = await searchGroupApi({ search: e.target.value });
     dispatch(setGroup(response));
   };
+
+
+  const handleViewGroupModalData=(groupName,data)=>{
+    setViewModalState(true)
+    setViewModalData({name:groupName ,data})
+  }
   return (
     <>
       {loading && <Loading />}
@@ -136,9 +144,10 @@ export default function GroupManagement() {
                       <td className="text-left">{item?.members?.length}</td>
                       <td className="text-left">
                         <div className="flex gap-3 flex-wrap lg:flex-nowrap">
-                          {item?.members?.map((member, index) => {
+                          {item?.members?.slice(0, 3).map((member, index) => {
                             return <p key={index}>{member.username}</p>;
                           })}
+                          <span className="text-blue-900 font-bold cursor-pointer hover:text-[#0240bb]" onClick={()=>handleViewGroupModalData(item?.name,item?.members)}>view more</span>
                         </div>
                       </td>
 
@@ -177,6 +186,7 @@ export default function GroupManagement() {
       {/* popup model */}
       <div className="flex items-center">
         <CreateGroupModal groupItem={groupItem} createGroupModalOpen={createGroupModalOpen} setCreateGroupModalOpen={handleModalClose} fetchGroup={fetchGroup} />
+        <ViewGroupModal viewModalData={viewModalData}  setViewModalState={setViewModalState} viewModalState={viewModalState} />
       </div>
     </>
   );
