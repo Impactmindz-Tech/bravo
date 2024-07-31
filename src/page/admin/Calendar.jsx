@@ -77,10 +77,10 @@ function Calendar() {
     <>
       <div className="flex justify-between sm:flex-col sm:gap-y-2  md:gap-y-2 w-full items-center">
         <h1 className="text-2xl font-bold sm:text-sm md:text-sm  sm:w-full">EVENTS MANAGEMENT</h1>
-        <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3 ">
+        <div className="flex gap-1 sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-2 lg:gap-3 sm:w-full">
           <Link to="/admin/event_participants">
             {" "}
-            <button className="bg-blue-900 text-white sm:w-full md:w-full flex justify-center hover:border-[#ccc] md:text-sm">
+            <button className="bg-blue-900 text-white sm:w-full md:w-full flex justify-center hover:border-[#ccc] md:text-sm ">
               <i className="my-0.4 pr-2 text-2xl  sm:my-0 md:text-md md:my-0 lg:my-2  md:text-sm"></i>
               EVENTS PARTICIPANTS
             </button>
