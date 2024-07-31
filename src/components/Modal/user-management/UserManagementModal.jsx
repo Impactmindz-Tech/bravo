@@ -15,7 +15,13 @@ import { createUser } from "../../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
 import { getAllGroup } from "../../../utils/service/CommonService";
 import Multiselect from "multiselect-react-dropdown";
+const scaleTranslateInStyle = {
+  animation: "scaleTranslateIn 0.5s ease-in-out",
+};
 
+const scaleTranslateOutStyle = {
+  animation: "scaleTranslateOut 0.5s ease-in-out",
+};
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -32,6 +38,19 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+
+  const [show, setShow] = useState(addAdminModalOpen);
+  useEffect(() => {
+    if (addAdminModalOpen) {
+      setShow(true);
+    } else {
+      const timer = setTimeout(() => setShow(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [addAdminModalOpen]);
+
+
+
   // fetching data for country,state city
   useEffect(() => {
     setCountries(Country.getAllCountries());
@@ -270,7 +289,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   return (
     <>
       <Modal open={addAdminModalOpen} onClose={handlemodalClose} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
-        <div className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
+        <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
           <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
             <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
               <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
@@ -328,24 +347,26 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                   <p className="text-danger">{errors?.role_id?.message}</p>
 
                   {/* file upload section */}
-                  <div className="flex gap-2">
-                    <h4 className="text-blue-300 pt-2 sm:text-sm"> Profile Picture</h4>
-                    <div className="flex w-[75%] items-center border input rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
-                      <label htmlFor="file-upload" className="flex items-center sm:justify-center sm:text-center bg-blue-900 text-white px-4 py-1 rounded-lg cursor-pointer font-semibold sm:w-[100%]">
-                        <FiUpload className="font-semibold mr-1" />
-                        Upload
-                      </label>
-                      <input id="file-upload" ref={fileInputRef} type="file" className="hidden" onChange={handleFileChange} />
-                      {selectedFile && (
-                        <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
-                          <span className="text-sm pl-2">{selectedFile.name.length <= 22 ? <>{selectedFile.name}</> : <>{selectedFile.name.substring(0, 22) + "." + selectedFile.name.split(".").pop()}</>}</span>
-                          <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
-                            <IoIosCloseCircleOutline className="text-lg bg-none" />
-                          </button>
-                        </div>
-                      )}
-                    </div>
+                  
+
+                  <div className="flex gap-3 flex-wrap">
+                  <h4 className="text-blue-300 pt-2 sm:text-sm ">Profile Picture</h4>
+                  <div className="flex w-[90%] 3xl:w-full  items-center border border-[#c9c9c9] rounded-lg py-1 px-2 sm:flex-col sm:gap-y-1">
+                    <label htmlFor="file-upload" className="flex items-center bg-blue-900 text-white  px-4 py-1 rounded-lg cursor-pointer font-semibold sm:w-[100%]">
+                      <FiUpload className="font-semibold mr-1" />
+                      Upload
+                    </label>
+                    <input id="file-upload" type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+                    {selectedFile && (
+                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0 ">
+                        <span className="text-sm pl-2">{selectedFile.name.length <= 22 ? <>{selectedFile.name}</> : <>{selectedFile.name.substring(0, 22) + "." + selectedFile.name.split(".").pop()}</>}</span>
+                        <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
+                          <IoIosCloseCircleOutline className="text-lg bg-none" />
+                        </button>
+                      </div>
+                    )}
                   </div>
+                </div>
 
                   <div className="flex flex-wrap list-none mt-6 gap-6">
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">

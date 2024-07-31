@@ -12,6 +12,13 @@ import toast from "react-hot-toast";
 import { setEvent } from "../../store/Slice/EventSlice";
 import { useDispatch } from "react-redux";
 
+const scaleTranslateInStyle = {
+  animation: "scaleTranslateIn 0.5s ease-in-out",
+};
+
+const scaleTranslateOutStyle = {
+  animation: "scaleTranslateOut 0.5s ease-in-out",
+};
 const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, eventDataToUpdate }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState([]);
@@ -22,6 +29,20 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [group, setGroup] = useState("");
 
   const [filename, setFileName] = useState("");
+
+  const [show, setShow] = useState(calenderModal);
+  useEffect(() => {
+    if (calenderModal) {
+      setShow(true);
+    } else {
+      const timer = setTimeout(() => setShow(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [calenderModal]);
+
+
+
+
   const fetchDashboardData = async () => {
     try {
       const response = await getAllUser();
@@ -214,7 +235,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   return (
     <>
       <Modal open={calenderModal} onClose={() => setCalenderModal(false)} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
-        <div className="h-auto overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] ">
+        <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="h-auto overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] ">
           <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
             <div className="relative w-full bg-white rounded-lg shadow-md pb-2 ">
               <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">

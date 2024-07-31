@@ -1,6 +1,6 @@
 import { FiUpload } from "react-icons/fi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { createAdminApi, getEditAdminApi } from "../../utils/service/AdminService";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,7 +11,13 @@ import { getAdminRolesApi, getAllGroup } from "../../utils/service/CommonService
 import { Modal } from "@mui/material";
 import toast from "react-hot-toast";
 import Multiselect from "multiselect-react-dropdown";
+const scaleTranslateInStyle = {
+  animation: "scaleTranslateIn 0.5s ease-in-out",
+};
 
+const scaleTranslateOutStyle = {
+  animation: "scaleTranslateOut 0.5s ease-in-out",
+};
 // eslint-disable-next-line react/prop-types
 const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAddAdminModalOpen, adminItem }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -20,11 +26,21 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-  const fileInputRef = useRef(null);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [memberList, setMemberList] = useState([]);
+
+  const [show, setShow] = useState(addAdminModalOpen);
+  useEffect(() => {
+    if (addAdminModalOpen) {
+      setShow(true);
+    } else {
+      const timer = setTimeout(() => setShow(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [addAdminModalOpen]);
+
 
   // fetching data for country,state city
   useEffect(() => {
@@ -131,7 +147,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
-    fileInputRef.current.value = null;
   };
 
   const fetchAllGroup = async () => {
@@ -273,7 +288,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   return (
     <Modal open={addAdminModalOpen} onClose={handleCloseModal} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
-      <div className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
+      <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
         <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
           <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
             <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
@@ -289,7 +304,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                   <h1 className="text-gray-500">
                     Choose Groups <span className="text-red-500">*</span>
                   </h1>
-                  <div className="w-[100%]   list-none">
+                  <div className="w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%]  list-none">
                     <Multiselect
                       options={groupData?.data?.map((user) => ({ name: user.name, id: user.group_id }))}
                       selectedValues={memberList}
@@ -336,10 +351,13 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                       <FiUpload className="font-semibold mr-1" />
                       Upload
                     </label>
-                    <input id="file-upload" type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+                    <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
                     {selectedFile && (
-                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0 ">
-                        <span className="text-sm pl-2">{selectedFile.name.length <= 22 ? <>{selectedFile.name}</> : <>{selectedFile.name.substring(0, 22) + "." + selectedFile.name.split(".").pop()}</>}</span>
+                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
+                        <span className="text-sm pl-2">
+                        {(selectedFile.name.length<=22)?<>{selectedFile.name}</>:<>{selectedFile.name.substring(0, 22)+"."+ selectedFile.name.split('.').pop()}</>}
+                            
+                        </span>
                         <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                           <IoIosCloseCircleOutline className="text-lg bg-none" />
                         </button>
