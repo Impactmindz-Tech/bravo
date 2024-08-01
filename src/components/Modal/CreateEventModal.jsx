@@ -312,7 +312,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                     </div>
 
                     {/* group id */}
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="flex flex-col w-[45%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="groupId">
                         Group id<span className="text-red-500 pl-1">*</span>
                       </label>
@@ -337,7 +337,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                     </div>
 
                     {/* user id */}
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="flex flex-col w-[45%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="userIdId">
                         User id<span className="text-red-500 pl-1">*</span>
                       </label>
