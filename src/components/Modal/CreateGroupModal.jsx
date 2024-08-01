@@ -147,94 +147,96 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
   };
 
   return (
-    <Modal open={createGroupModalOpen} onClose={handleModalClose} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto rounded-lg" closeAfterTransition>
-      <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="relative w-[65vw] sm:w-[90vw] md:w-[90vw] lg:w-[80vw] xl:w-[60vw] h-[60vh] sm:h-[70vh] md:h-[70vh] lg:h-[65vh] xl:h-[60vh] mx-auto rounded-lg ">
-        <div className="relative bg-white rounded-lg shadow-md pb-4 ">
-          <div className="flex justify-between items-center mb-4 bg-blue-900 py-2 rounded-t-lg">
-            <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white uppercase">{groupItem ? "Edit Group" : "Create Group"}</h2>
-            <button onClick={handleModalClose} className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none">
-              <IoClose />
-            </button>
-          </div>
+    <>
+      <Modal open={createGroupModalOpen} onClose={handleModalClose} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto rounded-lg" closeAfterTransition>
+        <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="relative w-[65vw] sm:w-[90vw] md:w-[90vw] lg:w-[80vw] xl:w-[60vw] h-[60vh] sm:h-[70vh] md:h-[70vh] lg:h-[65vh] xl:h-[60vh] mx-auto rounded-lg ">
+          <div className="relative bg-white rounded-lg shadow-md pb-4 ">
+            <div className="flex justify-between items-center mb-4 bg-blue-900 py-2 rounded-t-lg">
+              <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white uppercase">{groupItem ? "Edit Group" : "Create Group"}</h2>
+              <button onClick={handleModalClose} className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none">
+                <IoClose />
+              </button>
+            </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="p-8 flex flex-col gap-y-4 sm:p-4">
-              <div>
-                <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
-                  <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
-                    Group Name <span className="text-red-500 font-extrabold">*</span>
-                  </h4>
-                  <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
-                    <input type="text" placeholder="Std 10 Group" className="text-sm w-[100%] py-2 px-2 outline-none input" {...register("group_name")} />
-                  </div>
-                </div>
-                <p className="text-[red]">{errors?.group_name?.message}</p>
-              </div>
-              <div>
-                <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
-                  <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
-                    Group Description <span className="text-red-500 font-extrabold">*</span>
-                  </h4>
-                  <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
-                    <input type="text" placeholder="Group Description" className="text-sm w-[100%] py-2 px-2 outline-none input" {...register("group_desc")} />
-                  </div>
-                </div>
-                <p className="text-[red]">{errors?.group_desc?.message}</p>
-              </div>
-              <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
-                <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
-                  Members Name <span className="text-red-500 font-extrabold">*</span>
-                </h4>
-                <div className="w-[85%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] py-2 px-2 list-none">
-                {console.log(user)}
-                  <Multiselect
-                    options={user?.data?.map((user) => ({ name: user.email, id: user.user_id }))}
-                    selectedValues={groupMemberList}
-                    onSelect={handleSelect}
-                    onRemove={handleRemove}
-                    displayValue="name"
-                    placeholder="Members Name"
-                    style={{
-                      multiselectContainer: { width: "100%" },
-                      searchBox: { width: "100%" },
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-center sm:flex-col md:flex-col sm:gap-y-2 md:gap-y-2 lg:flex-col lg:gap-y-1">
-                <h4 className="text-blue-300 font-semibold w-[20%] lg:w-[100%] xl:w-[25%] sm:w-[100%] 3xl:text-xl md:w-[100%]">Group Picture</h4>
-
-                <div className="flex w-[80%] lg:w-[100%] xl:w-[75%] items-center input py-1 px-2 sm:flex-col sm:gap-y-1 sm:w-[100%] md:w-[100%]">
-                  <label htmlFor="file-upload" className="flex items-center bg-blue-900 px-4 py-2 sm:justify-center sm:text-center rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]">
-                    <FiUpload className="font-semibold mr-1" />
-                    Upload
-                  </label>
-                  <input id="file-upload" type="file" className="hidden" onChange={(event) => setSelectedFile(event.target.files[0])} />
-                  {selectedFile && (
-                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
-                      <span className="text-sm pl-2">{selectedFile.name.length <= 22 ? selectedFile.name : `${selectedFile.name.substring(0, 22)}.${selectedFile.name.split(".").pop()}`}</span>
-                      <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
-                        <IoIosCloseCircleOutline className="text-lg bg-none" />
-                      </button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="p-8 flex flex-col gap-y-4 sm:p-4 ">
+                <div>
+                  <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
+                    <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
+                      Group Name <span className="text-red-500 font-extrabold">*</span>
+                    </h4>
+                    <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
+                      <input type="text" placeholder="Std 10 Group" className="text-sm w-[100%] py-2 px-2 outline-none input" {...register("group_name")} />
                     </div>
-                  )}
+                  </div>
+                  <p className="text-[red]">{errors?.group_name?.message}</p>
+                </div>
+                <div>
+                  <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
+                    <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
+                      Group Description <span className="text-red-500 font-extrabold">*</span>
+                    </h4>
+                    <div className="flex w-[80%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%]">
+                      <input type="text" placeholder="Group Description" className="text-sm w-[100%] py-2 px-2 outline-none input" {...register("group_desc")} />
+                    </div>
+                  </div>
+                  <p className="text-[red]">{errors?.group_desc?.message}</p>
+                </div>
+                <div className="flex sm:flex-col sm:gap-y-1 md:flex-col md:gap-y-1 lg:flex-col lg:gap-y-1">
+                  <h4 className="text-blue-300 w-[20%] sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[25%]">
+                    Members Name <span className="text-red-500 font-extrabold">*</span>
+                  </h4>
+                  <div className="w-[85%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] py-2 px-2 list-none">
+                    {console.log(user)}
+                    <Multiselect
+                      options={user?.data?.map((user) => ({ name: user.email, id: user.user_id }))}
+                      selectedValues={groupMemberList}
+                      onSelect={handleSelect}
+                      onRemove={handleRemove}
+                      displayValue="name"
+                      placeholder="Members Name"
+                      style={{
+                        multiselectContainer: { width: "100%" },
+                        searchBox: { width: "100%" },
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-center sm:flex-col md:flex-col sm:gap-y-2 md:gap-y-2 lg:flex-col lg:gap-y-1">
+                  <h4 className="text-blue-300 font-semibold w-[20%] lg:w-[100%] xl:w-[25%] sm:w-[100%] 3xl:text-xl md:w-[100%]">Group Picture</h4>
+
+                  <div className="flex w-[80%] lg:w-[100%] xl:w-[75%] items-center input py-1 px-2 sm:flex-col sm:gap-y-1 sm:w-[100%] md:w-[100%]">
+                    <label htmlFor="file-upload" className="flex items-center bg-blue-900 px-4 py-2 sm:justify-center sm:text-center rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]">
+                      <FiUpload className="font-semibold mr-1" />
+                      Upload
+                    </label>
+                    <input id="file-upload" type="file" className="hidden" onChange={(event) => setSelectedFile(event.target.files[0])} />
+                    {selectedFile && (
+                      <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
+                        <span className="text-sm pl-2">{selectedFile.name.length <= 22 ? selectedFile.name : `${selectedFile.name.substring(0, 22)}.${selectedFile.name.split(".").pop()}`}</span>
+                        <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
+                          <IoIosCloseCircleOutline className="text-lg bg-none" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
-              <button type="submit" className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none border-none sm:text-sm">
-                {groupItem ? "Update Group" : "Create Group"}
-              </button>
-              <button onClick={handleModalClose} className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none hover:border-black">
-                Cancel
-              </button>
-            </div>
-          </form>
+              <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
+                <button type="submit" className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none border-none sm:text-sm">
+                  {groupItem ? "Update Group" : "Create Group"}
+                </button>
+                <button onClick={handleModalClose} className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none hover:border-black">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </Modal>
+      </Modal>
+    </>
   );
 };
 

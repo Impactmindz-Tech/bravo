@@ -22,21 +22,21 @@ const ViewGroupModal = ({ viewModalState, setViewModalState, viewModalData }) =>
   }, [viewModalState]);
   return (
     <Modal open={viewModalState} onClose={() => setViewModalState(false)} className="fixed modalContainer inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto">
-      <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="overflow-y-auto mainFormSection sm:w-[90vw] sm:h-[70vh] md:w-[90vw] md:h-[70vh] lg:w-[80vw] lg:h-[65vh] xl:w-[60vw] xl:h-[60vh] w-[55vw] h-[60vh]">
+      <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="rounded-lg overflow-y-auto mainFormSection sm:w-[90vw] sm:h-[70vh] md:w-[90vw] md:h-[70vh] lg:w-[80vw] lg:h-[65vh] xl:w-[60vw] xl:h-[60vh] w-[55vw] h-[60vh]">
         <div className="relative w-full mx-auto rounded-lg overflow-hidden">
-          <div className="relative bg-white rounded-lg shadow-md pb-4">
-            <div className="flex justify-between items-center mb-4 bg-blue-900 py-2">
+          <div className="relative bg-white  pb-4">
+            <div className="flex justify-between items-center bg-blue-900 py-2 4xl:border-r-primary  fixed z-50  w-[100%] max-w-[55vw]  md:max-w-[100vw] lg:max-w-[80vw] xl:max-w-[60vw]  4xl:max-w-[55vw] mx-auto  overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
               <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{viewModalData?.name}</h2>
               <button onClick={() => setViewModalState(false)} className="bg-blue-900 hover:text-gray-900 hover:border-none hover:outline-none text-lg text-white border-none outline-none">
                 <IoMdClose />
               </button>
             </div>
 
-            <div className="overflow-y-hidden sm:overflow-y-auto sm:max-h-[76vh] ">
-              <div className="py-2 flex flex-col gap-y-4 sm:w-[800px] ">
+            <div className="overflow-y-hidden sm:overflow-y-auto sm:max-h-[76vh] py-20">
+              <div className=" flex flex-col gap-y-4 sm:w-[800px] ">
                 {/* table */}
-                <div className="flex justify-between border-gray-100 py-2 px-1">
-                  <table className="w-full boxShadow rounded-lg ">
+                <div className="flex justify-between border-gray-100  px-1">
+                  <table className="w-full  rounded-lg ">
                     {/* table heading */}
                     <thead>
                       <tr>

@@ -41,7 +41,6 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
     }
   }, [addAdminModalOpen]);
 
-
   // fetching data for country,state city
   useEffect(() => {
     setCountries(Country.getAllCountries());
@@ -288,10 +287,10 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
 
   return (
     <Modal open={addAdminModalOpen} onClose={handleCloseModal} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
-      <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
+      <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="rounded-lg h-[600px] overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] 4xl:h-[60vh]">
         <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
           <div className="relative w-full bg-white rounded-lg shadow-md pb-2">
-            <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
+            <div className="flex justify-between items-center bg-blue-900 py-2 4xl:border-r-primary  fixed z-50  w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto  overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
               <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{adminItem ? "Edit Admin" : "Add Admin"}</h2>
               <button onClick={handleCloseModal} className="text-red text-white  hover:text-gray-900 hover:outline-none border-none outline-none bg-blue-900 text-lg">
                 <IoMdClose />
@@ -299,7 +298,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-              <div className="p-8 flex flex-col gap-y-4 w-full">
+              <div className="p-8 flex flex-col gap-y-4 w-full py-20">
                 <div className="flex flex-col space-y-2">
                   <h1 className="text-gray-500">
                     Choose Groups <span className="text-red-500">*</span>
@@ -354,10 +353,7 @@ const AdminManagementModalComponent = ({ addAdminModalOpen, getAllAdmins, setAdd
                     <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
                     {selectedFile && (
                       <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:justify-center sm:w-[100%] sm:ml-0">
-                        <span className="text-sm pl-2">
-                        {(selectedFile.name.length<=22)?<>{selectedFile.name}</>:<>{selectedFile.name.substring(0, 22)+"."+ selectedFile.name.split('.').pop()}</>}
-                            
-                        </span>
+                        <span className="text-sm pl-2">{selectedFile.name.length <= 22 ? <>{selectedFile.name}</> : <>{selectedFile.name.substring(0, 22) + "." + selectedFile.name.split(".").pop()}</>}</span>
                         <button onClick={handleRemoveFile} className="text-black text-sm bg-transparent border-none">
                           <IoIosCloseCircleOutline className="text-lg bg-none" />
                         </button>
