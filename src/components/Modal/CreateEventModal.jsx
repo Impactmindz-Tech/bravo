@@ -194,7 +194,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
 
         const updatedUsers = filteredUsers.map((user) => ({
           ...user,
-          name: user.first_name,
+          name: user.email,
         }));
 
         setUserMemberList(updatedUsers);
@@ -233,7 +233,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
     <>
       <Modal open={calenderModal} onClose={() => setCalenderModal(false)} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
         <div style={show ? scaleTranslateInStyle : scaleTranslateOutStyle} className="h-auto overflow-y-auto mt-6 sm:h-[70vh] mainFormSection md:h-[80vh] lg:h-[60vh] xl:h-[70vh]  2xl:h-[75vh] ">
-          <div className="relative w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
+          <div className="relative  w-[100%] max-w-[55vw] sm:max-w-[100vw] md:max-w-[100vw] lg:max-w-[70vw] xl:max-w-[65vw] 2xl:max-w-[60vw] 3xl:max-w-[65vw] 4xl:max-w-[65vw] mx-auto rounded-lg overflow-hidden sm:w-[90vw] md:w-[90vw] lg:w-[96vw]">
             <div className="relative w-full bg-white rounded-lg shadow-md pb-2 ">
               <div className="flex w-full justify-between items-center bg-blue-900 py-2 4xl:border-r-primary">
                 <h2 className="text-xl font-semibold text-gray-800 pl-4 text-white">{eventDataToUpdate[0] == null ? " Add Event" : " Edit Event"}</h2>
@@ -343,7 +343,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                       </label>
                       <Multiselect
                         options={user?.data?.map((user) => ({
-                          name: user.first_name ? user.first_name.toLowerCase() : "", // Check if first_name exists before calling toLowerCase()
+                          name: user.email ? user.email.toLowerCase() : "", // Check if email exists before calling toLowerCase()
                           id: user.user_id,
                         }))}
                         selectedValues={userMemberList}
