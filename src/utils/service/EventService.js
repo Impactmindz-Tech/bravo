@@ -7,6 +7,8 @@ export const createEventApi = async (payload) => {
     return responce.data;
   } catch (error) {
     console.log(error);
+    toast.error(error.response.data.message);
+
   }
 };
 

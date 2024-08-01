@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
 import { Link } from "react-router-dom";
+// const today = format(new Date(), 'yyyy-MM-dd');
 
 function Calendar() {
   const eventDataState = useSelector((state) => state.event.event);
@@ -99,22 +100,44 @@ function Calendar() {
           }}
           events={eventData}
           dateClick={handleDateClick}
-          eventContent={(eventInfo) => (
-            <div className="p-1 px-2 rounded-md text-sm flex gap-2 items-center justify-between sm:text-sm">
-              <div>
-                <b>{eventInfo.timeText}</b>
-                <i>{eventInfo.event.title}</i>
+          eventContent={(eventInfo) => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const eventDate = new Date(eventInfo.event.start);
+            eventDate.setHours(0, 0, 0, 0);
+
+            let eventClass = "";
+
+            // Check if the event is a past event
+            if (eventDate < today) {
+              eventClass = "past-event";
+            }
+            // Check if the event is the current date and month
+            else if (eventDate.getFullYear() === today.getFullYear() && eventDate.getMonth() === today.getMonth() && eventDate.getDate() === today.getDate()) {
+              eventClass = "present-event";
+            }
+            // Otherwise, it's a future event
+            else {
+              eventClass = "future-event";
+            }
+
+            return (
+              <div className={`p-1 px-2 rounded-md text-sm flex gap-2 items-center justify-between sm:text-sm ${eventClass}`}>
+                <div>
+                  <b>{eventInfo.timeText}</b>
+                  <i>{eventInfo.event.title}</i>
+                </div>
+                <div className="flex pr-2">
+                  <i>
+                    <TbEdit className="cursor-pointer text-lg hover:text-blue-900 sm:text-[10px]" title="Edit" onClick={() => editEvent(eventInfo.event)} />
+                  </i>
+                  <i>
+                    <MdDelete className="cursor-pointer text-lg hover:text-blue-900 sm:text-[10px]" title="Delete" onClick={() => deleteEvent(eventInfo.event)} />
+                  </i>
+                </div>
               </div>
-              <div className="flex pr-2">
-                <i>
-                  <TbEdit className="cursor-pointer  text-lg hover:text-blue-900 sm:text-[10px]" title="Edit" onClick={() => editEvent(eventInfo.event)} />
-                </i>
-                <i>
-                  <MdDelete className="cursor-pointer  text-lg hover:text-blue-900 sm:text-[10px]" title="Delete" onClick={() => deleteEvent(eventInfo.event)} />
-                </i>
-              </div>
-            </div>
-          )}
+            );
+          }}
         />
       </div>
       <CreateEventModal calenderModal={calenderModal} setCalenderModal={setCalenderModal} currentEventDate={currentEventDate} eventDataToUpdate={data} />

@@ -1,6 +1,6 @@
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Multiselect from "multiselect-react-dropdown";
 import { useForm } from "react-hook-form";
 import TagsInput from "react-tagsinput";
@@ -18,7 +18,8 @@ export default function SystemSetting() {
     formState: { errors },
     setValue,
   } = useForm({ resolver: yupResolver(systemSetting) });
-
+  const filePrivacyRef = useRef(null);
+  const fileAboutUsRef = useRef(null);
   const [relationKeyword, setRelationKeyword] = useState([]);
   const [relationKeywordMultiform, setRelationKeywordMultiForm] = useState([]);
   const [categoryKeyword, setCategoryKeyword] = useState([]);
@@ -72,6 +73,11 @@ export default function SystemSetting() {
   };
 
   const handleRemoveFile = (type) => () => {
+    if(type=="aboutDocumentFileDocument"){
+      fileAboutUsRef.current.value = null;
+    }else{
+      filePrivacyRef.current.value = null;
+    }
     setFiles((prevFiles) => ({
       ...prevFiles,
       [type]: null,
@@ -428,7 +434,7 @@ export default function SystemSetting() {
                   <FiUpload className="font-semibold mr-1 text-sm" />
                   Upload
                 </label>
-                <input id="file-upload-document" type="file" className="hidden" onChange={handleFileChange("aboutDocumentFileDocument")} />
+                <input id="file-upload-document" type="file" ref={fileAboutUsRef} className="hidden" onChange={handleFileChange("aboutDocumentFileDocument")} />
                 {files.aboutDocumentFileDocument && (
                   <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2  sm:w-[100%] sm:ml-0">
                     <span className="text-sm pl-2 ">{files.aboutDocumentFileDocument.name}</span>
@@ -455,7 +461,7 @@ export default function SystemSetting() {
                   <FiUpload className="font-semibold mr-1 text-sm" />
                   Upload
                 </label>
-                <input id="file-upload-privacy" type="file" className="hidden" onChange={handleFileChange("privacyDocumentFileDocument")} />
+                <input id="file-upload-privacy" type="file" ref={filePrivacyRef} className="hidden" onChange={handleFileChange("privacyDocumentFileDocument")} />
                 {files.privacyDocumentFileDocument && (
                   <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2  sm:w-[100%] sm:ml-0">
                     <span className="text-sm pl-2 ">{files.privacyDocumentFileDocument.name}</span>

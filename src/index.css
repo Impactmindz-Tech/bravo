@@ -29,7 +29,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-
 /* scrollbar */
 .mainFormSection::-webkit-scrollbar {
   background: #a9a9a9;
@@ -47,10 +46,6 @@ button:focus-visible {
   background: #2a2f3e;
 }
 
-
-
-
-
 .mainFormSection::-webkit-scrollbar:horizontal {
   background: #a9a9a9;
   height: 4px;
@@ -59,10 +54,10 @@ button:focus-visible {
 
 /* Horizontal track */
 .mainFormSection::-webkit-scrollbar-track:horizontal {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px grey;
   border-radius: 1px;
 }
- 
+
 /* Horizontal handle */
 .mainFormSection::-webkit-scrollbar-thumb:horizontal {
   background: #2a2f3e;
@@ -71,11 +66,6 @@ button:focus-visible {
 }
 
 /* Horizontal handle on hover */
-
-
-
-
-
 
 .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
   width: 85vw;
@@ -90,13 +80,6 @@ a.fc-col-header-cell-cushion {
 .fc-day-today {
   background-color: #2a2f3e !important;
 }
-
-
-
-
-
-
-
 
 button.fc-next-button.fc-button.fc-button-primary,
 button.fc-listWeek-button.fc-button.fc-button-primary {
@@ -134,9 +117,8 @@ button.fc-timeGridDay-button.fc-button.fc-button-primary {
 
   border: 1px solid rgb(240, 240, 240);
 }
-button.fc-today-button.fc-button.fc-button-primary{
+button.fc-today-button.fc-button.fc-button-primary {
   text-transform: capitalize;
-
 }
 button.fc-timeGridDay-button.fc-button.fc-button-primary.fc-button-active,
 button.fc-listWeek-button.fc-button.fc-button-primary.fc-button-active,
@@ -146,7 +128,7 @@ button.fc-timeGridWeek-button.fc-button.fc-button-primary.fc-button-active {
 }
 
 .p-1.px-2.rounded-md.text-sm {
-  background-color: #686b76;
+  /* background-color: #686b76; */
   border-radius: 0px;
   color: white !important;
 }
@@ -192,10 +174,11 @@ td a {
 
 .fc-dayGridMonth-view.fc-view.fc-daygrid {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-
-
 }
 
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {
+  text-transform: capitalize;
+}
 .modalContainer {
   border: none;
   outline: none;
@@ -242,7 +225,7 @@ td a {
 
   /* calendar table */
   .fc-dayGridMonth-view.fc-view.fc-daygrid,
-  .fc .fc-view-harness-active>.fc-view {
+  .fc .fc-view-harness-active > .fc-view {
     height: 90vw;
     font-size: 3vw;
   }
@@ -252,11 +235,10 @@ td a {
   border: none;
 }
 
-
 .react-tagsinput-tag {
-  background-color: #2A2F3E;
+  background-color: #2a2f3e;
   border-radius: 2px;
-  border: 1px solid #2A2F3E;
+  border: 1px solid #2a2f3e;
   color: white;
   display: inline-block;
   font-family: sans-serif;
@@ -268,9 +250,9 @@ td a {
 
 /* edit group style change */
 .editGroup .react-tagsinput-tag {
-  background-color: #2A2F3E;
+  background-color: #2a2f3e;
   border-radius: 2px;
-  border: 1px solid #2A2F3E;
+  border: 1px solid #2a2f3e;
   color: white;
   display: inline-block;
   font-family: sans-serif;
@@ -289,15 +271,15 @@ td a {
 }
 
 .settingGroup span li .react-tagsinput-tag {
-  background-color: #2A2F3E;
+  background-color: #2a2f3e;
   border-radius: 2px;
-  border: 1px solid #2A2F3E;
+  border: 1px solid #2a2f3e;
 }
 
 .settingGroup .react-tagsinput-tag {
-  background-color: #2A2F3E;
+  background-color: #2a2f3e;
   border-radius: 2px;
-  border: 1px solid #2A2F3E;
+  border: 1px solid #2a2f3e;
   color: white;
   display: inline-block;
   font-family: sans-serif;
@@ -313,10 +295,9 @@ td a {
   display: none;
 }
 
-.paginaiton_shadow{
+.paginaiton_shadow {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -326,26 +307,21 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
-label{
+label {
   text-transform: capitalize;
 }
 
-
-
 .chip {
   background: #2a2f3e !important;
-
 }
-
 
 .settingGroup span {
   gap: 5px;
 }
-
 
 /* Keyframes for 3D scale and translate animation */
 @keyframes scaleTranslateIn {
@@ -370,3 +346,18 @@ label{
   }
 }
 
+.fc-timegrid-event .fc-event-main {
+  background: rgb(128, 135, 156) !important;
+}
+
+.past-event {
+  background-color: #f82c1e; /* Gray color for past events */
+}
+
+.present-event {
+  background-color: #036811; /* Green color for present events */
+}
+
+.future-event {
+  background-color: #ff6004; /* Red color for future events */
+}
