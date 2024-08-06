@@ -272,9 +272,9 @@ export default function SystemSetting() {
           <h1 className="text-3xl font-bold sm:text-sm sm:pl-3 md:text-2xl md:pl-3 lg:text-xl">System Setting</h1>
         </div>
 
-        <div className="flex my-6 justify-between sm:flex-col sm:mx-2 md:flex-col md:mx-2  lg:my-2 md:gap-y-4 sm:gap-1">
+        <div className="overflow-y-auto mainFormSection mt-6 sm:max-h-[60vh] lg:max-h-[60vh] boxShadow rounded-lg  sm:mx-1 md:mx-1 lg:mx-1 flex gap-2 flex-wrap">
           {/* left section */}
-          <div className="w-[50%] m-auto md:w-[100%] boxShadow rounded-2xl sm:w-[100%] sm:px-2  ">
+          <div className="w-[50%]  py-5 xl:w-[100%]   lg:px-2  ">
             {/* category */}
             <h1 className="my-2 mx-5 text-blue-300 sm:text-sm sm:mx-2 md:mx-5 lg:text-xl">Category</h1>
             <div className="flex flex-wrap  gap-3 w-[95%] rounded-md py-2 px-2 list-none input mx-5 sm:mx-1 sm:w-[98%] sm:py-2 md:w-[94%] md:py-1 lg:w-[94%] lg:py-1 ">
@@ -323,13 +323,15 @@ export default function SystemSetting() {
                 />
               </div>
             </div>
+          </div>
 
+          <div className="w-[49%] py-9 xl:w-[100%]  lg:px-2  ">
             {/* admin management */}
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="flex ml-5 gap-3 sm:flex-col sm:ml-2 lg:w-[94%] lg:flex-wrap lg:mt-1 sm:w-[100%]">
                 <span className="font-medium py-8 w-[20%] sm:w-[100%] sm:py-1 lg:w-[100%] lg:py-0 lg:pt-3">Admin Management</span>
 
-                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%]">
+                <div className="font-normal text-secondary lg:w-[48%] sm:w-[100%] ">
                   <h1 className="sm:text-sm">
                     Level 1 <span className="text-red-500 pl-1">*</span>
                   </h1>
@@ -367,31 +369,10 @@ export default function SystemSetting() {
                 </div>
               </div>
 
-              <div className="flex justify-center   mb-4 sm:justify-center my-4 px-4">
-                <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none  w-full">Update</button>
+              <div className="flex justify-center   mb-4 sm:justify-center my-6 px-4">
+                <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none w-full">Update</button>
               </div>
             </form>
-            {/* file management */}
-
-            {/* <div className="flex mb-10 pl-5 mt-4 sm:flex-col sm:pl-3 sm:gap-y-2 lg:flex-wrap lg:gap-2">
-              <h4 className="text-blue-300 w-[25%] font-medium sm:w-[100%] lg:w-[100%]">Import Post Code Table</h4>
-
-              <div className="flex w-[72%] items-center  py-1 px-2 input  sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] ">
-                <label htmlFor="file-upload" className="flex items-center sm:justify-center sm:text-center bg-blue-900 px-4 py-2 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%] lg:py-1">
-                  <FiUpload className="font-semibold mr-1" />
-                  Upload
-                </label>
-                <input id="file-upload" type="file" className="hidden" onChange={handleFileChange("postCodeFile")} />
-                {files.postCodeFile && (
-                  <div className="flex justify-between items-center bg-blue-300 rounded-full ml-2 px-4 sm:w-[100%] sm:ml-0">
-                    <span className="text-sm pl-2 sm:pl-0">{files.postCodeFile.name}</span>
-                    <button onClick={handleRemoveFile("postCodeFile")} className="bg-none noColor text-sm bg-blue-300 outline-none border-none text-textMainColor-900">
-                      <IoIosCloseCircleOutline className="text-lg" />
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
