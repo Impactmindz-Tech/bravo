@@ -150,8 +150,9 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       }
     } else {
       console.log(otherSelectedFiles, "tinku");
-      const eventFilesDoc = JSON.stringify(otherSelectedFiles.map((member) => member));
-      console.log(eventFilesDoc);
+      // const eventFilesDoc = JSON.stringify(otherSelectedFiles.map((member) => console.log(member , 'tinku saini fdfgsdfgrgr')));
+      const eventFilesDoc = otherSelectedFiles.map((member) => member)
+      console.log(eventFilesDoc , 'tinku saini');
 
       const groupIDs = JSON.stringify(groupMemberList?.map((member) => member.id));
 
@@ -167,8 +168,12 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
         return;
       }
       formData.append("user_id", userIds);
+      
+      formData.append("event_doc", eventFilesDoc);
+      for (let index = 0; index < otherSelectedFiles.length; index++) {
+        // const element = array[index];
+      }
 
-      formData.append("event_doc", otherSelectedFiles);
       try {
         const responce = await createEventApi(formData);
 
