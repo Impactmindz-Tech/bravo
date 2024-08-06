@@ -11,6 +11,7 @@ import { createEvent } from "../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
 import { setEvent } from "../../store/Slice/EventSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const scaleTranslateInStyle = {
   animation: "scaleTranslateIn 0.5s ease-in-out",
@@ -27,7 +28,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [userMemberList, setUserMemberList] = useState([]);
   const [groupMemberList, setGroupMemberList] = useState([]);
   const [group, setGroup] = useState("");
-
+  const [eventDocUrl, setEventDocUrl] = useState("");
   const [filename, setFileName] = useState("");
 
   const [show, setShow] = useState(calenderModal);
@@ -180,6 +181,8 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   };
   useEffect(() => {
     if (eventDataToUpdate[0]) {
+      setEventDocUrl(eventDataToUpdate[0]?.event_doc);
+
       if (eventDataToUpdate[0].group_id !== null) {
         const trimmedGroupString = eventDataToUpdate[0].group_id.trim().slice(1, -1);
         const groupIdArray = trimmedGroupString.split(",").map(Number);
@@ -219,9 +222,12 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
         const url = eventDataToUpdate[0].event_doc;
         const fileName = url.split("/").pop();
         setFileName(fileName);
+      } else {
+        setEventDocUrl("");
       }
     } else {
       reset();
+      setEventDocUrl("");
       setFileName("");
       setUserMemberList([]);
       setGroupMemberList([]);
@@ -296,19 +302,26 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                       <input type="text" name="event_cost" id="event_cost" placeholder="cost" className="input w-full" {...register("event_cost")} />
                       {/* <p>{errors?.event_cost?.message}</p> */}
                     </div>
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="relative flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="event_doc">
                         event doc <br />
                         {}
                       </label>
-                      {filename ? <input type="text" id="file-name" value={filename} readOnly onClick={() => setFileName("")} /> : <input type="file" name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" onChange={handleFileChange} />}
+
+                      {filename ? <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => setFileName("")} /> : <input type="file" name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" onChange={handleFileChange} />}
+                      {eventDocUrl !== "" && (
+                        <p className="absolute -bottom-6 left-0 w-full text-center font-semibold hover:text-[#12141b] text-[#2a2f3e]">
+                          <Link to={eventDocUrl} target="_blank">
+                            Live Link
+                          </Link>
+                        </p>
+                      )}
                     </div>
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="event_notes">
                         event notes
                       </label>
                       <input type="text" name="event_notes" id="event_notes" placeholder="event notes" className="input w-full" {...register("event_notes")} />
-                      {/* <p>{errors?.event_notes?.message}</p> */}
                     </div>
 
                     {/* group id */}
