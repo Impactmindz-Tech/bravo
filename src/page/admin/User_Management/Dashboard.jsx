@@ -123,7 +123,6 @@ const Dashboard = () => {
               <>
                 {dataDetails?.data?.map((item, index) => (
                   <tr key={index}>
-                  {console.log(item)}
                     <td className="text-left">
                       <div className="flex gap-2 items-center">
                         <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">{item.profile_picture ? <img src={item.profile_picture} alt="user " className="rounded-full w-[40px] h-[40px]" /> : <img src={adminUserProfile} alt="adminUserProfile " className="rounded-full w-[40px] h-[40px]" />}</div>

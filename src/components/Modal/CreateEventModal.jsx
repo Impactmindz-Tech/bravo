@@ -35,7 +35,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [docFile, setDocFile] = useState([]);
   const [imageURL, setImageURL] = useState(null);
   const [otherSelectedFiles, setOtherSelectedFiles] = useState([]);
-
   const otherImage = useRef(null);
 
   useEffect(() => {
@@ -150,6 +149,10 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
         console.log(error);
       }
     } else {
+      console.log(otherSelectedFiles, "tinku");
+      const eventFilesDoc = JSON.stringify(otherSelectedFiles.map((member) => member));
+      console.log(eventFilesDoc);
+
       const groupIDs = JSON.stringify(groupMemberList?.map((member) => member.id));
 
       if (groupIDs.length === 2) {
@@ -165,7 +168,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       }
       formData.append("user_id", userIds);
 
-      formData.append("event_doc", docFile);
+      formData.append("event_doc", otherSelectedFiles);
       try {
         const responce = await createEventApi(formData);
 
