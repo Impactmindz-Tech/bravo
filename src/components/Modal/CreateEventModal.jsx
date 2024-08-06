@@ -310,9 +310,9 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
 
                       {filename ? <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => setFileName("")} /> : <input type="file" name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" onChange={handleFileChange} />}
                       {eventDocUrl !== "" && (
-                        <p className="absolute -bottom-6 left-0 w-full text-center font-semibold hover:text-[#12141b] text-[#2a2f3e]">
+                        <p className="absolute -bottom-6 left-0 w-full text-center font-medium hover:text-[#12141b] text-[#2a2f3e]">
                           <Link to={eventDocUrl} target="_blank">
-                            Live Link
+                            View Event Doc
                           </Link>
                         </p>
                       )}
