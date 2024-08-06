@@ -33,7 +33,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [show, setShow] = useState(calenderModal);
   const [docFile, setDocFile] = useState([]);
 
-  const [backUpFileName, setBackupFileName] = useState("");
   useEffect(() => {
     if (calenderModal) {
       setShow(true);
@@ -95,9 +94,10 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
     formData.append("location", data?.event_location);
     formData.append("cost", data?.event_cost);
     formData.append("event_notes", data?.event_notes);
-
     // update
     if (eventDataToUpdate.length !== 0) {
+      formData.append("event_image", docFile);
+
       const updatedGroupIDs = JSON.stringify(groupMemberList?.map((member) => member.group_id || member.id));
 
       if (updatedGroupIDs.length === 2) {
@@ -111,9 +111,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
         return;
       }
       formData.append("user_id", updatedUserId);
-      if (docFile.length !== 0) {
-        formData.append("event_image", docFile);
-      }
       formData.append("event_id", eventId);
 
       try {
@@ -237,6 +234,12 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       setUser("");
     }
   }, [setValue, reset, eventDataToUpdate, currentEventDate]);
+
+  const clickOnReadOnly = () => {
+    setFileName("");
+    setEventDocUrl("");
+    setDocFile([]);
+  };
   return (
     <>
       <Modal open={calenderModal} onClose={() => setCalenderModal(false)} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
@@ -310,7 +313,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                         {}
                       </label>
 
-                      {filename ? <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => setFileName("")} /> : <input type="file" name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" onChange={handleFileChange} />}
+                      {filename ? <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => clickOnReadOnly()} /> : <input type="file" name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" onChange={handleFileChange} />}
                       {eventDocUrl !== "" && (
                         <p className="absolute -bottom-6 left-0 w-full text-center font-medium hover:text-[#12141b] text-[#2a2f3e]">
                           <Link to={eventDocUrl} target="_blank">
@@ -318,13 +321,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                           </Link>
                         </p>
                       )}
-                    </div>
-                    <div className="flex flex-col w-[100%] gap-y-2">
-                      <label className="text-blue-300 text-sm" htmlFor="event_notes">
-                        event notes
-                      </label>
-
-                      <textarea name="event_notes" id="event_notes" placeholder="event notes" className="input w-full h-[20vh] resize-none" {...register("event_notes")}></textarea>
                     </div>
 
                     {/* group id */}
@@ -373,8 +369,16 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                         }}
                       />
                     </div>
+
+                    <div className="flex flex-col w-[100%] gap-y-2">
+                      <label className="text-blue-300 text-sm" htmlFor="event_notes">
+                        event notes
+                      </label>
+
+                      <textarea name="event_notes" id="event_notes" placeholder="event notes" className="input w-full h-[20vh] resize-none" {...register("event_notes")}></textarea>
+                    </div>
                   </div>
-                  <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center my-10">
+                  <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
                     {eventDataToUpdate?.length !== 0 ? <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Update"}</button> : <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Save"}</button>}
 
                     <button className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none" onClick={() => setCalenderModal(false)}>
