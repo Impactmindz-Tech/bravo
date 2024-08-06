@@ -89,12 +89,20 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
     if (e.target.files) {
       const files = Array.from(e.target.files);
 
-      // Generate unique IDs using Date.now() and index
-      const fileData = files.map((file, index) => ({
+      // Extract existing file names from otherSelectedFiles
+      const existingFileNames = new Set(otherSelectedFiles.map((file) => file.name));
+
+      // Filter out files that already exist
+      const newFiles = files.filter((file) => !existingFileNames.has(file.name));
+
+      // Generate unique IDs for new files
+      const fileData = newFiles.map((file, index) => ({
         name: file.name,
         id: `${Date.now()}-${index}`, // Unique ID based on timestamp and index
       }));
-      setOtherSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+
+      // Update state with new files
+      setOtherSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
       setDocList((prevList) => [...prevList, ...fileData]);
     }
   };
@@ -383,7 +391,8 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                           style={{
                             multiselectContainer: {
                               width: "100%",
-                              maxHeight: "11vh", // Set the maximum height to trigger scrolling
+                              minHeight: "11vh", // Set the minimum height to 11vh
+                              maxHeight: "11vh", // Set the maximum height to 11vh
                               overflowY: "auto", // Enable vertical scrolling
                             },
                             searchBox: { width: "100%" },
