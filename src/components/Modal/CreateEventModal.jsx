@@ -1,7 +1,7 @@
 import { Modal } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Multiselect from "multiselect-react-dropdown";
 import { IoMdClose } from "react-icons/io";
 
@@ -27,11 +27,16 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [eventId, setEventId] = useState("");
   const [userMemberList, setUserMemberList] = useState([]);
   const [groupMemberList, setGroupMemberList] = useState([]);
+  const [docList, setDocList] = useState([]);
   const [group, setGroup] = useState("");
   const [eventDocUrl, setEventDocUrl] = useState("");
   const [filename, setFileName] = useState("");
   const [show, setShow] = useState(calenderModal);
   const [docFile, setDocFile] = useState([]);
+  const [imageURL, setImageURL] = useState(null);
+  const [otherSelectedFiles, setOtherSelectedFiles] = useState([]);
+
+  const otherImage = useRef(null);
 
   useEffect(() => {
     if (calenderModal) {
@@ -80,9 +85,19 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
 
   const handleGroupRemove = (groupMemberList) => setGroupMemberList(groupMemberList);
 
-  const handleFileChange = (event) => {
-    setDocFile(event.target.files[0]);
-    setFileName("");
+
+  const handleFileChange = (e) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+
+      // Generate unique IDs using Date.now() and index
+      const fileData = files.map((file, index) => ({
+        name: file.name,
+        id: `${Date.now()}-${index}`, // Unique ID based on timestamp and index
+      }));
+      setOtherSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+      setDocList((prevList) => [...prevList, ...fileData]);
+    }
   };
 
   const onSubmit = async (data) => {
@@ -94,6 +109,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
     formData.append("location", data?.event_location);
     formData.append("cost", data?.event_cost);
     formData.append("event_notes", data?.event_notes);
+
     // update
     if (eventDataToUpdate.length !== 0) {
       if (docFile.length !== 0) {
@@ -239,6 +255,27 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const clickOnReadOnly = () => {
     setFileName("");
   };
+
+  // handle files lists
+  const options = docList.map((file) => ({
+    name: file.name,
+    id: file.id,
+  }));
+
+  const selectedValues = docList.map((file) => ({
+    name: file.name,
+    id: file.id,
+  }));
+
+  const handlDocFileSelect = (selectedList) => {
+    setDocList(selectedList);
+  };
+
+  const handlDocFileSelectRemove = (selectedList, removedItem) => {
+    setDocList(selectedList);
+    setOtherSelectedFiles((prevFiles) => prevFiles.filter((file) => file.name !== removedItem.name));
+  };
+
   return (
     <>
       <Modal open={calenderModal} onClose={() => setCalenderModal(false)} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
@@ -306,13 +343,15 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                       <input type="text" name="event_cost" id="event_cost" placeholder="cost" className="input w-full" {...register("event_cost")} />
                       {/* <p>{errors?.event_cost?.message}</p> */}
                     </div>
+
                     <div className="relative flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="event_doc">
                         event doc <br />
                         {}
                       </label>
 
-                      {filename ? <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => clickOnReadOnly()} /> : <input type="file" name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" onChange={handleFileChange} />}
+                      {filename ? <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => clickOnReadOnly()} /> : <input type="file" ref={otherImage} name="event_doc" id="event_doc" placeholder="event doc"  className="input w-full" multiple onChange={handleFileChange} />}
+
                       {eventDocUrl !== "" && (
                         <p className="absolute -bottom-6 left-0 w-full text-center font-medium hover:text-[#12141b] text-[#2a2f3e]">
                           <Link to={eventDocUrl} target="_blank">
@@ -320,6 +359,35 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                           </Link>
                         </p>
                       )}
+                    </div>
+                    <div className="my-6 grid grid-cols-4 2xl:grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+
+                    <div className="flex flex-col w-full">
+                      <label className="text-blue-300 text-sm" htmlFor="groupId">
+                        Selected Docs<span className="text-red-500 pl-1">*</span>
+                      </label>
+                      <div className="relative">
+                        <Multiselect
+                          options={options}
+                          selectedValues={selectedValues}
+                          onSelect={handlDocFileSelect}
+                          className="my-2"
+                          onRemove={handlDocFileSelectRemove}
+                          displayValue="name"
+                          placeholder="Group Name"
+                          listProps={{
+                            maxHeight: 200, // Set the maximum height of the dropdown list
+                          }}
+                          style={{
+                            multiselectContainer: {
+                              width: "100%",
+                              maxHeight: "11vh", // Set the maximum height to trigger scrolling
+                              overflowY: "auto", // Enable vertical scrolling
+                            },
+                            searchBox: { width: "100%" },
+                          }}
+                        />
+                      </div>
                     </div>
 
                     {/* group id */}
