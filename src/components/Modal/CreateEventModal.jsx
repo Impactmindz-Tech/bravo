@@ -30,8 +30,8 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [group, setGroup] = useState("");
   const [eventDocUrl, setEventDocUrl] = useState("");
   const [filename, setFileName] = useState("");
-
   const [show, setShow] = useState(calenderModal);
+  const [docFile, setDocFile] = useState([]);
   useEffect(() => {
     if (calenderModal) {
       setShow(true);
@@ -67,8 +67,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
     formState: { errors },
     setValue,
   } = useForm({ resolver: yupResolver(createEvent) });
-
-  const [docFile, setDocFile] = useState([]);
 
   const handleSelect = (userMemberList) => {
     setUserMemberList(userMemberList);
@@ -115,6 +113,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
         formData.append("event_image", docFile);
       }
       formData.append("event_id", eventId);
+
       try {
         const responce = await updateEventApi(formData);
         if (responce?.isSuccess) {
@@ -229,6 +228,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       reset();
       setEventDocUrl("");
       setFileName("");
+      setDocFile([]);
       setUserMemberList([]);
       setGroupMemberList([]);
       setGroup("");

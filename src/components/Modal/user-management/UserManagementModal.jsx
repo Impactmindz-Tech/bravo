@@ -126,7 +126,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       } else {
         setSelectedFile(null);
       }
-      setValue("authrization_code", items?.authrization_code || "");
       setValue("first_name", items?.first_name || "");
       setValue("last_name", items?.last_name);
       setValue("username", items?.username);
@@ -162,7 +161,24 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     } else {
       reset();
       setSelectedFile(null);
-      setSelectedCountry("");
+      setSelectedCountry({
+        name: "Austria",
+        isoCode: "AT",
+        flag: "🇦🇹",
+        phonecode: "43",
+        currency: "EUR",
+        latitude: "47.33333333",
+        longitude: "13.33333333",
+        timezones: [
+          {
+            zoneName: "Europe/Vienna",
+            gmtOffset: 3600,
+            gmtOffsetName: "UTC+01:00",
+            abbreviation: "CET",
+            tzName: "Central European Time",
+          },
+        ],
+      });
       setSelectedState("");
       setMemberList([]);
       setSelectedCity("");
@@ -171,7 +187,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append("authrization_code", data?.authrization_code);
     formData.append("first_name", data?.first_name);
     formData.append("last_name", data?.last_name);
     formData.append("username", data?.email);
@@ -366,14 +381,14 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                   </div>
 
                   <div className="flex flex-wrap list-none mt-6 gap-6">
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    {/* <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="authrization_code">
                         {" "}
                         Authentication Code <span className="text-red-500 pl-1">*</span>
                       </label>
                       <input type="number" name="authrization_code" id="authrization_code" placeholder="385555" className="input" {...register("authrization_code")} />
                       <p>{errors?.authrization_code?.message}</p>
-                    </div>
+                    </div> */}
 
                     {items == null && (
                       <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
@@ -413,7 +428,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="email">
-                        Email Id<span className="text-red-500 pl-1">*</span>
+                        Email Id
                       </label>
                       <input type="text" name="email" id="email" className="input" {...register("email")} />
                       <p>{errors?.email?.message}</p>
@@ -421,7 +436,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="phone">
-                        Contact No<span className="text-red-500 pl-1">*</span>
+                        Contact No
                       </label>
                       <input type="number" name="phone" id="phone" className="input" {...register("phone")} />
                       <p>{errors?.phone?.message}</p>

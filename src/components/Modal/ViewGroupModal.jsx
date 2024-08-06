@@ -61,42 +61,6 @@ const ViewGroupModal = ({ viewModalState, setViewModalState, viewModalData }) =>
                           ))}
                         </>
                       )}
-                      {viewModalData?.data?.length > 0 && (
-                        <>
-                          {viewModalData.data.map((item) => (
-                            <tr className="text-center" key={item.user_id}>
-                              <td className="px-4 py-2 sm:max-w-[200px]">{item.first_name}</td>
-                              <td className="px-4 py-2">{item.last_name}</td>
-                              <td className="px-4 py-2">{item.username}</td>
-                              <td className="px-4 py-2 capitalize">{item.email}</td>
-                            </tr>
-                          ))}
-                        </>
-                      )}
-                      {viewModalData?.data?.length > 0 && (
-                        <>
-                          {viewModalData.data.map((item) => (
-                            <tr className="text-center" key={item.user_id}>
-                              <td className="px-4 py-2 sm:max-w-[200px]">{item.first_name}</td>
-                              <td className="px-4 py-2">{item.last_name}</td>
-                              <td className="px-4 py-2">{item.username}</td>
-                              <td className="px-4 py-2 capitalize">{item.email}</td>
-                            </tr>
-                          ))}
-                        </>
-                      )}
-                      {viewModalData?.data?.length > 0 && (
-                        <>
-                          {viewModalData.data.map((item) => (
-                            <tr className="text-center" key={item.user_id}>
-                              <td className="px-4 py-2 sm:max-w-[200px]">{item.first_name}</td>
-                              <td className="px-4 py-2">{item.last_name}</td>
-                              <td className="px-4 py-2">{item.username}</td>
-                              <td className="px-4 py-2 capitalize">{item.email}</td>
-                            </tr>
-                          ))}
-                        </>
-                      )}
                     </tbody>
                   </table>
                 </div>

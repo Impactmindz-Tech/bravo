@@ -23,11 +23,11 @@ export const profileValidation = yup.object({
 });
 
 export const createUser = yup.object({
-  authrization_code: yup.string().required("Authentication Code is required"),
+  // authrization_code: yup.string().required("Authentication Code is required"),
   first_name: yup.string().required("First Name is required"),
   last_name: yup.string().required("Last Name is required"),
-  phone: yup.string().required("Phone is required"),
-  email: yup.string().required("Email is required"),
+  // phone: yup.string().required("Phone is required"),
+  // email: yup.string().required("Email is required"),
   // password: yup.string().required("Password is required"),
   dob: yup.string().required("DOB is required"),
   // Age: yup.string().required("Age is required"),

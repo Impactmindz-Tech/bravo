@@ -22,9 +22,9 @@ export default function GroupManagement() {
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const[viewModalData,setViewModalData]=useState([])
+  const [viewModalData, setViewModalData] = useState([]);
   const groupData = useSelector((state) => state.group.group);
-const [viewModalState,setViewModalState]=useState(false)
+  const [viewModalState, setViewModalState] = useState(false);
   const groupStatusUpdate = async (id) => {
     const formData = new FormData();
     formData.append("group_id", id);
@@ -87,11 +87,10 @@ const [viewModalState,setViewModalState]=useState(false)
     dispatch(setGroup(response));
   };
 
-
-  const handleViewGroupModalData=(groupName,data)=>{
-    setViewModalState(true)
-    setViewModalData({name:groupName ,data})
-  }
+  const handleViewGroupModalData = (groupName, data) => {
+    setViewModalState(true);
+    setViewModalData({ name: groupName, data });
+  };
   return (
     <>
       {loading && <Loading />}
@@ -147,7 +146,9 @@ const [viewModalState,setViewModalState]=useState(false)
                           {item?.members?.slice(0, 3).map((member, index) => {
                             return <p key={index}>{member.username}</p>;
                           })}
-                          <span className="text-blue-900 font-bold cursor-pointer hover:text-[#0240bb]" onClick={()=>handleViewGroupModalData(item?.name,item?.members)}>view more</span>
+                          <span className="text-blue-900 font-bold cursor-pointer hover:text-[#0240bb]" onClick={() => handleViewGroupModalData(item?.name, item?.members)}>
+                            view more
+                          </span>
                         </div>
                       </td>
 
@@ -186,7 +187,7 @@ const [viewModalState,setViewModalState]=useState(false)
       {/* popup model */}
       <div className="flex items-center">
         <CreateGroupModal groupItem={groupItem} createGroupModalOpen={createGroupModalOpen} setCreateGroupModalOpen={handleModalClose} fetchGroup={fetchGroup} />
-        <ViewGroupModal viewModalData={viewModalData}  setViewModalState={setViewModalState} viewModalState={viewModalState} />
+        <ViewGroupModal viewModalData={viewModalData} setViewModalState={setViewModalState} viewModalState={viewModalState} />
       </div>
     </>
   );

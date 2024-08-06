@@ -187,9 +187,8 @@ const CreateGroupModal = ({ createGroupModalOpen, setCreateGroupModalOpen, fetch
                     Members Name <span className="text-red-500 font-extrabold">*</span>
                   </h4>
                   <div className="w-[85%] md:w-[100%] lg:w-[100%] xl:w-[75%] sm:w-[100%] py-2 px-2 list-none">
-                    {console.log(user)}
                     <Multiselect
-                      options={user?.data?.map((user) => ({ name: user.email, id: user.user_id }))}
+                      options={user?.data?.map((user) => ({ name: `${user.first_name} ${user.last_name} ${user.authrization_code}`, id: user.user_id }))}
                       selectedValues={groupMemberList}
                       onSelect={handleSelect}
                       onRemove={handleRemove}
