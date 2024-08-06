@@ -238,8 +238,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
 
   const clickOnReadOnly = () => {
     setFileName("");
-    setEventDocUrl("");
-    setDocFile([]);
   };
   return (
     <>
