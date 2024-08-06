@@ -109,9 +109,10 @@ const Dashboard = () => {
         <table className="min-w-full">
           <thead>
             <tr>
-              <th className="text-left">User Name</th>
-              <th className="text-left">Email id</th>
+              <th className="text-left"> Name</th>
+              <th className="text-left">Surname</th>
               <th className="text-left">Contact No</th>
+              <th className="text-left">Email id</th>
               <th className="text-left">Authentication Code</th>
               <th className="text-left">Status</th>
               <th className="text-left">Action</th>
@@ -122,6 +123,7 @@ const Dashboard = () => {
               <>
                 {dataDetails?.data?.map((item, index) => (
                   <tr key={index}>
+                  {console.log(item)}
                     <td className="text-left">
                       <div className="flex gap-2 items-center">
                         <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">{item.profile_picture ? <img src={item.profile_picture} alt="user " className="rounded-full w-[40px] h-[40px]" /> : <img src={adminUserProfile} alt="adminUserProfile " className="rounded-full w-[40px] h-[40px]" />}</div>
@@ -129,8 +131,9 @@ const Dashboard = () => {
                       </div>
                     </td>
 
-                    <td className="text-left">{item.email}</td>
+                    <td className="text-left capitalize">{item.last_name}</td>
                     <td className="text-left">{item.phone}</td>
+                    <td className="text-left">{item.email}</td>
                     <td className="text-left">{item.authrization_code}</td>
 
                     <td className="text-left cursor-pointer">

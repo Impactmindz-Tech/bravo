@@ -32,6 +32,8 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [filename, setFileName] = useState("");
   const [show, setShow] = useState(calenderModal);
   const [docFile, setDocFile] = useState([]);
+
+  const [backUpFileName, setBackupFileName] = useState("");
   useEffect(() => {
     if (calenderModal) {
       setShow(true);
@@ -317,15 +319,16 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                         </p>
                       )}
                     </div>
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="flex flex-col w-[100%] gap-y-2">
                       <label className="text-blue-300 text-sm" htmlFor="event_notes">
                         event notes
                       </label>
-                      <input type="text" name="event_notes" id="event_notes" placeholder="event notes" className="input w-full" {...register("event_notes")} />
+
+                      <textarea name="event_notes" id="event_notes" placeholder="event notes" className="input w-full h-[20vh] resize-none" {...register("event_notes")}></textarea>
                     </div>
 
                     {/* group id */}
-                    <div className="flex flex-col w-[45%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="flex flex-col w-[45%] gap-y-2 sm:w-[100%] lg:w-[45%]">
                       <label className="text-blue-300 text-sm" htmlFor="groupId">
                         Group id<span className="text-red-500 pl-1">*</span>
                       </label>
@@ -350,7 +353,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                     </div>
 
                     {/* user id */}
-                    <div className="flex flex-col w-[45%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="flex flex-col w-[45%] gap-y-2 sm:w-[100%] lg:w-[45%]">
                       <label className="text-blue-300 text-sm" htmlFor="userIdId">
                         User id<span className="text-red-500 pl-1">*</span>
                       </label>
@@ -371,7 +374,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                       />
                     </div>
                   </div>
-                  <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
+                  <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center my-10">
                     {eventDataToUpdate?.length !== 0 ? <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Update"}</button> : <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Save"}</button>}
 
                     <button className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none" onClick={() => setCalenderModal(false)}>
