@@ -96,8 +96,9 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
     formData.append("event_notes", data?.event_notes);
     // update
     if (eventDataToUpdate.length !== 0) {
-      formData.append("event_image", docFile);
-
+      if (docFile.length !== 0) {
+        formData.append("event_image", docFile);
+      }
       const updatedGroupIDs = JSON.stringify(groupMemberList?.map((member) => member.group_id || member.id));
 
       if (updatedGroupIDs.length === 2) {
