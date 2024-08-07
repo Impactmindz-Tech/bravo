@@ -26,7 +26,6 @@ export default function SystemSetting() {
   const [relationKeywordMultiform, setRelationKeywordMultiForm] = useState([]);
   const [categoryKeyword, setCategoryKeyword] = useState([]);
   const [categoryKeywordMultiform, setCategoryKeywordMultiForm] = useState([]);
-
   const [privacyText, setPrivacyText] = useState("");
   const [privacyDocUrl, setPrivacyDocUrl] = useState("");
   const [aboutText, setAboutText] = useState("");
@@ -304,7 +303,6 @@ export default function SystemSetting() {
     let response = await GetPagesApi();
     if (response?.isSuccess) {
       let data = response.data;
-      console.log(data);
       data.map((item) => {
         if (item.page_name == "About Us") {
           setAboutText(item.page_content);
@@ -314,12 +312,6 @@ export default function SystemSetting() {
           setPrivacyDocUrl(item.page_document);
         }
       });
-      // if(data.page_name==="About Us"){
-      //   console.log("about")
-      // }else{
-
-      //   console.log("privacy")
-      // }}
     }
   };
 
@@ -327,24 +319,38 @@ export default function SystemSetting() {
     GetPagesApiData();
   }, []);
 
-  const handlePageUpdate =async (e) => {
+  const handlePageUpdate = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
 
-
-    if(aboutText===""){
+    if (aboutText === "") {
       toast.error("Please Enter Text in About ");
-      return
+      return;
     }
-    if(privacyText===""){
+    if (privacyText === "") {
       toast.error("Please Enter Text in Privacy ");
-      return
+      return;
     }
 
+    formData.append("page_id", 1);
+    formData.append("page_content", aboutText);
+    if (files.aboutDocumentFileDocument !== null) {
+      formData.append("page_document", files.aboutDocumentFileDocument);
+    }
+    await updatePageApi(formData);
 
-    
-    // updatePageApi()
+    formData.append("page_id", 2);
+    formData.append("page_content", privacyText);
+    if (files.privacyDocumentFileDocument !== null) {
+      formData.append("page_document", files.privacyDocumentFileDocument);
+    }
+    let response = await updatePageApi(formData);
 
-    // 
+    if (response?.isSuccess) {
+      toast.success(response?.message);
+      setFiles([]);
+      GetPagesApiData();
+    }
   };
   return (
     <>
