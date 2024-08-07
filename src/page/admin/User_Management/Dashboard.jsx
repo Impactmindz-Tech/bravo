@@ -5,7 +5,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import editIcon from "../../../assets/images/editIcon.svg";
 import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import adminUserProfile from "../../../assets/images/adminUserProfile.svg";
-import { DashboardApi, searchUserApi, userStateUpdate } from "../../../utils/service/DashboardService";
+import { DashboardApi, deleteUserDataByID, searchUserApi, userStateUpdate } from "../../../utils/service/DashboardService";
 import { setUser } from "../../../store/Slice/UserSlice";
 import toast from "react-hot-toast";
 import Pagination from "../../../components/Pagination";
@@ -81,8 +81,18 @@ const Dashboard = () => {
     dispatch(setUser(response));
   };
 
-  const deleteUser = (id) => {
-    console.log(id);
+  const deleteUser = async (id) => {
+    const formData = new FormData();
+    formData.append("user_id", id);
+    try {
+      const response = await deleteUserDataByID(formData);
+      if (response?.isSuccess) {
+        toast.success(response?.message);
+        fetchDashboardData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
