@@ -83,7 +83,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   };
 
   const handleGroupRemove = (groupMemberList) => setGroupMemberList(groupMemberList);
-
   const handleFileChange = (e) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
@@ -105,7 +104,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       setDocList((prevList) => [...prevList, ...fileData]);
     }
   };
-
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("title", data?.event_title);
@@ -149,10 +147,9 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
         console.log(error);
       }
     } else {
-      console.log(otherSelectedFiles, "tinku");
-      // const eventFilesDoc = JSON.stringify(otherSelectedFiles.map((member) => console.log(member , 'tinku saini fdfgsdfgrgr')));
-      const eventFilesDoc = otherSelectedFiles.map((member) => member)
-      console.log(eventFilesDoc , 'tinku saini');
+      for (let index = 0; index < otherSelectedFiles.length; index++) {
+        formData.append(`event_doc[${index}]`, otherSelectedFiles[index]);
+      }
 
       const groupIDs = JSON.stringify(groupMemberList?.map((member) => member.id));
 
@@ -168,8 +165,8 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
         return;
       }
       formData.append("user_id", userIds);
-      
-      formData.append("event_doc", eventFilesDoc);
+
+      // formData.append("event_doc", eventFilesDoc);
       for (let index = 0; index < otherSelectedFiles.length; index++) {
         // const element = array[index];
       }
@@ -259,6 +256,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       reset();
       setEventDocUrl("");
       setFileName("");
+      setDocList([]);
       setDocFile([]);
       setUserMemberList([]);
       setGroupMemberList([]);
@@ -368,7 +366,11 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                         {}
                       </label>
 
-                      {filename ? <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => clickOnReadOnly()} /> : <input type="file" ref={otherImage} name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" multiple onChange={handleFileChange} />}
+                      {filename ? (
+                        <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => clickOnReadOnly()} />
+                      ) : (
+                        <input type="file" ref={otherImage} name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" multiple onChange={handleFileChange} />
+                      )}
 
                       {eventDocUrl !== "" && (
                         <p className="absolute -bottom-6 left-0 w-full text-center font-medium hover:text-[#12141b] text-[#2a2f3e]">
@@ -465,7 +467,11 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                     </div>
                   </div>
                   <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
-                    {eventDataToUpdate?.length !== 0 ? <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Update"}</button> : <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Save"}</button>}
+                    {eventDataToUpdate?.length !== 0 ? (
+                      <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Update"}</button>
+                    ) : (
+                      <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Save"}</button>
+                    )}
 
                     <button className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none" onClick={() => setCalenderModal(false)}>
                       Cancel
