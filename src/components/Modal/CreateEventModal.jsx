@@ -29,7 +29,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [groupMemberList, setGroupMemberList] = useState([]);
   const [docList, setDocList] = useState([]);
   const [group, setGroup] = useState("");
-  const [eventDocUrl, setEventDocUrl] = useState("");
   const [filename, setFileName] = useState("");
   const [show, setShow] = useState(calenderModal);
   const [docFile, setDocFile] = useState([]);
@@ -208,8 +207,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   };
   useEffect(() => {
     if (eventDataToUpdate[0]) {
-      setEventDocUrl(eventDataToUpdate[0]?.event_doc);
-
       if (eventDataToUpdate[0].group_id !== null) {
         const trimmedGroupString = eventDataToUpdate[0].group_id.trim().slice(1, -1);
         const groupIdArray = trimmedGroupString.split(",").map(Number);
@@ -249,12 +246,9 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
         const url = eventDataToUpdate[0].event_doc;
         const fileName = url.split("/").pop();
         setFileName(fileName);
-      } else {
-        setEventDocUrl("");
       }
     } else {
       reset();
-      setEventDocUrl("");
       setFileName("");
       setDocList([]);
       setDocFile([]);
@@ -372,13 +366,13 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                         <input type="file" ref={otherImage} name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" multiple onChange={handleFileChange} />
                       )}
 
-                      {eventDocUrl !== "" && (
+                      {/* {eventDocUrl !== "" && (
                         <p className="absolute -bottom-6 left-0 w-full text-center font-medium hover:text-[#12141b] text-[#2a2f3e]">
                           <Link to={eventDocUrl} target="_blank">
                             View Event Doc
                           </Link>
                         </p>
-                      )}
+                      )} */}
                     </div>
                     <div className="my-6 grid grid-cols-4 2xl:grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4"></div>
 
