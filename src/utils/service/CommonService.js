@@ -17,6 +17,9 @@ export const getAllUser = async () => {
     console.log(error);
   }
 };
+
+
+
 export const getAdminRolesApi = async () => {
   try {
     const responce = await axiosInstance.get(`?page=getAdminRoles`);

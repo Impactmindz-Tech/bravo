@@ -95,3 +95,25 @@ export const updateRolesApi = async (payload) => {
     toast.error(error.response.data.message);
   }
 };
+
+
+export const GetPagesApi = async () => {
+  try {
+    const responce = await axiosInstance.get(`?page=Getpages_api`);
+    return responce.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+export const updatePageApi = async (payload) => {
+  try {
+    const responce = await axiosInstance.post(`?page=updatePage`, payload);
+    return responce.data;
+  } catch (error) {
+    console.log(error);
+    toast.error(error.response.data.message);
+  }
+};

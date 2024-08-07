@@ -157,6 +157,16 @@ td a {
   border: 1px solid #c9c9c9;
   border-radius: 10px;
 }
+.FileInput {
+  padding: 4px;
+  outline: none;
+  border: 1px solid #c9c9c9;
+  border-radius: 10px;
+}
+.filesSet{
+  outline: none !important; 
+  border: none !important;
+}
 
 .no_scroll::-webkit-scrollbar {
   display: none;
@@ -185,6 +195,8 @@ td a {
   box-shadow: none;
   background: none;
 }
+
+
 
 @media screen and (max-width: 639px) {
   .p-1.px-2.rounded-md.text-sm {

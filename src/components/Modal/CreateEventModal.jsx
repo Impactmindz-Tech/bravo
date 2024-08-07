@@ -32,7 +32,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   const [filename, setFileName] = useState("");
   const [show, setShow] = useState(calenderModal);
   const [docFile, setDocFile] = useState([]);
-  const [imageURL, setImageURL] = useState(null);
   const [otherSelectedFiles, setOtherSelectedFiles] = useState([]);
   const otherImage = useRef(null);
 
@@ -96,6 +95,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       const fileData = newFiles.map((file, index) => ({
         name: file.name,
         id: `${Date.now()}-${index}`, // Unique ID based on timestamp and index
+        url: URL.createObjectURL(file), // Generate preview URL
       }));
 
       // Update state with new files
@@ -115,9 +115,34 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
 
     // update
     if (eventDataToUpdate.length !== 0) {
-      if (docFile.length !== 0) {
-        formData.append("event_image", docFile);
+      // Convert docList to the format of otherSelectedFiles
+
+      // Merge and remove duplicates based on 'name'
+      // Create a set of file names from otherSelectedFiles
+      const otherSelectedFileNames = new Set(otherSelectedFiles.map((file) => file.name));
+
+      // Filter docList to exclude files with names already in otherSelectedFiles
+      const filteredDocList = docList.filter((file) => !otherSelectedFileNames.has(file.name));
+
+      // Format filteredDocList to match the structure of otherSelectedFiles
+      const formattedDocList = filteredDocList.map((file) => ({
+        name: file.name,
+      }));
+
+      const formattedDocListArray = formattedDocList?.map((file) => file.name);
+      for (let index = 0; index < otherSelectedFiles.length; index++) {
+        formData.append(`event_doc[${index}]`, otherSelectedFiles[index]);
       }
+
+      let count = 1;
+      for (let index = 0; index < formattedDocListArray.length; index++) {
+        formData.append(`event_doc[${count}]`, `[${formattedDocListArray[index]}]`);
+        count++;
+      }
+
+      // if (docFile.length !== 0) {
+      //   formData.append("event_image", docFile);
+      // }
       const updatedGroupIDs = JSON.stringify(groupMemberList?.map((member) => member.group_id || member.id));
 
       if (updatedGroupIDs.length === 2) {
@@ -207,6 +232,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
   };
   useEffect(() => {
     if (eventDataToUpdate[0]) {
+      setDocList([]);
       if (eventDataToUpdate[0].group_id !== null) {
         const trimmedGroupString = eventDataToUpdate[0].group_id.trim().slice(1, -1);
         const groupIdArray = trimmedGroupString.split(",").map(Number);
@@ -241,7 +267,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       setValue("event_end", convertToDateTimeLocal(eventDataToUpdate[0].end_time));
 
       if (eventDataToUpdate[0].event_doc !== null) {
-        setDocList([]);
         const newFilesArray = JSON.parse(eventDataToUpdate[0]?.event_doc);
         const fileData = newFilesArray.map((file, index) => ({
           name: file,
@@ -251,7 +276,9 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       }
     } else {
       reset();
-
+      if (otherImage.current) {
+        otherImage.current.value = ""; // Clear the file input
+      }
       setDocList([]);
       setDocFile([]);
       setUserMemberList([]);
@@ -260,16 +287,17 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       setUser("");
     }
   }, [setValue, reset, eventDataToUpdate, currentEventDate]);
-
   // handle files lists
   const options = docList.map((file) => ({
     name: file.name,
     id: file.id,
+    url: file.url,
   }));
 
   const selectedValues = docList.map((file) => ({
     name: file.name,
     id: file.id,
+    url: file.url,
   }));
 
   const handlDocFileSelect = (selectedList) => {
@@ -284,6 +312,11 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
     }
   };
 
+  const handleItemClick = (e, file) => {
+    console.log("click");
+    e.stopPropagation(); // Prevent the dropdown from closing
+    window.open(file.url, "_blank", "noopener,noreferrer");
+  };
   return (
     <>
       <Modal open={calenderModal} onClose={() => setCalenderModal(false)} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
@@ -352,52 +385,88 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                       {/* <p>{errors?.event_cost?.message}</p> */}
                     </div>
 
-                    <div className="relative flex flex-col w-[45%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm" htmlFor="event_doc">
-                        event doc <br />
-                        {}
-                      </label>
+                    <div className="relative flex w-full flex-wrap gap-2">
+                      <div className="relative flex flex-col w-[45%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                        <label className="text-blue-300 text-sm" htmlFor="event_doc">
+                          event doc <br />
+                          {}
+                        </label>
 
-                      <input type="file" ref={otherImage} name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" multiple onChange={handleFileChange} />
+                        <input type="file" ref={otherImage} name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" multiple onChange={handleFileChange} />
 
-                      {/* {eventDocUrl !== "" && (
+                        {/* {eventDocUrl !== "" && (
                         <p className="absolute -bottom-6 left-0 w-full text-center font-medium hover:text-[#12141b] text-[#2a2f3e]">
                           <Link to={eventDocUrl} target="_blank">
                             View Event Doc
                           </Link>
                         </p>
                       )} */}
-                    </div>
-                    <div className="my-6 grid grid-cols-4 2xl:grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+                      </div>
 
-                    <div className="flex flex-col w-full">
-                      <label className="text-blue-300 text-sm" htmlFor="groupId">
-                        Selected Docs<span className="text-red-500 pl-1">*</span>
-                      </label>
-                      <div className="relative">
-                        <Multiselect
-                          options={options}
-                          selectedValues={selectedValues}
-                          onSelect={handlDocFileSelect}
-                          className="my-2"
-                          onRemove={handlDocFileSelectRemove}
-                          displayValue="name"
-                          placeholder="Event Doc Files Preview"
-                          listProps={{
-                            maxHeight: 200, // Set the maximum height of the dropdown list
-                          }}
-                          style={{
-                            multiselectContainer: {
-                              width: "100%",
-                              maxHeight: "11vh", // Set the maximum height to 11vh
-                              overflowY: "auto", // Enable vertical scrolling
-                            },
-                            searchBox: { width: "100%" },
-                          }}
-                        />
+                      <div className="flex flex-col w-full">
+                        <label className="text-blue-300 text-sm" htmlFor="groupId">
+                          Selected Docs<span className="text-red-500 pl-1">*</span>
+                        </label>
+                        <div className="relative">
+                          <Multiselect
+                            options={options}
+                            selectedValues={selectedValues}
+                            onSelect={handlDocFileSelect}
+                            onRemove={handlDocFileSelectRemove}
+                            displayValue="name"
+                            placeholder="Event Doc Files Preview"
+                            listProps={{
+                              maxHeight: 200, // Set the maximum height of the dropdown list
+                            }}
+                            style={{
+                              multiselectContainer: {
+                                width: "100%",
+                                maxHeight: "11vh",
+                                overflowY: "auto",
+                              },
+                              searchBox: { width: "100%" },
+                            }}
+                            customCloseIcon={<span style={{ cursor: "pointer", color: "red" }}>&times;</span>}
+                            customChipRenderer={(selectedItem, handleRemove) => (
+                              <div
+                                key={selectedItem.id}
+                                style={{
+                                  display: "inline-block",
+                                  padding: "5px 10px",
+                                  margin: "5px",
+                                  backgroundColor: "#f1f1f1",
+                                  borderRadius: "3px",
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    cursor: "pointer",
+                                    color: "blue",
+                                    textDecoration: "underline",
+                                  }}
+                                  onClick={(e) => handleItemClick(e, selectedItem)}
+                                >
+                                  {selectedItem.name}
+                                </span>
+                                <span
+                                  style={{
+                                    marginLeft: "10px",
+                                    cursor: "pointer",
+                                    color: "red",
+                                  }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleRemove(selectedItem);
+                                  }}
+                                >
+                                  &times;
+                                </span>
+                              </div>
+                            )}
+                          />
+                        </div>
                       </div>
                     </div>
-
                     {/* group id */}
                     <div className="flex flex-col w-[45%] gap-y-2 sm:w-[100%] lg:w-[45%]">
                       <label className="text-blue-300 text-sm" htmlFor="groupId">

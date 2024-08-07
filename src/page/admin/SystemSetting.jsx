@@ -7,8 +7,10 @@ import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { systemSetting } from "../../utils/validation/FormValidation";
-import { createCategoryApi, createRelationApi, deleteCategory, deleteRelation, getAdminRoles, getAllCategories, getAllRelation, getAllRoles, updateRolesApi } from "../../utils/service/SystemSettingService";
+import { createCategoryApi, createRelationApi, deleteCategory, deleteRelation, getAdminRoles, getAllCategories, getAllRelation, getAllRoles, updatePageApi, updateRolesApi } from "../../utils/service/SystemSettingService";
 import toast from "react-hot-toast";
+import { GetPagesApi } from "../../utils/service/SystemSettingService";
+import { Link } from "react-router-dom";
 
 export default function SystemSetting() {
   const {
@@ -24,6 +26,11 @@ export default function SystemSetting() {
   const [relationKeywordMultiform, setRelationKeywordMultiForm] = useState([]);
   const [categoryKeyword, setCategoryKeyword] = useState([]);
   const [categoryKeywordMultiform, setCategoryKeywordMultiForm] = useState([]);
+
+  const [privacyText, setPrivacyText] = useState("");
+  const [privacyDocUrl, setPrivacyDocUrl] = useState("");
+  const [aboutText, setAboutText] = useState("");
+  const [aboutDocUrl, setAboutDocUrl] = useState("");
   const [relationData, setRelationData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [relationList, setRelationList] = useState([]);
@@ -73,9 +80,9 @@ export default function SystemSetting() {
   };
 
   const handleRemoveFile = (type) => () => {
-    if(type=="aboutDocumentFileDocument"){
+    if (type == "aboutDocumentFileDocument") {
       fileAboutUsRef.current.value = null;
-    }else{
+    } else {
       filePrivacyRef.current.value = null;
     }
     setFiles((prevFiles) => ({
@@ -292,6 +299,53 @@ export default function SystemSetting() {
     }
   };
 
+  // get Pages
+  const GetPagesApiData = async () => {
+    let response = await GetPagesApi();
+    if (response?.isSuccess) {
+      let data = response.data;
+      console.log(data);
+      data.map((item) => {
+        if (item.page_name == "About Us") {
+          setAboutText(item.page_content);
+          setAboutDocUrl(item.page_document);
+        } else {
+          setPrivacyText(item.page_content);
+          setPrivacyDocUrl(item.page_document);
+        }
+      });
+      // if(data.page_name==="About Us"){
+      //   console.log("about")
+      // }else{
+
+      //   console.log("privacy")
+      // }}
+    }
+  };
+
+  useEffect(() => {
+    GetPagesApiData();
+  }, []);
+
+  const handlePageUpdate =async (e) => {
+    e.preventDefault();
+
+
+    if(aboutText===""){
+      toast.error("Please Enter Text in About ");
+      return
+    }
+    if(privacyText===""){
+      toast.error("Please Enter Text in Privacy ");
+      return
+    }
+
+
+    
+    // updatePageApi()
+
+    // 
+  };
   return (
     <>
       <div className="sm:max-h-[90vh] h-full sm:overflow-hidden sm:overflow-y-auto mainFormSection pb-2 md:max-h-[90vh]  md:overflow-hidden md:overflow-y-auto ">
@@ -424,68 +478,81 @@ export default function SystemSetting() {
 
           {/* right section */}
           <div className="w-[38%]  md:w-[100%] boxShadow rounded-2xl sm:w-[98%] sm:mt-5">
-            <h1 className="font-bold mx-5 my-5 sm:text-sm tg:text-xl">About Us</h1>
+            <form onSubmit={handlePageUpdate}>
+              <h1 className="font-bold mx-5 my-5 sm:text-sm tg:text-xl">About Us</h1>
 
-            <div className="flex flex-wrap pl-5 mt-4 gap-2 sm:flex-col sm:gap-y-1 sm:pl-3">
-              <h4 className="text-blue-300 w-[25%] font-medium text-sm py-3 sm:py-1  sm:w-[96%] sm:text-sm lg:w-[96%] lg:py-0 ">Upload Document</h4>
+              <div className="flex  pl-5 mt-4 gap-2 flex-wrap sm:gap-y-1 sm:pl-3">
+                <h4 className="text-blue-300 w-[25%] font-medium text-sm py-3 sm:py-1  sm:w-[96%] sm:text-sm lg:w-[96%] lg:py-0 ">Upload Document</h4>
 
-              <div className="flex w-[71%] items-center  py-1 px-1 input sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] lg:py-1 ">
-                <label htmlFor="file-upload-document" className="flex items-center sm:justify-center sm:text-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]">
-                  <FiUpload className="font-semibold mr-1 text-sm" />
-                  Upload
-                </label>
-                <input id="file-upload-document" type="file" ref={fileAboutUsRef} className="hidden" onChange={handleFileChange("aboutDocumentFileDocument")} />
-                {files.aboutDocumentFileDocument && (
-                  <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2  sm:w-[100%] sm:ml-0">
-                    <span className="text-sm pl-2 ">{files.aboutDocumentFileDocument.name}</span>
-                    <button onClick={handleRemoveFile("aboutDocumentFileDocument")} className="bg-none text-sm bg-blue-300 outline-none border-none text-textMainColor-900">
-                      <IoIosCloseCircleOutline className="text-lg" />
-                    </button>
-                  </div>
-                )}
+                <div className="flex gap-2 w-[71%] items-center  py-1 px-1 input flex-wrap sm:w-[96%] sm:gap-y-1 lg:w-[96%] lg:py-1 relative">
+                  <label htmlFor="file-upload-document" className="flex items-center sm:justify-center sm:text-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white lg:w-[100%]">
+                    <FiUpload className="font-semibold mr-1 text-sm" />
+                    Upload
+                  </label>
+                  <input id="file-upload-document" type="file" ref={fileAboutUsRef} className="hidden" onChange={handleFileChange("aboutDocumentFileDocument")} />
+                  {files.aboutDocumentFileDocument && (
+                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2  lg:w-[100%] sm:ml-0">
+                      <span className="text-sm pl-2 ">{files.aboutDocumentFileDocument.name}</span>
+                      <button onClick={handleRemoveFile("aboutDocumentFileDocument")} className="bg-none text-sm bg-blue-300 outline-none border-none text-textMainColor-900">
+                        <IoIosCloseCircleOutline className="text-lg" />
+                      </button>
+                    </div>
+                  )}
+                  {aboutDocUrl !== "" && (
+                    <h1 className="font-semibold">
+                      <Link to={aboutDocUrl} target="_blank">
+                        Live Preview
+                      </Link>
+                    </h1>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3 ">Text</h2>
-            <textarea name="text" rows={3} className=" mx-5 my-2 w-[94%] resize-none input outline-none px-2 sm:mx-3 sm:w-[92%] lg:w-[90%] lg:max-h-[100px]  md:w-[92%]"></textarea>
+              <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3 ">Text</h2>
+              <textarea name="text" rows={3} value={aboutText} onChange={(e) => setAboutText(e.target.value)} className=" mx-5 my-2 w-[94%] resize-none input outline-none px-2 sm:mx-3 sm:w-[92%] lg:w-[90%] lg:max-h-[100px]  md:w-[92%]"></textarea>
 
-            {/*  divider*/}
-            <hr className="border-[#EAEAEA]" />
-            <h1 className="font-bold mx-5 my-5 sm:my-1 lg:my-2 ">Privacy Policy</h1>
+              {/*  divider*/}
+              <hr className="border-[#EAEAEA]" />
+              <h1 className="font-bold mx-5 my-5 sm:my-1 lg:my-2 ">Privacy Policy</h1>
 
-            <div className="flex pl-5 mt-4 gap-2 sm:flex-col flex-wrap lg:mt-2">
-              <h4 className="text-blue-300 w-[25%] lg:w-[100%] font-medium text-sm py-3 sm:w-[100%]">Upload Document</h4>
+              <div className="flex pl-5 mt-4 gap-2 sm:flex-col flex-wrap lg:mt-2">
+                <h4 className="text-blue-300 w-[25%] lg:w-[100%] font-medium text-sm py-3 sm:w-[100%]">Upload Document</h4>
 
-              <div className="flex w-[71%] items-center  py-1 px-1 input sm:flex-col sm:w-[96%] sm:gap-y-1 lg:w-[96%] lg:py-1 ">
-                <label htmlFor="file-upload-privacy" className="flex items-center sm:justify-center sm:text-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white sm:w-[100%]">
-                  <FiUpload className="font-semibold mr-1 text-sm" />
-                  Upload
-                </label>
-                <input id="file-upload-privacy" type="file" ref={filePrivacyRef} className="hidden" onChange={handleFileChange("privacyDocumentFileDocument")} />
-                {files.privacyDocumentFileDocument && (
-                  <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2  sm:w-[100%] sm:ml-0">
-                    <span className="text-sm pl-2 ">{files.privacyDocumentFileDocument.name}</span>
-                    <button onClick={handleRemoveFile("privacyDocumentFileDocument")} className="bg-none text-sm bg-blue-300 outline-none border-none text-textMainColor-900">
-                      <IoIosCloseCircleOutline className="text-lg" />
-                    </button>
-                  </div>
-                )}
+                <div className="flex gap-2 w-[71%] items-center  py-1 px-1 input flex-wrap xl:w-[96%] sm:gap-y-1  lg:py-1 ">
+                  <label htmlFor="file-upload-privacy" className="flex items-center sm:justify-center sm:text-center bg-blue-900 px-2 py-1 rounded-lg cursor-pointer font-semibold text-white xl:w-[100%]">
+                    <FiUpload className="font-semibold mr-1 text-sm" />
+                    Upload
+                  </label>
+                  <input id="file-upload-privacy" type="file" ref={filePrivacyRef} className="hidden" onChange={handleFileChange("privacyDocumentFileDocument")} />
+                  {files.privacyDocumentFileDocument && (
+                    <div className="flex justify-between items-center bg-blue-300 rounded-full ml-1 px-2  xl:w-[100%] sm:ml-0">
+                      <span className="text-sm pl-2 ">{files.privacyDocumentFileDocument.name}</span>
+                      <button onClick={handleRemoveFile("privacyDocumentFileDocument")} className="bg-none text-sm bg-blue-300 outline-none border-none text-textMainColor-900">
+                        <IoIosCloseCircleOutline className="text-lg" />
+                      </button>
+                    </div>
+                  )}
+                  {privacyDocUrl !== "" && (
+                    <h1 className="font-semibold">
+                      <Link to={privacyDocUrl} target="_blank">
+                        Live Preview
+                      </Link>
+                    </h1>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3">Text</h2>
-            <textarea name="text" rows={3} className="border mx-5 my-2 w-[94%] resize-none input outline-none px-2 sm:mx-3 sm:w-[92%]  lg:w-[90%] lg:max-h-[100px]  md:w-[92%]"></textarea>
+              <h2 className="mx-5 text-sm mt-2 text-secondary sm:mx-3">Text</h2>
+              <textarea name="text" rows={3} value={privacyText} onChange={(e) => setPrivacyText(e.target.value)} className="border mx-5 my-2 w-[94%] resize-none input outline-none px-2 sm:mx-3 sm:w-[92%]  lg:w-[90%] lg:max-h-[100px]  md:w-[92%]"></textarea>
 
-
-                {/* bottom btn section */}
-        <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5 lg:mr-0">
-          <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none w-[120px]">Save</button>
-          <button className="border border-black bg-white  text-black font-semibold rounded-lg focus:outline-none hover:border-black">cancel</button>
-        </div>
+              {/* bottom btn section */}
+              <div className="flex justify-end mr-9 gap-2 mb-4 sm:justify-center sm:mr-0 sm:pb-5 lg:mr-0">
+                <button className=" bg-blue-900 text-textMainColor-900 font-semibold rounded-lg focus:outline-none border-none w-[120px]">Update</button>
+                <button className="border border-black bg-white  text-black font-semibold rounded-lg focus:outline-none hover:border-black">cancel</button>
+              </div>
+            </form>
           </div>
-       
         </div>
-    
       </div>
     </>
   );
