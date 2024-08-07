@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoIosSearch } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { FaEye } from "react-icons/fa";
 import editIcon from "../../../assets/images/editIcon.svg";
+import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import adminUserProfile from "../../../assets/images/adminUserProfile.svg";
 import { DashboardApi, searchUserApi, userStateUpdate } from "../../../utils/service/DashboardService";
 import { setUser } from "../../../store/Slice/UserSlice";
@@ -80,6 +80,10 @@ const Dashboard = () => {
     const response = await searchUserApi({ search: e.target.value });
     dispatch(setUser(response));
   };
+
+  const deleteUser = (id) => {
+    console.log(id);
+  };
   return (
     <>
       {loading && <Loading />}
@@ -121,33 +125,33 @@ const Dashboard = () => {
           <tbody>
             {dataDetails?.data?.length > 0 ? (
               <>
-                {dataDetails?.data?.map((item, index) => (
-                  <tr key={index}>
-                    <td className="text-left">
-                      <div className="flex gap-2 items-center">
-                        <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">{item.profile_picture ? <img src={item.profile_picture} alt="user " className="rounded-full w-[40px] h-[40px]" /> : <img src={adminUserProfile} alt="adminUserProfile " className="rounded-full w-[40px] h-[40px]" />}</div>
-                        <span>{item.first_name}</span>
-                      </div>
-                    </td>
+                {dataDetails?.data
+                  ?.filter((item) => item.is_active !== 2)
+                  .map((item, index) => (
+                    <tr key={index}>
+                      <td className="text-left">
+                        <div className="flex gap-2 items-center">
+                          <div className="w-[40px] flex justify-center md:w-[60px] lg:w-[60px]">{item.profile_picture ? <img src={item.profile_picture} alt="user" className="rounded-full w-[40px] h-[40px]" /> : <img src={adminUserProfile} alt="adminUserProfile" className="rounded-full w-[40px] h-[40px]" />}</div>
+                          <span>{item.first_name}</span>
+                        </div>
+                      </td>
 
-                    <td className="text-left capitalize">{item.last_name}</td>
-                    <td className="text-left">{item.phone}</td>
-                    <td className="text-left">{item.email}</td>
-                    <td className="text-left">{item.authrization_code}</td>
+                      <td className="text-left capitalize">{item.last_name}</td>
+                      <td className="text-left">{item.phone}</td>
+                      <td className="text-left">{item.email}</td>
+                      <td className="text-left">{item.authrization_code}</td>
 
-                    <td className="text-left cursor-pointer">
-                      <div onClick={() => handleClose(item?.user_id)}>{item.is_active === 1 ? <div className="border text-center rounded-full bg-success text-white p-1  text-sm w-[80px] ">Active</div> : <div className="border p-1 text-sm w-[80px]   text-center rounded-full bg-danger text-white">Inactive</div>}</div>
-                    </td>
-                    <td className="text-left">
-                      <div className="flex gap-3 sm:gap-1 items-center   sm:gap-y-3 sm:items-center md:gap-1 md:gap-y-3 md:items-center  xl:gap-1">
-                        <img onClick={() => handleEditUser(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer  sm:ml-0 sm:mr-0 md:w-[18px] md:ml-0 md:mr-0  lg:w-[18px] xl:mr-0" />
-                        {/* <Link to={`/admin/user/${item?.user_id}`} className="flex justify-center text-[#065813] cursor-pointer lg:w-[15px] ">
-                          <FaEye />
-                        </Link> */}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      <td className="text-left cursor-pointer">
+                        <div onClick={() => handleClose(item?.user_id)}>{item.is_active === 1 ? <div className="border text-center rounded-full bg-success text-white p-1 text-sm w-[80px]">Active</div> : <div className="border p-1 text-sm w-[80px] text-center rounded-full bg-danger text-white">Inactive</div>}</div>
+                      </td>
+                      <td className="text-left">
+                        <div className="flex gap-3 sm:gap-1 items-center sm:gap-y-3 sm:items-center md:gap-1 md:gap-y-3 md:items-center xl:gap-1">
+                          <img onClick={() => handleEditUser(item)} src={editIcon} alt="edit icon" className="mr-2 text-[#826007] hover:text-blue-800 cursor-pointer sm:ml-0 sm:mr-0 md:w-[18px] md:ml-0 md:mr-0 lg:w-[18px] xl:mr-0" />
+                          <img src={deleteIcon} onClick={() => deleteUser(item.user_id)} alt="delete icon" className="mr-2 text-[#4E493E] hover:text-red-800 cursor-pointer sm:w-[20px] sm:mr-0 sm:ml-0 md:w-[20px] md:mr-0 md:ml-0 lg:w-[30px] xl:mr-0" />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </>
             ) : (
               <tr>

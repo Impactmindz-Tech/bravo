@@ -71,3 +71,22 @@ export const getUserDataByID = async (id) => {
     console.log(error);
   }
 };
+
+
+
+export const deleteUserDataByID = async (payload) => {
+  let ids = parseInt(payload.event_id);
+  try {
+    const responce = await axiosInstance.delete(`?page=deleteEvent`, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: { event_id: ids },
+    });
+    return responce.data;
+  } catch (error) {
+    console.log(error);
+    toast.error(error.response.data.message);
+
+  }
+};
