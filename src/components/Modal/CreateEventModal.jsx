@@ -237,19 +237,21 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       setValue("event_cost", eventDataToUpdate[0]?.cost);
       setValue("event_notes", eventDataToUpdate[0]?.event_notes);
       setValue("event_group_id", eventDataToUpdate[0]?.group_id);
-
       setStartTime(convertToDateTimeLocal(eventDataToUpdate[0].start_time));
-
       setValue("event_end", convertToDateTimeLocal(eventDataToUpdate[0].end_time));
 
       if (eventDataToUpdate[0].event_doc !== null) {
-        const url = eventDataToUpdate[0].event_doc;
-        const fileName = url.split("/").pop();
-        setFileName(fileName);
+        setDocList([]);
+        const newFilesArray = JSON.parse(eventDataToUpdate[0]?.event_doc);
+        const fileData = newFilesArray.map((file, index) => ({
+          name: file,
+          id: `${Date.now()}-${index}`, // Unique ID based on timestamp and index
+        }));
+        setDocList((prevDocList) => [...prevDocList, ...fileData]);
       }
     } else {
       reset();
-      setFileName("");
+
       setDocList([]);
       setDocFile([]);
       setUserMemberList([]);
@@ -258,10 +260,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
       setUser("");
     }
   }, [setValue, reset, eventDataToUpdate, currentEventDate]);
-
-  const clickOnReadOnly = () => {
-    setFileName("");
-  };
 
   // handle files lists
   const options = docList.map((file) => ({
@@ -354,17 +352,13 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                       {/* <p>{errors?.event_cost?.message}</p> */}
                     </div>
 
-                    <div className="relative flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="relative flex flex-col w-[45%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="event_doc">
                         event doc <br />
                         {}
                       </label>
 
-                      {filename ? (
-                        <input type="text" id="file-name" className="input w-full" value={filename} readOnly onClick={() => clickOnReadOnly()} />
-                      ) : (
-                        <input type="file" ref={otherImage} name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" multiple onChange={handleFileChange} />
-                      )}
+                      <input type="file" ref={otherImage} name="event_doc" id="event_doc" placeholder="event doc" className="input w-full" multiple onChange={handleFileChange} />
 
                       {/* {eventDocUrl !== "" && (
                         <p className="absolute -bottom-6 left-0 w-full text-center font-medium hover:text-[#12141b] text-[#2a2f3e]">
@@ -395,7 +389,6 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                           style={{
                             multiselectContainer: {
                               width: "100%",
-                              minHeight: "11vh", // Set the minimum height to 11vh
                               maxHeight: "11vh", // Set the maximum height to 11vh
                               overflowY: "auto", // Enable vertical scrolling
                             },
@@ -461,11 +454,7 @@ const CreateEventModal = ({ calenderModal, setCalenderModal, currentEventDate, e
                     </div>
                   </div>
                   <div className="flex justify-end mr-9 gap-2 sm:mr-0 sm:justify-center">
-                    {eventDataToUpdate?.length !== 0 ? (
-                      <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Update"}</button>
-                    ) : (
-                      <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Save"}</button>
-                    )}
+                    {eventDataToUpdate?.length !== 0 ? <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Update"}</button> : <button className="bg-blue-900 text-white font-semibold rounded-lg focus:outline-none w-[120px]">{"Save"}</button>}
 
                     <button className="border border-black bg-white text-black font-semibold rounded-lg focus:outline-none" onClick={() => setCalenderModal(false)}>
                       Cancel
