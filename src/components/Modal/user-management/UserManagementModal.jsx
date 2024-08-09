@@ -25,7 +25,7 @@ const scaleTranslateOutStyle = {
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
   const admindetails = useSelector((state) => state.admindetails.data);
-  console.log(admindetails);
+
   const [selectedFile, setSelectedFile] = useState(null);
   const currentDate = new Date().toISOString().split("T")[0];
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
@@ -111,16 +111,24 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     try {
       const response = await getAllRoles();
       const responses = await getAdminRolesApi();
-      const mergedRoles = [...response.data, ...responses.data];
-      setRole(mergedRoles);
+      if (admindetails == "1") {
+        const mergedRoles = [...response.data, ...responses.data];
+        setRole(mergedRoles);
+      } else {
+        const filterArray = responses.data.filter((response) => response.role_name !== "Super Admin");
+        const mergedRoles = [...response.data, ...filterArray];
+        setRole(mergedRoles);
+      }
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getAllGroups();
-    getAllRoless();
-  }, []);
+    if (admindetails !== null) {
+      getAllGroups();
+      getAllRoless();
+    }
+  }, [admindetails]);
 
   useEffect(() => {
     if (items) {
@@ -275,6 +283,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   }, [items, reset, setValue]);
 
   const onSubmit = async (data) => {
+    console.log(adminState)
     const formData = new FormData();
     formData.append("first_name", data?.first_name);
     formData.append("last_name", data?.last_name);
@@ -289,6 +298,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     formData.append("email", data?.email);
     formData.append("notes", data?.notes);
     formData.append("gender", data?.Gender);
+    if (data.age === 0) {
+      toast.error("User must be at least 1 year old.");
+      return;
+    }
     if (memberList.length === 0) {
       toast.error("Please select at least one group");
       return;
@@ -347,7 +360,8 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       }
     } else {
       try {
-        if (data.password == "") {
+        console.log(data.password)
+        if (adminState && data.password === "") {
           toast.error("Password is required");
           return;
         }
@@ -391,6 +405,16 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
   const calulateAgeError = () => {
     toast.error("Please enter your date of birth (DOB) ");
+  };
+
+  const handleClickOnGrp = (role_name) => {
+    const matchingRoles = ["Super Admin", "Admin Level 1", "Admin Level 2"];
+
+    if (matchingRoles.includes(role_name)) {
+      setAdminState(true);
+    } else {
+      setAdminState(false);
+    }
   };
   return (
     <>
@@ -447,7 +471,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                         {role?.map((item, index) => {
                           return (
                             <div className="flex items-center" key={index}>
-                              <input type="radio" value={item.role_id} name="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={item.role_name == items?.role_name} />
+                              <input type="radio" value={item.role_id} name="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={item.role_name == items?.role_name} onClick={() => handleClickOnGrp(item.role_name)} />
                               <span className="ml-2 text-gray-700">{item.role_name}</span>
                             </div>
                           );
@@ -490,7 +514,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="email">
-                        Email Id
+                        Email Id {adminState && <span className="text-red-500 pl-1"> *</span>}
                       </label>
                       <input type="text" name="email" id="email" className="input" {...register("email")} />
                       <p>{errors?.email?.message}</p>
@@ -505,7 +529,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                     {items == null && (
                       <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                         <label className="text-blue-300 text-sm" htmlFor="password">
-                          password
+                          password {adminState && <span className="text-red-500 pl-1"> *</span>}
                         </label>
                         <input type="text" name="password" id="password" placeholder="Password" className="input" {...register("password")} />
                         <p>{errors?.password?.message}</p>
@@ -540,7 +564,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="phone">
-                        Contact No
+                        Contact No {adminState && <span className="text-red-500 pl-1"> *</span>}
                       </label>
                       <input type="number" name="phone" id="phone" className="input" {...register("phone")} />
                       <p>{errors?.phone?.message}</p>
