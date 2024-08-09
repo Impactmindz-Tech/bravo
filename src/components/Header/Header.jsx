@@ -7,6 +7,8 @@ import { MdOutlineMenuOpen } from "react-icons/md";
 import { MdOutlineMenu } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setMenuToggle } from "../../store/Slice/MenuToggleStateSlice";
+import { setAdminDetails } from "../../store/Slice/AdminLoginDetailsSlice";
+import { getLocalStorage } from "../../utils/LocalStorageUtills";
 export default function Header() {
   const dispatch = useDispatch();
   const menuToggleState = useSelector((state) => state.menuToggle.state);
@@ -28,13 +30,12 @@ export default function Header() {
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       setDropdown(false);
-    dispatch(setMenuToggle(false));
-
+      dispatch(setMenuToggle(false));
     }
   };
 
   useEffect(() => {
-    
+    // dispatch(setMenuToggle(false));
     if (dropdown) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
@@ -42,6 +43,12 @@ export default function Header() {
     }
   }, [dropdown]);
 
+  // loading admin data
+  useEffect(() => {
+    if (localStorage) {
+      dispatch(setAdminDetails(localStorage.getItem("adminRole")));
+    }
+  }, []);
   return (
     <header className="flex justify-between border-gray-100 py-2 px-10 shadow-md  min-w-[100%] sm:px-2 md:px-1 lg:px-2 xl:px-2 2xl:px-1 sm:py-1">
       <div className="logo pl-2 sm:pl-0 sm:pt-0 sm:flex sm:items-center sm:gap-2">
@@ -68,7 +75,6 @@ export default function Header() {
           {dropdown && (
             <div className="absolute border border-[#ccc] right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
               <div className="py-1 cursor-pointer">
-               
                 <div onClick={logout} to="#" className="block px-4 py-2 font-semibold text-sm">
                   Sign out
                 </div>

@@ -5,6 +5,7 @@ import AdminSlice from "./Slice/AdminSlice";
 import EventSlice from "./Slice/EventSlice";
 import ParticipantsSlice from "./Slice/EventParticipantsSlice";
 import ToggleMenuStateSlice from "./Slice/MenuToggleStateSlice";
+import AdminDetailsSlice from "./Slice/AdminLoginDetailsSlice";
 export const store = configureStore({
   reducer: {
     [UserSlice.name]: UserSlice.reducer,
@@ -14,5 +15,6 @@ export const store = configureStore({
     [EventSlice.name]: EventSlice.reducer,
     [ToggleMenuStateSlice.name]: ToggleMenuStateSlice.reducer,
     [ParticipantsSlice.name]: ParticipantsSlice.reducer,
+    [AdminDetailsSlice.name]: AdminDetailsSlice.reducer,
   },
 });

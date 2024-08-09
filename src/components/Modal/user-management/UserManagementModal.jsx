@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { FiUpload } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
@@ -13,7 +13,7 @@ import { Country, State, City } from "country-state-city";
 import { CreateUser, EditUser, getAllRoles } from "../../../utils/service/DashboardService";
 import { createUser } from "../../../utils/validation/FormValidation";
 import toast from "react-hot-toast";
-import { getAllGroup } from "../../../utils/service/CommonService";
+import { getAdminRolesApi, getAllGroup } from "../../../utils/service/CommonService";
 import Multiselect from "multiselect-react-dropdown";
 const scaleTranslateInStyle = {
   animation: "scaleTranslateIn 0.5s ease-in-out",
@@ -24,6 +24,8 @@ const scaleTranslateOutStyle = {
 };
 // eslint-disable-next-line react/prop-types
 const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, onUserCreated }) => {
+  const admindetails = useSelector((state) => state.admindetails.data);
+  console.log(admindetails);
   const [selectedFile, setSelectedFile] = useState(null);
   const currentDate = new Date().toISOString().split("T")[0];
   const [addRelativeModalOpen, setAddRelativeModalOpen] = useState(false);
@@ -38,7 +40,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
-
+  const [adminState, setAdminState] = useState(false);
   const [show, setShow] = useState(addAdminModalOpen);
   useEffect(() => {
     if (addAdminModalOpen) {
@@ -108,7 +110,9 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
   const getAllRoless = async () => {
     try {
       const response = await getAllRoles();
-      setRole(response);
+      const responses = await getAdminRolesApi();
+      const mergedRoles = [...response.data, ...responses.data];
+      setRole(mergedRoles);
     } catch (error) {
       console.log(error);
     }
@@ -139,6 +143,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       setValue("group_id", items?.group_id);
       setValue("email", items?.email);
       setValue("notes", items?.notes);
+      setValue("username", items?.username);
 
       const formattedMembers =
         items?.groups?.map((member) => ({
@@ -162,20 +167,104 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
       reset();
       setSelectedFile(null);
       setSelectedCountry({
-        name: "Austria",
-        isoCode: "AT",
-        flag: "🇦🇹",
-        phonecode: "43",
-        currency: "EUR",
-        latitude: "47.33333333",
-        longitude: "13.33333333",
+        name: "Australia",
+        isoCode: "AU",
+        flag: "🇦🇺",
+        phonecode: "61",
+        currency: "AUD",
+        latitude: "-27.00000000",
+        longitude: "133.00000000",
         timezones: [
           {
-            zoneName: "Europe/Vienna",
-            gmtOffset: 3600,
-            gmtOffsetName: "UTC+01:00",
-            abbreviation: "CET",
-            tzName: "Central European Time",
+            zoneName: "Antarctica/Macquarie",
+            gmtOffset: 39600,
+            gmtOffsetName: "UTC+11:00",
+            abbreviation: "MIST",
+            tzName: "Macquarie Island Station Time",
+          },
+          {
+            zoneName: "Australia/Adelaide",
+            gmtOffset: 37800,
+            gmtOffsetName: "UTC+10:30",
+            abbreviation: "ACDT",
+            tzName: "Australian Central Daylight Saving Time",
+          },
+          {
+            zoneName: "Australia/Brisbane",
+            gmtOffset: 36000,
+            gmtOffsetName: "UTC+10:00",
+            abbreviation: "AEST",
+            tzName: "Australian Eastern Standard Time",
+          },
+          {
+            zoneName: "Australia/Broken_Hill",
+            gmtOffset: 37800,
+            gmtOffsetName: "UTC+10:30",
+            abbreviation: "ACDT",
+            tzName: "Australian Central Daylight Saving Time",
+          },
+          {
+            zoneName: "Australia/Currie",
+            gmtOffset: 39600,
+            gmtOffsetName: "UTC+11:00",
+            abbreviation: "AEDT",
+            tzName: "Australian Eastern Daylight Saving Time",
+          },
+          {
+            zoneName: "Australia/Darwin",
+            gmtOffset: 34200,
+            gmtOffsetName: "UTC+09:30",
+            abbreviation: "ACST",
+            tzName: "Australian Central Standard Time",
+          },
+          {
+            zoneName: "Australia/Eucla",
+            gmtOffset: 31500,
+            gmtOffsetName: "UTC+08:45",
+            abbreviation: "ACWST",
+            tzName: "Australian Central Western Standard Time (Unofficial)",
+          },
+          {
+            zoneName: "Australia/Hobart",
+            gmtOffset: 39600,
+            gmtOffsetName: "UTC+11:00",
+            abbreviation: "AEDT",
+            tzName: "Australian Eastern Daylight Saving Time",
+          },
+          {
+            zoneName: "Australia/Lindeman",
+            gmtOffset: 36000,
+            gmtOffsetName: "UTC+10:00",
+            abbreviation: "AEST",
+            tzName: "Australian Eastern Standard Time",
+          },
+          {
+            zoneName: "Australia/Lord_Howe",
+            gmtOffset: 39600,
+            gmtOffsetName: "UTC+11:00",
+            abbreviation: "LHST",
+            tzName: "Lord Howe Summer Time",
+          },
+          {
+            zoneName: "Australia/Melbourne",
+            gmtOffset: 39600,
+            gmtOffsetName: "UTC+11:00",
+            abbreviation: "AEDT",
+            tzName: "Australian Eastern Daylight Saving Time",
+          },
+          {
+            zoneName: "Australia/Perth",
+            gmtOffset: 28800,
+            gmtOffsetName: "UTC+08:00",
+            abbreviation: "AWST",
+            tzName: "Australian Western Standard Time",
+          },
+          {
+            zoneName: "Australia/Sydney",
+            gmtOffset: 39600,
+            gmtOffsetName: "UTC+11:00",
+            abbreviation: "AEDT",
+            tzName: "Australian Eastern Daylight Saving Time",
           },
         ],
       });
@@ -194,14 +283,14 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     formData.append("dob", data?.dob);
     formData.append("age", data?.age);
     formData.append("address", data?.address);
+    formData.append("username", data?.username);
     formData.append("postal_code", data?.postal_code);
     formData.append("role_id", data?.role_id);
-    // formData.append("group_id", data.group_id);
     formData.append("email", data?.email);
     formData.append("notes", data?.notes);
     formData.append("gender", data?.Gender);
     if (memberList.length === 0) {
-      toast.error("Please select at least one member name");
+      toast.error("Please select at least one group");
       return;
     }
 
@@ -299,6 +388,10 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
     const age = Math.floor(diffInYears);
     setValue("age", age);
   };
+
+  const calulateAgeError = () => {
+    toast.error("Please enter your date of birth (DOB) ");
+  };
   return (
     <>
       <Modal open={addAdminModalOpen} onClose={handlemodalClose} className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-opacity-50 ">
@@ -348,14 +441,19 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                   </div>
 
                   <div className="flex gap-3">
-                    {role?.data?.map((item, index) => {
-                      return (
-                        <div className="flex items-center" key={index}>
-                          <input type="radio" value={item.role_id} name="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={item.role_name == items?.role_name} />
-                          <span className="ml-2 text-gray-700">{item.role_name}</span>
-                        </div>
-                      );
-                    })}
+                    {role.length !== 0 && (
+                      <>
+                        {" "}
+                        {role?.map((item, index) => {
+                          return (
+                            <div className="flex items-center" key={index}>
+                              <input type="radio" value={item.role_id} name="role_id" className="form-radio border-2 border-yellow-400 rounded-full appearance-none h-6 w-6 checked:bg-blue-900 checked:border-transparent" {...register("role_id")} defaultChecked={item.role_name == items?.role_name} />
+                              <span className="ml-2 text-gray-700">{item.role_name}</span>
+                            </div>
+                          );
+                        })}
+                      </>
+                    )}
                   </div>
                   <p className="text-danger">{errors?.role_id?.message}</p>
 
@@ -390,12 +488,26 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <p>{errors?.authrization_code?.message}</p>
                     </div> */}
 
+                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                      <label className="text-blue-300 text-sm" htmlFor="email">
+                        Email Id
+                      </label>
+                      <input type="text" name="email" id="email" className="input" {...register("email")} />
+                      <p>{errors?.email?.message}</p>
+                    </div>
+                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                      <label className="text-blue-300 text-sm" htmlFor="email">
+                        username <span className="text-red-500 pl-1">*</span>
+                      </label>
+                      <input type="text" name="email" id="email" className="input" {...register("username")} />
+                      <p>{errors?.username?.message}</p>
+                    </div>
                     {items == null && (
                       <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                         <label className="text-blue-300 text-sm" htmlFor="password">
-                          password <span className="text-red-500 pl-1">*</span>
+                          password
                         </label>
-                        <input type="text" name="password" id="password" placeholder="385555" className="input" {...register("password")} />
+                        <input type="text" name="password" id="password" placeholder="Password" className="input" {...register("password")} />
                         <p>{errors?.password?.message}</p>
                       </div>
                     )}
@@ -427,14 +539,6 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                     </div>
 
                     <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
-                      <label className="text-blue-300 text-sm" htmlFor="email">
-                        Email Id
-                      </label>
-                      <input type="text" name="email" id="email" className="input" {...register("email")} />
-                      <p>{errors?.email?.message}</p>
-                    </div>
-
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
                       <label className="text-blue-300 text-sm" htmlFor="phone">
                         Contact No
                       </label>
@@ -450,7 +554,7 @@ const UserManagementModal = ({ addAdminModalOpen, setAddAdminModalOpen, items, o
                       <p>{errors?.dob?.message}</p>
                     </div>
 
-                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]">
+                    <div className="flex flex-col w-[22%] gap-y-2 sm:w-[100%] md:w-[47%] lg:w-[30%] xl:w-[30%] 2xl:w-[30%]" onClick={() => calulateAgeError()}>
                       <label className="text-blue-300 text-sm" htmlFor="Age">
                         Age<span className="text-red-500 pl-1">*</span>
                       </label>

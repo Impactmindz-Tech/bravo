@@ -8,7 +8,6 @@ export const createEventApi = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
 
@@ -19,7 +18,6 @@ export const updateEventApi = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
 
@@ -36,7 +34,6 @@ export const deleteEventApi = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
 
@@ -51,10 +48,7 @@ export const getAllEventsApi = async (payload) => {
 
 export const EventParticipantsApi = async (payload) => {
   try {
-    const responce = await axiosInstance.get(
-      `?page=eventParticipants`,
-      payload
-    );
+    const responce = await axiosInstance.get(`?page=eventParticipants`, payload);
     return responce.data;
   } catch (error) {
     console.log(error);

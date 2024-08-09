@@ -72,8 +72,6 @@ export const getUserDataByID = async (id) => {
   }
 };
 
-
-
 export const deleteUserDataByID = async (payload) => {
   try {
     const responce = await axiosInstance.post(`?page=deleteUser`, payload);
@@ -81,6 +79,5 @@ export const deleteUserDataByID = async (payload) => {
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message);
-
   }
 };
